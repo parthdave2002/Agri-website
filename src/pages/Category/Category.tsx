@@ -31,8 +31,8 @@ const CategoryCarouselSection: React.FC = () => {
             <a href="#" className="text-sm text-yellow-600 hover:underline">{t("View All")} →</a>
 
              <div className="flex gap-2">
-              <button className=" category-carousel-prev  bg-blue-500 text-white px-2 py-2 rounded-full"> <FaChevronLeft /> </button>
-              <button className=" category-carousel-next  bg-blue-500 text-white px-2 py-2 rounded-full"> <FaChevronRight /></button>
+              <button className=" category-carousel-prev  bg-green-500 text-white px-2 py-2 rounded-full"> <FaChevronLeft /> </button>
+              <button className=" category-carousel-next  bg-green-500 text-white px-2 py-2 rounded-full"> <FaChevronRight /></button>
             </div>
           </div>
         </div>

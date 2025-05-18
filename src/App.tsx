@@ -27,17 +27,19 @@ function App() {
       <Header />
      
       <BannerSection />
+      
       <CategoryCarouselSection />
+       <FeaturesSection />
       <BrandCarouselSection />
-      <PromoBannerSection />
+   
       <BestSellingProductSection /> 
       <DiscountBannerSection />
       <PopularProductSection />
-      <JustarrivedSection />
-      <RecentBlogSection /> 
-      <ShopFasterSection />
+      {/* <JustarrivedSection /> */}
+      {/* <RecentBlogSection />  */}
+      {/* <ShopFasterSection /> */}
       <PopularSearches />
-      <FeaturesSection />
+        <PromoBannerSection />
       <Footer />
     </>
   )
