@@ -29,9 +29,9 @@ const bannerSlides = [
 const BannerSection: React.FC = () => {
   return (
      <section className="py-8 bg-[url('/images/background-pattern.jpg')] bg-no-repeat bg-cover ">
-      <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2">
-          <Swiper   modules={[ Pagination, Scrollbar, A11y, Autoplay ]}  spaceBetween={50}   autoplay={{ delay: 5000, disableOnInteraction: false }}  scrollbar={{ draggable: true }} loop className="rounded-xl overflow-hidden" >
+      <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 ">
+        <div className="">
+          <Swiper   modules={[ Pagination, Scrollbar, A11y, Autoplay ]}  spaceBetween={50}   autoplay={{ delay: 5000, disableOnInteraction: false }}   loop className="rounded-xl overflow-hidden" >
             {bannerSlides.map((item, idx) => (
                 <SwiperSlide>
                     <div className="flex flex-col md:flex-row items-center bg-[#eaf5f7] rounded-xl p-6 md:p-10 ">
@@ -50,7 +50,7 @@ const BannerSection: React.FC = () => {
           </Swiper>
         </div>
 
-        <div className="space-y-6 h-full">
+        {/* <div className="space-y-6 h-full">
 
                   <div className="relative bg-[#e9f3e6] rounded-xl p-10 flex items-center justify-between overflow-hidden">
 
@@ -111,7 +111,7 @@ const BannerSection: React.FC = () => {
 
                       <div className="absolute right-0 bottom-0 h-full"> <img src="/images/ad-image-2.png" alt="Baked Products" className="h-full object-contain" /> </div>
                   </div>
-        </div>
+        </div> */}
       </div>
     </section>
   );

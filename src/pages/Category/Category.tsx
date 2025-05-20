@@ -28,12 +28,12 @@ const CategoryCarouselSection: React.FC = () => {
         <div className="flex flex-wrap justify-between items-center mb-6">
           <h2 className="text-2xl md:text-3xl font-semibold">{t("Category")}</h2>
           <div className="flex items-center gap-4">
-            <a href="#" className="text-sm text-yellow-600 hover:underline">{t("View All")} →</a>
+            {/* <a href="#" className="text-sm text-yellow-600 hover:underline">{t("View All")} →</a> */}
 
-             <div className="flex gap-2">
+             {/* <div className="flex gap-2">
               <button className=" category-carousel-prev  bg-green-500 text-white px-2 py-2 rounded-full"> <FaChevronLeft /> </button>
               <button className=" category-carousel-next  bg-green-500 text-white px-2 py-2 rounded-full"> <FaChevronRight /></button>
-            </div>
+            </div> */}
           </div>
         </div>
         
@@ -55,10 +55,10 @@ const CategoryCarouselSection: React.FC = () => {
             >
             {categoryData.map((item, idx) => (
                 <SwiperSlide key={idx} className='min-w-[300px] my-4'>
-                <a href="#" className="flex flex-col items-center text-center p-[2rem] bg-[#f0ffff] rounded-xl shadow-md hover:shadow-xl transition duration-300"           >
+                <div className="flex flex-col items-center text-center p-[2rem] bg-[#f0ffff] rounded-xl shadow-md hover:shadow-xl transition duration-300"           >
                     <img src={item.img} alt={item.title} className="w-16 h-16 object-contain mb-2" />
                     <h3 className="font-heading font-semibold text-[18px] leading-[25px] text-gray-800">{item.title}</h3>
-                </a>
+                </div>
                 </SwiperSlide>
             ))}
             </Swiper>
