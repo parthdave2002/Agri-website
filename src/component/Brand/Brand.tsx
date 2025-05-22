@@ -3,35 +3,38 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { useTranslation } from "react-i18next";
+import Marquee from "react-fast-marquee";
 
 const brandData = [
   {
-    img: 'images/product-thumb-11.jpg',
+    img: 'images/company/bayerLogo.webp',
     title: 'Honey best nectar you wish to get',
-    subtitle: 'Amber Jar',
+    subtitle: 'Bayer',
   },
   {
-    img: 'images/product-thumb-12.jpg',
+    img: 'images/company/dhanukaLogo.webp',
     title: 'Honey best nectar you wish to get',
-    subtitle: 'Amber Jar',
+    subtitle: 'Dhanuka',
   },
   {
-    img: 'images/product-thumb-13.jpg',
+    img: 'images/company/fmcLogo.webp',
     title: 'Honey best nectar you wish to get',
-    subtitle: 'Amber Jar',
+    subtitle: 'FMC',
   },
   {
-    img: 'images/product-thumb-14.jpg',
+    img: 'images/company/uplLogo.webp',
     title: 'Honey best nectar you wish to get',
-    subtitle: 'Amber Jar',
+    subtitle: 'UPL',
   },
 ];
 
 const BrandCarouselSection: React.FC = () => {
-      const { t } = useTranslation();
+  
+  const repeatedData = [...brandData, ...brandData];
+  const { t } = useTranslation();
   return (
     <section className="py-10 overflow-hidden">
-      <div className="max-w-1600 mx-auto px-4">
+      {/* <div className="max-w-1600 mx-auto px-4">
         <div className="flex flex-wrap justify-between items-center mb-10">
           <h2 className="text-2xl md:text-3xl font-semibold">{t("Newly Arrived Brands")}</h2>
           <div className="flex items-center gap-3">
@@ -73,6 +76,24 @@ const BrandCarouselSection: React.FC = () => {
             ))}
 
         </Swiper>
+      </div> */}
+
+      <div className="max-w-1600 mx-auto px-4">
+        <div className="flex flex-wrap justify-between items-center mb-10">
+          <h2 className="text-2xl md:text-3xl font-semibold">{t("Brands")}</h2>
+          <div className="w-full overflow-hidden bg-white py-4">
+            <Marquee loop={0} speed={50} pauseOnClick={true} autoFill={true}>
+              {brandData.map((item, index) => (
+                <div key={index} className="flex-shrink-0 w-32 mx-10 flex items-center justify-center">
+                  <div className='flex flex-col '>
+                    <img src={item.img} alt={item.title} className="max-h-full max-w-full object-contain" />
+                    <h3 className="text-lg text-center font-heading font-bold text-gray-900 mt-2">{item.subtitle}</h3>
+                  </div>
+                </div>
+              ))}
+            </Marquee>
+          </div>
+        </div>
       </div>
     </section>
   );

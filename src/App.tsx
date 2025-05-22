@@ -2,45 +2,32 @@ import { useState } from 'react'
 // import reactLogo from './assets/react.svg'
 // import viteLogo from '/vite.svg'
 import './App.css'
-import Footer from './component/Footer/footer'
-import FeaturesSection from './pages/Features/Features'
-import PopularSearches from './pages/Looking/LookingFor'
-import ShopFasterSection from './pages/ShopFaster/ShopFaster'
-import RecentBlogSection from './pages/RecentBlog/RecentBlog'
-import JustarrivedSection from './pages/JustArrived/Justarrived'
-import PopularProductSection from './pages/PopularProduct/PopularProduct'
-import PromoBannerSection from './pages/PromotionBanner/PromotionBanner'
-import DiscountBannerSection from './pages/DiscountBanner/DiscountBanner'
-import BestSellingProductSection from './pages/BestSellingProduct/BestSellingProduct'
-import BrandCarouselSection from './pages/Brand/Brand'
-import CategoryCarouselSection from './pages/Category/Category'
-import BannerSection from './pages/Banner/Banner'
+import { Route, BrowserRouter as Router, Routes } from 'react-router-dom'; 
 import CartSection from './pages/Cart/Cart'
-import Header from './component/Header/Header'
+import Layout from './layout/Layout';
+import HomeSection from './pages/Home';
+import ProductSection from './pages/Product';
+import AboutSection from './pages/About';
+import ContactusSection from './pages/Contact';
+import Termspagesection from './pages/Terms';
+import Refundpagesection from './pages/Refund';
+import Privacypagesection from './pages/privacy';
 
 function App() {
 
-
-
   return (
     <>
-      <Header />
-     
-      <BannerSection />
-      
-      <CategoryCarouselSection />
-       <FeaturesSection />
-      <BrandCarouselSection />
-   
-      <BestSellingProductSection /> 
-      <DiscountBannerSection />
-      <PopularProductSection />
-      {/* <JustarrivedSection /> */}
-      {/* <RecentBlogSection />  */}
-      {/* <ShopFasterSection /> */}
-      <PopularSearches />
-        <PromoBannerSection />
-      <Footer />
+    <Router>
+      <Routes>
+        <Route path='/' element={ <Layout><HomeSection /> </Layout> } />  
+        <Route path='/product' element={<Layout> <ProductSection /> </Layout>} />  
+        <Route path='/about' element={<Layout> <AboutSection /> </Layout>} />  
+        <Route path='/contactus' element={<Layout> <ContactusSection /> </Layout>} />  
+        <Route path='/privacy-policy' element={<Layout> <Privacypagesection /> </Layout>} />  
+        <Route path='/refund-policy' element={<Layout> <Refundpagesection /> </Layout>} />  
+        <Route path='/terms & condition' element={<Layout> <Termspagesection /> </Layout>} />  
+      </Routes>
+    </Router>
     </>
   )
 }
