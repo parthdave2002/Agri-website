@@ -12,6 +12,8 @@ import ContactusSection from './pages/Contact';
 import Termspagesection from './pages/Terms';
 import Refundpagesection from './pages/Refund';
 import Privacypagesection from './pages/privacy';
+import FAQSection from './component/FAQ/FAQ';
+import PagenotfoundSection from './component/Pagenotfound/Pagenotfound';
 
 function App() {
 
@@ -23,9 +25,11 @@ function App() {
         <Route path='/product' element={<Layout> <ProductSection /> </Layout>} />  
         <Route path='/about' element={<Layout> <AboutSection /> </Layout>} />  
         <Route path='/contactus' element={<Layout> <ContactusSection /> </Layout>} />  
+        <Route path='/faq' element={<Layout> <FAQSection /> </Layout>} />  
         <Route path='/privacy-policy' element={<Layout> <Privacypagesection /> </Layout>} />  
         <Route path='/refund-policy' element={<Layout> <Refundpagesection /> </Layout>} />  
         <Route path='/terms & condition' element={<Layout> <Termspagesection /> </Layout>} />  
+        <Route path='/*' element={ <PagenotfoundSection /> } />  
       </Routes>
     </Router>
     </>

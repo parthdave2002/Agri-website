@@ -9,6 +9,7 @@ import BrandCarouselSection from '../../component/Brand/Brand'
 import CategoryCarouselSection from '../../component/Category/Category'
 import BannerSection from '../../component/Banner/Banner'
 import TestimonailSection from '../../component/Testimonial/Testimonail'
+import FAQSection from '../../component/FAQ/FAQ'
 
 const HomeSection = () => {
 
@@ -31,7 +32,7 @@ const HomeSection = () => {
       <PromoBannerSection />
       <TestimonailSection />
       <LookingForSection />
-
+      <FAQSection />
     </div>
   )
 }

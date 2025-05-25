@@ -34,7 +34,7 @@ const BannerSection: React.FC = () => {
           <Swiper   modules={[ Pagination, Scrollbar, A11y, Autoplay ]}  spaceBetween={50}   autoplay={{ delay: 5000, disableOnInteraction: false }}   loop className="rounded-xl overflow-hidden" >
             {bannerSlides.map((item, idx) => (
                 <SwiperSlide>
-                    <div className="flex flex-col md:flex-row items-center bg-[#eaf5f7] rounded-xl p-6 md:p-10 ">
+                    <div className="flex flex-col md:flex-row items-center bg-[#eaf5f7] rounded-xl p-6 md:p-10  z-1">
                         <div className="md:w-1/2 space-y-4">
                             <span className="text-yellow-600 text-lg font-semibold">{item?.category}</span>
                             <h2 className="text-3xl md:text-[3.5rem] leading-[4rem] font-heading font-bold text-gray-800">{item.title}</h2>

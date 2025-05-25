@@ -20,17 +20,17 @@ const Footer = () => {
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 justify-items-center md:grid-cols-3 gap-8">
 
-     
-              <div className="col-span-1">
+            <div className="col-span-1">
               <img src="/images/logo.webp" alt="FoodMart Logo" className="w-36 md:w-[15rem] mb-6 justify-self-center" />
 
-              <div className='text-md md:text-[1rem] font-heading font-semibold'> {t("Phone")} :  9100029429 / 9100029329  </div>
-              <div className='text-md md:text-[1rem] font-heading font-semibold mb-4'> {t("Email")} : info@agribharat.com</div>
-                 <div className="flex space-x-3 ">
-                <div className="w-10 h-10 flex items-center justify-center transition cursor-pointer">  <img src="/public/images/whatsapp.png" />   </div>
-                <div className="w-10 h-10 flex items-center justify-center transition cursor-pointer">  <img  src="/public/images/instagram.png" />   </div>
-                <div className="w-10 h-10 flex items-center justify-center transition cursor-pointer">  <img  src="/public/images/youtube.png" />   </div>
-              </div>
+              <div className='text-md md:text-[1rem] font-heading font-semibold'> {t("Phone")} :  {t("9100029429 / 9100029329")}  </div>
+              <div className='text-md md:text-[1rem] font-heading font-semibold mb-4'> {t("Email")} : agribharat.info@gmail.com</div>
+                <div className="flex space-x-3 ">
+                  <a  target="_blank" rel='noopener noreferre'  href="https://chat.whatsapp.com/EpxTJUNTU8Q1NKUAS3RjBM"  className="w-10 h-10 flex items-center justify-center transition cursor-pointer">  <img src="/public/images/whatsapp.png" />   </a>
+                  <a  target="_blank" rel='noopener noreferre'  href="https://www.instagram.com/agribharat.in?igsh=MXQwbnlwMmI5c3RvMw=="  className="w-10 h-10 flex items-center justify-center transition cursor-pointer">  <img  src="/public/images/instagram.png" />   </a>
+                  <a  target="_blank" rel='noopener noreferre'  href="https://youtube.com/@agribharat2023?si=ip4lwikEkp4SCBgy"  className="w-10 h-10 flex items-center justify-center transition cursor-pointer">  <img  src="/public/images/youtube.png" />   </a>
+                  <a  target="_blank" rel='noopener noreferre'  href="https://www.facebook.com/agribharat.in/"  className="w-10 h-10 flex items-center justify-center transition cursor-pointer"> <img  src="/public/images/facebook.png" />   </a>
+                </div>
           </div>
 
           <div>
