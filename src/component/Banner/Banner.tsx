@@ -8,21 +8,21 @@ const bannerSlides = [
     title: 'Fresh Smoothie & Summer Juice',
     description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Dignissim massa diam elementum.',
     button: 'Shop Now',
-    img: 'images/product-thumb-1.png',
+    img: 'images/banner/Banner.jpeg',
   },
   {
     category: '100% natural',
     title: 'Fresh Smoothie & Summer Juice',
     description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Dignissim massa diam elementum.',
     button: 'Shop Collection',
-    img: 'images/product-thumb-1.png',
+    img: 'images/banner/Banner.jpeg',
   },
   {
     category: '100% natural',
     title: 'Heinz Tomato Ketchup',
     description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Dignissim massa diam elementum.',
     button: 'Shop Collection',
-    img: 'images/product-thumb-2.png',
+    img: 'images/banner/Banner.jpeg',
   },
 ];
 
@@ -34,7 +34,7 @@ const BannerSection: React.FC = () => {
           <Swiper   modules={[ Pagination, Scrollbar, A11y, Autoplay ]}  spaceBetween={50}   autoplay={{ delay: 5000, disableOnInteraction: false }}   loop className="rounded-xl overflow-hidden" >
             {bannerSlides.map((item, idx) => (
                 <SwiperSlide>
-                    <div className="flex flex-col md:flex-row items-center bg-[#eaf5f7] rounded-xl p-6 md:p-10  z-1">
+                    {/* <div className="flex flex-col md:flex-row items-center bg-[#eaf5f7] rounded-xl p-6 md:p-10  z-1">
                         <div className="md:w-1/2 space-y-4">
                             <span className="text-yellow-600 text-lg font-semibold">{item?.category}</span>
                             <h2 className="text-3xl md:text-[3.5rem] leading-[4rem] font-heading font-bold text-gray-800">{item.title}</h2>
@@ -44,7 +44,8 @@ const BannerSection: React.FC = () => {
                         <div className="md:w-1/2 mt-6 md:mt-0 flex justify-center">
                             <img src={item.img} alt="Smoothie Bottle" className="h-[30rem] object-contain" />
                         </div>
-                    </div>
+                    </div> */}
+                       <img src={item.img} alt={item.img} className="h-[30rem] object-contain" />
                 </SwiperSlide>
             ))}
           </Swiper>

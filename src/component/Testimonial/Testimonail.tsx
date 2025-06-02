@@ -52,7 +52,7 @@ const TestimonailSection = () => {
         <div className=" p-8 rounded-xl shadow-md max-w-5xl mx-auto border border-gray-200 py-10 overflow-hidden">
      
           <div className="relative max-w-5xl mx-auto px-1  md:px-4">
-            <Swiper   modules={[Autoplay]} autoplay={{ delay: 5000, disableOnInteraction: false }} loop spaceBetween={30} slidesPerView={1}  >
+            <Swiper   modules={[Autoplay]} autoplay={{ delay: 5000, disableOnInteraction: false }} loop spaceBetween={30} slidesPerView={3}  >
               {testimonials.map((t :any, index:number) => (
                 <SwiperSlide key={index}>
                   <div className="bg-white p-6 rounded-lg shadow-lg  h-full flex flex-col items-center transition-all duration-500 hover:scale-105">
