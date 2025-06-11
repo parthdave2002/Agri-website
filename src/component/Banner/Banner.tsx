@@ -1,6 +1,9 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Scrollbar, A11y, Autoplay   } from 'swiper/modules';
+import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
+import {getBannerlist} from "../../Store/actions"
 
 const bannerSlides = [
   {
@@ -27,12 +30,28 @@ const bannerSlides = [
 ];
 
 const BannerSection: React.FC = () => {
+
+  const dispatch = useDispatch(); 
+  const [bannerSlides, setbannerSlides] = useState([]); 
+  useEffect(() => { dispatch(getBannerlist()) }, []); 
+
+  // ------------- Get data from redux code start ------------- 
+  const bannerdetail :any = useSelector((state:any) => state.Banner.Bannerlist); 
+  useEffect(() => { 
+    console.log("bannerdetail",bannerdetail);
+    
+    if (bannerdetail) { 
+      setbannerSlides(bannerdetail); 
+    }
+  }, [bannerdetail]); 
+  // ------------- Get data from redux code end -------------
+
   return (
      <section className="py-8 bg-[url('/images/background-pattern.jpg')] bg-no-repeat bg-cover ">
       <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 ">
         <div className="">
           <Swiper   modules={[ Pagination, Scrollbar, A11y, Autoplay ]}  spaceBetween={50}   autoplay={{ delay: 5000, disableOnInteraction: false }}   loop className="rounded-xl overflow-hidden" >
-            {bannerSlides.map((item, idx) => (
+            {bannerSlides.map((item:any, i:number) => (
                 <SwiperSlide>
                     {/* <div className="flex flex-col md:flex-row items-center bg-[#eaf5f7] rounded-xl p-6 md:p-10  z-1">
                         <div className="md:w-1/2 space-y-4">
@@ -45,74 +64,13 @@ const BannerSection: React.FC = () => {
                             <img src={item.img} alt="Smoothie Bottle" className="h-[30rem] object-contain" />
                         </div>
                     </div> */}
-                       <img src={item.img} alt={item.img} className="h-[30rem] object-contain" />
+                       <img src={item?.banner_pic} key={i} alt={item?.banner_pic} className="h-[30rem] object-contain" />
                 </SwiperSlide>
             ))}
           </Swiper>
         </div>
 
-        {/* <div className="space-y-6 h-full">
-
-                  <div className="relative bg-[#e9f3e6] rounded-xl p-10 flex items-center justify-between overflow-hidden">
-
-                      <div className="z-10 max-w-md">
-                          <p className="text-[28px] font-light text-gray-900 mb-2">20% Off</p>
-
-                          <div className="relative mb-4 pb-3 ">
-                              <div className="border-b border-black w-20 absolute bottom-[6px] left-0" />
-                              <div className="  uppercase text-[11px] tracking-[0.3em] text-[#252525] absolute bottom-0 right-8">  Sale </div>
-                          </div>
-
-                          <h3 className="text-2xl font-heading font-bold text-gray-900 mb-4"> Fruits & Vegetables </h3>
-
-                          <a href="#" className="inline-flex items-center gap-1 text-gray-600 hover:text-black transition">
-                              Shop Collection
-                              <svg
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  className="h-4 w-4"
-                                  fill="none"
-                                  viewBox="0 0 24 24"
-                                  stroke="currentColor"
-                                  strokeWidth={2}
-                              >
-                                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-                              </svg>
-                          </a>
-                      </div>
-
-                      <div className="absolute right-0 bottom-0 h-full">  <img src="/images/ad-image-1.png" alt="Fruits & Vegetables" className="h-full object-contain" /> </div>
-                  </div>
-
-                  <div className="relative bg-[#f4eee7] rounded-xl p-10 flex items-center justify-between overflow-hidden">
-                      <div className="z-10">
-                          <div className="text-[28px] font-light text-gray-900 mb-2">15% Off</div>
-                          <div className="relative mb-4 pb-3 ">
-                              <div className="border-b border-black w-20 absolute bottom-[6px] left-0" />
-                              <div className="  uppercase text-[11px] tracking-[0.3em] text-[#252525] absolute bottom-0 right-8">  Sale </div>
-                          </div>
-                          <h3 className="text-2xl font-heading font-bold text-gray-900 mb-4">Baked Products</h3>
-                          <a href="#" className="inline-flex items-center gap-1 text-gray-600 hover:text-black transition" >
-                              Shop Collection
-                              <svg
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  className="h-4 w-4"
-                                  fill="none"
-                                  viewBox="0 0 24 24"
-                                  stroke="currentColor"
-                                  strokeWidth={2}
-                              >
-                                  <path
-                                      strokeLinecap="round"
-                                      strokeLinejoin="round"
-                                      d="M9 5l7 7-7 7"
-                                  />
-                              </svg>
-                          </a>
-                      </div>
-
-                      <div className="absolute right-0 bottom-0 h-full"> <img src="/images/ad-image-2.png" alt="Baked Products" className="h-full object-contain" /> </div>
-                  </div>
-        </div> */}
+      
       </div>
     </section>
   );

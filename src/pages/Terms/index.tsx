@@ -13,7 +13,10 @@ const  Termspagesection = () => {
     <div className='p-6'>
       <div className="max-w-1600 mx-auto px-4">
         <h2 className="text-[1.5rem] md:text-[2rem] font-heading font-semibold my-5"> Terms & Condition </h2>
-        <p className='mb-6 text-[1rem]'>1. The website , https://in.puma.com is owned and operated by Puma Sports India Pvt Ltd and its affiliates/ Group Companies. The trade name, the word mark and all intellectual property rights associated with Puma and https://in.puma.com are owned solely by Puma SE and or its Group/ Affiliate Companies. ( Hereinafter collectively referred as Puma) </p>
+
+        <p className=' text-[1rem]'> Effective Date: 01/01/2025</p>
+        <div  className='mb-6 text-[1rem]'>Welcome to AgriBharat (“Website” or “Platform”). These Terms and Conditions (“Terms”) govern your access to and use of our website and services. By accessing or using AgriBharat, you accept and agree to be bound by the following terms. If you do not agree, please discontinue use immediately.</div>
+        <p className='mb-6 text-[1rem]'>1. General Use of Website </p>
         <p className='mb-6 text-[1rem]'>2. All orders shall be subject to terms and conditions as mentioned below. Any person placing an order/s on the website ordering the product ( “ customer”) shall be capable of entering into this contract ( competent Parties), their consent being free ( without any force or coercion) and the object and consideration being for a lawful purpose. </p>
         <p className='mb-6 text-[1rem]'>3. All customer / users of this web site hereby understand and agree that their use and/ or placement of any product on the website constitutes the acceptance of the terms and conditions set forth herein in totality and in the event such terms and conditions are not acceptable, the customer/ or user shall not place an order. The Customer/ User confirms and acknowledges that usage of this website is an acceptance of the T & C of this website and is also a representation by the user that he/ She is capable of entering into this Agreement, their consent is free , the object of the product being ordered and consideration being paid is for a lawful purpose. </p>
         <p className='mb-6 text-[1rem]'>4. PUMA, reserve the right to modify the terms and conditions at any time without prior notice. </p>

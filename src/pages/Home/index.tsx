@@ -22,7 +22,7 @@ const HomeSection = () => {
 
 
   return (
-    <div>
+    <div className='z-5'>
       <BannerSection />
       <CategoryCarouselSection />
       <BestSellingProductSection />

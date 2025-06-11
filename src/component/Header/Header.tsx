@@ -7,6 +7,7 @@ import { MdOutlineShoppingCart } from "react-icons/md";
 import { useTranslation } from "react-i18next";
 import CartSection from "../../pages/Cart/Cart";
 import { useNavigate } from "react-router-dom";
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 const Header: React.FC= ( ) => {
     const nagivate = useNavigate()
@@ -57,7 +58,7 @@ const Header: React.FC= ( ) => {
 
       <div className="container border-b border-gray-100 mx-auto  py-3">
         <div className="md:flex flex-wrap items-center justify-between gap-4">
-          <div className="text-center sm:text-left">  <div className="cursor-pointer"  onClick={ () =>RedirectCall("/")}>   <img src="/images/logo.webp" alt="logo" className="h-[3.5rem] mx-auto sm:mx-0" /> </div> </div>
+          <div className="text-center sm:text-left">  <div className="cursor-pointer"  onClick={ () =>RedirectCall("/")}>   <LazyLoadImage effect="blur" src="/images/logo.webp" alt="logo" className="h-[3.5rem] mx-auto sm:mx-0" /> </div> </div>
 
             <div className="flex flex-row gap-x-[5rem] justify-center my-6 md:my-0">
               <div className="text-xl md:text-[1.2rem] hover:text-green-600 hover: font-heading font-bold  cursor-pointer" onClick={() => RedirectCall("/")}> {t("Home")}</div>
@@ -105,7 +106,7 @@ const Header: React.FC= ( ) => {
                   <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
                     <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
                       <DialogPanel transition  className="relative transform overflow-hidden rounded-lg p-6 bg-white text-left shadow-xl transition-all data-closed:translate-y-4 data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in sm:my-8 sm:w-full sm:max-w-lg data-closed:sm:translate-y-0 data-closed:sm:scale-95">
-                         <img src="/public/images/Congratualtion-2.gif" />
+                         <LazyLoadImage effect="blur" src="/public/images/Congratualtion-2.gif" />
                           <button  type="button"  onClick={() => setIsOpenSuccessModal(false)}  className="inline-flex w-full justify-center rounded-md border border-green-600 px-[4rem] py-2 text-sm md:text-lg font-semibold hover:text-white shadow-xs hover:bg-green-600 sm:ml-3 sm:w-auto"  >   Okay </button>
 
                       </DialogPanel>

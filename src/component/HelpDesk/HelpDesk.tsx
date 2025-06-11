@@ -28,17 +28,17 @@ const HelpDesk = () => {
     }
   return (
     <>
-     <div className="fixed bottom-28 right-6 z-50 flex flex-col items-end space-y-2">
-              {isOpen && (
-                <>
-                  <button className="flex items-center w-[12rem] space-x-2 bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-full shadow-md" onClick={ () =>OpenModal()}>  <MdOutlineQuestionMark  /> <span> {t("Need Help")}</span> </button>
-                  <button className="flex items-center w-[12rem] space-x-2 bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-full shadow-md" onClick={() => RedirectCall("/contactus")}>  <TfiHeadphoneAlt /> <span> {t("Contact Us")}</span>  </button>
-                </>
-              )}
-      <button className="fixed bottom-6 right-6 z-50 rounded-full bg-green-600 hover:bg-green-700 p-4 shadow-lg text-white transition animate-bounce"  onClick={() => setIsOpen(!isOpen)} >    {isOpen ? <IoCloseSharp className='text-2xl'  /> : <IoSettingsSharp   className="text-2xl " /> }   </button>
-       
-    </div>
-                {isOpenDelteModel  ?  <HelpModal isOpenDelteModel={isOpenDelteModel}  setisOpenDelteModel={Closemodal} />  : null}
+      <div className="fixed bottom-28 right-6 z-[9998] flex flex-col items-end space-y-2">
+        {isOpen && (
+          <>
+            <button className="flex items-center w-[12rem] space-x-2 bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-full shadow-md" onClick={() => OpenModal()}>  <MdOutlineQuestionMark /> <span> {t("Need Help")}</span> </button>
+            <button className="flex items-center w-[12rem] space-x-2 bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-full shadow-md" onClick={() => RedirectCall("/contactus")}>  <TfiHeadphoneAlt /> <span> {t("Contact Us")}</span>  </button>
+          </>
+        )}
+        <button className="fixed bottom-6 right-6 rounded-full bg-green-600 hover:bg-green-700 p-4 shadow-lg text-white transition animate-bounce" onClick={() => setIsOpen(!isOpen)} >    {isOpen ? <IoCloseSharp className='text-2xl' /> : <IoSettingsSharp className="text-2xl " />}   </button>
+
+      </div>
+      {isOpenDelteModel ? <HelpModal isOpenDelteModel={isOpenDelteModel} setisOpenDelteModel={Closemodal} /> : null}
     </>
   )
 }

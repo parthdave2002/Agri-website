@@ -1,40 +1,76 @@
 {
-    "Missed Call To Order": "ઓર્ડર માટે મિસ્ડ કોલ",
-   "Category" : "વિભાગ",
-   "View All" : "બધા જુઓ",
-   "Brands" : "બ્રાન્ડ્સ",
-   "Best selling products" : "શ્રેષ્ઠ વેચાણ ઉત્પાદનો",
-   "Most popular products" :"સૌથી વધુ લોકપ્રિય ઉત્પાદનો",
-   "Just Arrived" : "હમણાં જ પહોંચ્યા",
-   "Frequently Asked Questions" : "વારંવાર પૂછાતા પ્રશ્નો",
-   "Need Help" : "મદદની જરૂર છે",
-    "9100029429 / 9100029329"  : "૯૧૦૦૦૨૯૪૨૯ / ૯૧૦૦૦૨૯૩૨૯",
-    "Terms & condition": "નિયમો અને શરતો",
-    "Privacy policy" : "ગોપનીયતા નીતિ",
-    "Returns & Refunds" : "વળતર અને રિફંડ",
-    "Contact Us" : "અમારો સંપર્ક કરો",
-    "Home" : "હોમ",
-    "About" : "અમારા વિશે",
-    "Products" : "ઉત્પાદનો", 
-    "All Rights Reserved" : "સર્વાધિકાર સુરક્ષિત",
-    "Office Address" : "ઓફિસ સરનામું",
-    "Quick Links" : "ઝડપી લિંક્સ",
-    "Phone" : "ફોન",
-    "Email" : "ઈમેલ",
-    "Testimonial" : "પ્રશંસાપત્ર",
-    "People are also looking for" :"લોકો પણ શોધી રહ્યા છે",
+  "Missed Call To Order": "ઓર્ડર માટે મિસ્ડ કોલ",
+  "9100029429 / 9100029329": "૯૧૦૦૦૨૯૪૨૯ / ૯૧૦૦૦૨૯૩૨૯",
 
-    "welcome": "સ્વાગત છે",
-    "description": "વર્ણન"
-    ,
-    "Notification": "સૂચના",
+  "Home": "હોમ",
+  "About": "અમારા વિશે",
+  "Products": "ઉત્પાદનો",
+  "Contact Us": "અમારો સંપર્ક કરો",
 
-    "English" : "અંગ્રેજી",
-    "Gujarati" : "ગુજરાતી",
+  "Category": "વિભાગ",
+  "Brands": "બ્રાન્ડ્સ",
+  "Best selling products": "શ્રેષ્ઠ વેચાણ ઉત્પાદનો",
+  "Most popular products": "સૌથી વધુ લોકપ્રિય ઉત્પાદનો",
+  "Just Arrived": "હમણાં જ પહોંચ્યા",
+  "Testimonial": "પ્રશંસાપત્ર",
+  "People are also looking for": "લોકો પણ શોધી રહ્યા છે",
+  "Frequently Asked Questions": "વારંવાર પૂછાતા પ્રશ્નો",
 
-    "Free delivery": "મફત વિતરણ",
-    "100% secure payment" : "૧૦૦% સુરક્ષિત ચુકવણી",
-    "Quality guarantee" : "ગુણવત્તા ગેરંટી",
-    "Guaranteed savings" : "બચતની ખાતરી",
-    "Daily offers" : "દરરોજ ઓફર"
+  
+  "faq": {
+    "heading": "વારંવાર પૂછાતા પ્રશ્નો",
+    "list": [
+      {
+        "question": "શું એગ્રીભારતમાં તમામ પ્રોડક્ટ ઓરિજિનલ મળે છે?",
+        "answer": "હા, અમે ૧૦૦% ઓરિજિનલ અને બ્રાન્ડેડ કૃષિ પ્રોડક્ટ જ વેચીએ છીએ."
+      },
+      {
+        "question": "શું ખરીદી પર બિલ આપવામાં આવે છે?",
+        "answer": "હા, દરેક ખરીદી સાથે સંપૂર્ણ GST બિલ આપવામાં આવે છે."
+      },
+      {
+        "question": "શું હું ઓર્ડર ઘરે મળ્યા પછી ચૂકવણી કરી શકું?",
+        "answer": "હાં, અમે સુરક્ષિત ઓનલાઈન પેમેન્ટ અને કેશ ઓન ડિલિવરી (COD) બંને વિકલ્પો આપીએ છીએ."
+      },
+      {
+        "question": "શું હું કૃષિ વિષે નિષ્ણાંત સલાહ લઈ શકું?",
+        "answer": "હાં, અમારા કૃષિ નિષ્ણાંતો તમારી જરૂરિયાતોને અનુરૂપ તરત માર્ગદર્શન આપે છે."
+      },
+      {
+        "question": "જો મને ખોટું ઉત્પાદન કે નુકસાનીવાળો સામાન મળે તો શું કરું?",
+        "answer": "તમારે અમારા કૃષિ નિષ્ણાંત હેલ્પલાઇન પર કોલ કરીને ફરિયાદ નોંધાવવી. અમે ઝડપથી ઉકેલ આપશું."
+      },
+      {
+        "question": "તમારો હેલ્પલાઇન નંબર શું છે?",
+        "answer": "તમે અમારો સંપર્ક આ નંબર પર કરી શકો છો: 9100029429 / 9100029329"
+      }
+    ]
+  },
+
+  "Need Help": "મદદની જરૂર છે",
+  "View All": "બધા જુઓ",
+
+  "Terms & condition": "નિયમો અને શરતો",
+  "Privacy policy": "ગોપનીયતા નીતિ",
+  "Returns & Refunds": "વળતર અને રિફંડ",
+  "All Rights Reserved": "સર્વાધિકાર સુરક્ષિત",
+  "Office Address": "ઓફિસ સરનામું",
+  "Quick Links": "ઝડપી લિંક્સ",
+  "legal policies" : "કાનૂની નીતિઓ",
+  "Phone": "ફોન",
+  "Email": "ઈમેલ",
+
+  "Product Details": "ઉત્પાદન વિગતો",
+  "Relevant Category Products": "સંબંધિત શ્રેણી ઉત્પાદનો",
+  "welcome": "સ્વાગત છે",
+  "description": "વર્ણન",
+
+  "English": "અંગ્રેજી",
+  "Gujarati": "ગુજરાતી",
+
+  "Free delivery": "મફત વિતરણ",
+  "100% secure payment": "૧૦૦% સુરક્ષિત ચુકવણી",
+  "Quality guarantee": "ગુણવત્તા ગેરંટી",
+  "Guaranteed savings": "બચતની ખાતરી",
+  "Daily offers": "દરરોજ ઓફર"
 }

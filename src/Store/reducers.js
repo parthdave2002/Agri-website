@@ -16,6 +16,7 @@ const rootReducer = combineReducers({
     Banner,
     Crop,
     Coupon,
+    Lead
 });
 
 export default rootReducer;

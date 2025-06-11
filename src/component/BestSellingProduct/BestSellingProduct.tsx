@@ -1,6 +1,6 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
-import { FaChevronLeft, FaChevronRight, FaHeart } from 'react-icons/fa';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { useTranslation } from "react-i18next";
 import { FaCartShopping } from 'react-icons/fa6';
 import { useNavigate } from 'react-router-dom';
@@ -57,8 +57,12 @@ const BestSellingProductSection: React.FC = () => {
       navigate(data)
     }
 
+  const DetailspageCall = (id: string | number) => {
+    navigate(`/product-detail/${id}`)
+  }
+
   return (
-    <section className="py-10 overflow-hidden">
+    <section className="py-10  overflow-hidden">
       <div className="max-w-1600 mx-auto px-4">
         <div className=" md:flex justify-between items-center mb-6">
           <h2 className="text-2xl font-heading md:text-3xl font-semibold">{t("Best selling products")}</h2>
@@ -73,6 +77,7 @@ const BestSellingProductSection: React.FC = () => {
 
         <Swiper
           modules={[Navigation]}
+          className='z-5'
           navigation={{
             nextEl: '.products-carousel-next',
             prevEl: '.products-carousel-prev',
@@ -87,12 +92,12 @@ const BestSellingProductSection: React.FC = () => {
         >
           {products.map((product) => (
             <SwiperSlide key={product.id}>
-              <div className="relative p-4 bg-white border border-[#FBFBFB] shadow-[0px_5px_22px_rgba(0,0,0,0.04)] rounded-2xl mb-7 hover:shadow-[0px_21px_44px_rgba(0,0,0,0.08)] transition-shadow duration-300">
+              <div className="relative z-5 p-4 bg-white border border-[#FBFBFB] shadow-[0px_5px_22px_rgba(0,0,0,0.04)] rounded-2xl mb-7 hover:shadow-[0px_21px_44px_rgba(0,0,0,0.08)] transition-shadow duration-300">
                 {/* <button className="absolute top-5 right-5 w-[40px] h-[40px] rounded-full flex items-center justify-center bg-white border border-[#d8d8d8] hover:bg-green-600 hover:text-white transition-all duration-300"> <FaHeart />  </button> */}
                 <div className="absolute top-5 left-5 w-[50px] h-[30px] rounded-md flex items-center justify-center bg-green-500 border border-[#d8d8d8] hover:bg-green-600 text-white transition-all duration-300"> <span className="badge bg-success position-absolute m-3">-15%</span>  </div>
 
-                <figure className="bg-[#F9F9F9] rounded-[12px] text-center mb-4"> <img src={product.image} alt="Product" className="mx-auto max-h-[210px] h-auto" />  </figure>
-                <h3 className="block w-full font-heading font-semibold text-[18px] leading-[25px] capitalize text-[#333333] mb-1"> {product.title} </h3>
+                <figure className="bg-[#F9F9F9] rounded-[12px] text-center mb-4"> <LazyLoadImage effect="blur" src={product.image} alt="Product" className="mx-auto max-h-[210px] h-auto" />  </figure>
+                <h3 className="block w-full font-heading font-semibold text-[18px] leading-[25px] capitalize text-[#333333] mb-1 cursor-pointer" onClick={() => DetailspageCall(product?.id)}> {product.title} </h3>
 
                 <div className="flex justify-between items-center text-sm mb-1">
                   <span className="font-normal text-[13px] leading-[18px] tracking-[0.02em] uppercase text-[#9D9D9D]">{product.quantity} </span>

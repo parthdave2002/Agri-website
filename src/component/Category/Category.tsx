@@ -1,13 +1,14 @@
 import React from 'react';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { useTranslation } from "react-i18next";
 
 const categoryData = [
-  { img: 'images/category/img-2.webp', title: 'Fruits & Veges' },
-  { img: 'images/category/img-2.webp', title: 'Fruits & Veges' },
-  { img: 'images/category/img-2.webp', title: 'Fruits & Veges' },
-  { img: 'images/category/img-2.webp', title: 'Fruits & Veges' },
-  { img: 'images/category/img-2.webp', title: 'Fruits & Veges' },
-  { img: 'images/category/img-2.webp', title: 'Fruits & Veges' }
+  { img: 'images/category/animal-husbandry.webp', title: 'Animal Husbandry' },
+  { img: 'images/category/fertilizer.webp', title: 'Fertilizer' },
+  { img: 'images/category/plant-nutrition.webp', title: 'Plant Nutrition' },
+  { img: 'images/category/plant-protection.webp', title: 'Plant Protection' },
+  { img: 'images/category/seed.webp', title: 'Seeds' },
+  { img: 'images/category/hardware.webp', title: 'Hardware' }
 ];
 
 const CategoryCarouselSection: React.FC = () => {
@@ -32,7 +33,7 @@ const CategoryCarouselSection: React.FC = () => {
         <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-6 max-w-1600">
           {categoryData.map((item, idx) => (
             <div key={idx} className="flex flex-col items-center text-center group ">
-              <div className="bg-gray-100 flex items-center justify-center group-hover:shadow-md transition rounded-full p-1"><img src={item.img} alt={item.title} className=" object-contain rounded-full border-2 border-green-600" />  </div>
+              <div className="bg-gray-100 flex items-center justify-center group-hover:shadow-md transition rounded-full p-1"><LazyLoadImage effect="blur" src={item.img} alt={item.title} className=" object-contain rounded-full border-2 border-green-600" />  </div>
               <div className='mt-2 text-md md:text-[1rem] font-heading font-semibold   text-gray-800'> {item.title} </div>
             </div>
           ))}

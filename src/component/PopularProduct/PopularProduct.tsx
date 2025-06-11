@@ -3,15 +3,8 @@ import { Navigation, Autoplay } from 'swiper/modules';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { FaCartShopping } from 'react-icons/fa6';
-
-interface Product {
-  id: number;
-  image: string[];
-  title: string;
-  quantity: string;
-  rating: number;
-  price: string;
-}
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import { Product } from '../../types/types';
 
 const products: Product[] = [
   {
@@ -88,6 +81,10 @@ const PopularProductSection: React.FC = () => {
   const RedirectCall = (data: string) => {
     navigate(data)
   }
+
+  const DetailspageCall = (id: string | number) => {
+    navigate(`/product-detail/${id}`)
+  }
   return (
     <section className="py-10 overflow-hidden">
       <div className="max-w-1600 mx-auto px-4">
@@ -105,12 +102,12 @@ const PopularProductSection: React.FC = () => {
                 <Swiper modules={[Navigation, Autoplay]} spaceBetween={16} slidesPerView={1} loop={true} autoplay={{ delay: 3000, disableOnInteraction: false, }} >
                   {product.image.map((img, index) => (
                     <SwiperSlide key={index}>
-                      <img src={img} alt={`Product image ${index + 1}`} className="mx-auto max-h-[210px] h-auto object-contain" />
+                      <LazyLoadImage effect="blur" src={img} alt={`Product image ${index + 1}`} className="mx-auto max-h-[210px] h-auto object-contain" />
                     </SwiperSlide>
                   ))}
                 </Swiper>
               </figure>
-              <h3 className="block w-full font-heading font-semibold text-[18px] leading-[25px] capitalize text-[#333333] mb-1"> {product.title} </h3>
+              <h3 className="block w-full font-heading font-semibold text-[18px] leading-[25px] capitalize text-[#333333] mb-1 cursor-pointer" onClick={() => DetailspageCall(product?.id)}> {product.title} </h3>
 
               <div className="flex justify-between items-center text-sm mb-1">
                 <span className="font-normal text-[13px] leading-[18px] tracking-[0.02em] uppercase text-[#9D9D9D]">{product.quantity} </span>
@@ -133,7 +130,6 @@ const PopularProductSection: React.FC = () => {
             </div>
           ))}
         </div>
-        
       </div>
     </section>
   );

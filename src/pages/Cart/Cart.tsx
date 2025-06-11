@@ -2,6 +2,7 @@ import { useState } from "react";
 import { FaMinus, FaPlus, FaShoppingCart } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
 import { MdDelete } from "react-icons/md";
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 interface CartProps{
     cartOpen : boolean;
@@ -68,7 +69,7 @@ const CartSection: React.FC  <CartProps>= ( { cartOpen, onClose, OrderPlaced } )
   
   return (
     <>
-      <div className={`fixed top-0 right-0 z-50 h-full w-80  md:w-[25rem] bg-white shadow-lg transition-transform duration-300 ${  cartOpen ? "translate-x-0" : "translate-x-full" }`} aria-labelledby="My Cart"  role="dialog" >
+      <div className={`fixed top-0 right-0 z-[9999] h-full w-80  md:w-[25rem] bg-white shadow-lg transition-transform duration-300 ${  cartOpen ? "translate-x-0" : "translate-x-full" }`} aria-labelledby="My Cart"  role="dialog" >
         <div className="flex justify-between px-4 py-3 ">
           <div></div>
           <h4 className=" items-center  text-[2rem] font-semibold font-heading">  <span className="text-green-600 self-center flex gap-x-3"> Cart <FaShoppingCart className="self-center"  /></span> </h4>
@@ -81,7 +82,7 @@ const CartSection: React.FC  <CartProps>= ( { cartOpen, onClose, OrderPlaced } )
                   return(
                     <div className="flex items-center justify-between border-b py-3">
                   <div className="flex items-center space-x-4">
-                    <div className="w-16 h-16 bg-green-400 flex items-center justify-center rounded-full"> <img src={item?.image} alt={item?.title} className="w-16 h-16 object-contain" /> </div>
+                    <div className="w-16 h-16 bg-green-400 flex items-center justify-center rounded-full"> <LazyLoadImage effect="blur" src={item?.image} alt={item?.title} className="w-16 h-16 object-contain" /> </div>
                   </div>
 
                     <div className="text-left md:max-w-[13rem] md:w-[13rem]  w-[10rem] md:max-w-[10rem]">
