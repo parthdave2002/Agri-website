@@ -3,12 +3,12 @@ import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { useTranslation } from "react-i18next";
 
 const categoryData = [
-  { img: 'images/category/animal-husbandry.webp', title: 'Animal Husbandry' },
-  { img: 'images/category/fertilizer.webp', title: 'Fertilizer' },
-  { img: 'images/category/plant-nutrition.webp', title: 'Plant Nutrition' },
   { img: 'images/category/plant-protection.webp', title: 'Plant Protection' },
+  { img: 'images/category/plant-nutrition.webp', title: 'Plant Nutrition' },
+  { img: 'images/category/fertilizer.webp', title: 'Fertilizer' },
   { img: 'images/category/seed.webp', title: 'Seeds' },
-  { img: 'images/category/hardware.webp', title: 'Hardware' }
+  { img: 'images/category/hardware.webp', title: 'Hardware' },
+  { img: 'images/category/animal-husbandry.webp', title: 'Animal Husbandry' },
 ];
 
 const CategoryCarouselSection: React.FC = () => {

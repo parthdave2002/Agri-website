@@ -76,170 +76,6 @@ const ProductSection = () => {
       setTotalListData(TotalProductData ? TotalProductData : 0);
       setCurrentPageNo(CurrentPage ? CurrentPage : 1);
     }, [Productlist,  ProductlistSize, TotalProductData, CurrentPage]);
-    
-
-  // const products: Product[] = [
-  //   {
-  //     id: 1,
-  //     image: ['/images/thumb-tomatoes.png', '/images/thumb-tomatoketchup.png', '/images/thumb-bananas.png'],
-  //     title: 'Sunstar Fresh Melon Juice',
-  //     quantity: '1 Unit',
-  //     rating: 4.5,
-  //     price: '$18.00',
-  //   },
-  //   {
-  //     id: 2,
-  //     image: ['/images/thumb-tomatoketchup.png', '/images/thumb-tomatoes.png', '/images/thumb-bananas.png'],
-  //     title: 'Sunstar Fresh Melon Juice',
-  //     quantity: '1 Unit',
-  //     rating: 4.5,
-  //     price: '$18.00',
-  //   },
-  //   {
-  //     id: 3,
-  //     image: ['/images/thumb-bananas.png', '/images/thumb-tomatoketchup.png', '/images/thumb-tomatoes.png'],
-  //     title: 'Sunstar Fresh Melon Juice',
-  //     quantity: '1 Unit',
-  //     rating: 4.5,
-  //     price: '$18.00',
-  //   },
-  //   {
-  //     id: 4,
-  //     image: ['/images/thumb-tomatoketchup.png', '/images/thumb-tomatoes.png', '/images/thumb-bananas.png'],
-  //     title: 'Sunstar Fresh Melon Juice',
-  //     quantity: '1 Unit',
-  //     rating: 4.5,
-  //     price: '$18.00',
-  //   },
-  //   {
-  //     id: 5,
-  //     image: ['/images/thumb-bananas.png'],
-  //     title: 'Sunstar Fresh Melon Juice',
-  //     quantity: '1 Unit',
-  //     rating: 4.5,
-  //     price: '$18.00',
-  //   },
-  //   {
-  //     id: 6,
-  //     image: ['/images/thumb-tomatoketchup.png', '/images/thumb-tomatoketchup.png'],
-  //     title: 'Sunstar Fresh Melon Juice',
-  //     quantity: '1 Unit',
-  //     rating: 4.5,
-  //     price: '$18.00',
-  //   },
-  //   {
-  //     id: 7,
-  //     image: ['/images/thumb-bananas.png'],
-  //     title: 'Sunstar Fresh Melon Juice',
-  //     quantity: '1 Unit',
-  //     rating: 4.5,
-  //     price: '$18.00',
-  //   },
-  //   {
-  //     id: 8,
-  //     image: ['/images/thumb-bananas.png', '/images/thumb-tomatoketchup.png', '/images/thumb-tomatoes.png'],
-  //     title: 'Sunstar Fresh Melon Juice',
-  //     quantity: '1 Unit',
-  //     rating: 4.5,
-  //     price: '$18.00',
-  //   },
-  //   {
-  //     id:9,
-  //     image: ['/images/thumb-bananas.png', '/images/thumb-tomatoketchup.png', '/images/thumb-tomatoes.png'],
-  //     title: 'Sunstar Fresh Melon Juice',
-  //     quantity: '1 Unit',
-  //     rating: 4.5,
-  //     price: '$18.00',
-  //   },
-  //   {
-  //     id:10,
-  //     image: ['/images/thumb-bananas.png', '/images/thumb-tomatoketchup.png', '/images/thumb-tomatoes.png'],
-  //     title: 'Sunstar Fresh Melon Juice',
-  //     quantity: '1 Unit',
-  //     rating: 4.5,
-  //     price: '$18.00',
-  //   },
-  //   {
-  //     id:11,
-  //     image: ['/images/thumb-bananas.png', '/images/thumb-tomatoketchup.png', '/images/thumb-tomatoes.png'],
-  //     title: 'Sunstar Fresh Melon Juice',
-  //     quantity: '1 Unit',
-  //     rating: 4.5,
-  //     price: '$18.00',
-  //   },
-  //   {
-  //     id: 12,
-  //     image: ['/images/thumb-bananas.png', '/images/thumb-tomatoketchup.png', '/images/thumb-tomatoes.png'],
-  //     title: 'Sunstar Fresh Melon Juice',
-  //     quantity: '1 Unit',
-  //     rating: 4.5,
-  //     price: '$18.00',
-  //   },
-  //   {
-  //     id: 13,
-  //     image: ['/images/thumb-bananas.png', '/images/thumb-tomatoketchup.png', '/images/thumb-tomatoes.png'],
-  //     title: 'Sunstar Fresh Melon Juice',
-  //     quantity: '1 Unit',
-  //     rating: 4.5,
-  //     price: '$18.00',
-  //   },
-  //   {
-  //     id: 14,
-  //     image: ['/images/thumb-bananas.png', '/images/thumb-tomatoketchup.png', '/images/thumb-tomatoes.png'],
-  //     title: 'Sunstar Fresh Melon Juice',
-  //     quantity: '1 Unit',
-  //     rating: 4.5,
-  //     price: '$18.00',
-  //   },
-  //   {
-  //     id:15,
-  //     image: ['/images/thumb-bananas.png', '/images/thumb-tomatoketchup.png', '/images/thumb-tomatoes.png'],
-  //     title: 'Sunstar Fresh Melon Juice',
-  //     quantity: '1 Unit',
-  //     rating: 4.5,
-  //     price: '$18.00',
-  //   },
-  //   {
-  //     id: 16,
-  //     image: ['/images/thumb-bananas.png', '/images/thumb-tomatoketchup.png', '/images/thumb-tomatoes.png'],
-  //     title: 'Sunstar Fresh Melon Juice',
-  //     quantity: '1 Unit',
-  //     rating: 4.5,
-  //     price: '$18.00',
-  //   },
-  //   {
-  //     id:17,
-  //     image: ['/images/thumb-bananas.png', '/images/thumb-tomatoketchup.png', '/images/thumb-tomatoes.png'],
-  //     title: 'Sunstar Fresh Melon Juice',
-  //     quantity: '1 Unit',
-  //     rating: 4.5,
-  //     price: '$18.00',
-  //   },
-  //   {
-  //     id:18,
-  //     image: ['/images/thumb-bananas.png', '/images/thumb-tomatoketchup.png', '/images/thumb-tomatoes.png'],
-  //     title: 'Sunstar Fresh Melon Juice',
-  //     quantity: '1 Unit',
-  //     rating: 4.5,
-  //     price: '$18.00',
-  //   },
-  //   {
-  //     id:19,
-  //     image: ['/images/thumb-bananas.png', '/images/thumb-tomatoketchup.png', '/images/thumb-tomatoes.png'],
-  //     title: 'Sunstar Fresh Melon Juice',
-  //     quantity: '1 Unit',
-  //     rating: 4.5,
-  //     price: '$18.00',
-  //   },
-  //   {
-  //     id: 20,
-  //     image: ['/images/thumb-bananas.png', '/images/thumb-tomatoketchup.png', '/images/thumb-tomatoes.png'],
-  //     title: 'Sunstar Fresh Melon Juice',
-  //     quantity: '1 Unit',
-  //     rating: 4.5,
-  //     price: '$18.00',
-  //   }
-  // ];
 
   // ------------ Add to cart start ----------
     const AddCall = (data:Product) =>{
@@ -265,8 +101,6 @@ const ProductSection = () => {
       window.addEventListener("scroll", handleScroll);
       return () => window.removeEventListener("scroll", handleScroll);
     }, [hasMore]);
-
-    console.log("${IMG_URL}/public/product/${img}", IMG_URL);
     
   // ------------ Scroll to load more end ----------
   return (
@@ -278,14 +112,14 @@ const ProductSection = () => {
               <Swiper modules={[Navigation, Autoplay]} spaceBetween={16} slidesPerView={1} loop={true} autoplay={{ delay: 3000, disableOnInteraction: false, }} >
                 {product?.product_pics.map((img, index) => (
                   <SwiperSlide key={index}>
-                    <LazyLoadImage effect="blur"  src= {  `${IMG_URL}/public/product/${img}`}  alt={`Product image ${index + 1}`} className="mx-auto max-h-[210px] h-auto object-contain" />
+                    <LazyLoadImage effect="blur"  src= {  `${IMG_URL}/public/product/${img}`}  alt={`Product image ${index + 1}`} className="mx-auto max-h-[210px] w-[12rem] h-[12rem] object-contain" />
                   </SwiperSlide>
                 ))}
               </Swiper>
             </figure>
 
             <div className="flex justify-between items-center text-sm ">
-              <h3 className="block w-full font-heading font-semibold text-[18px] leading-[25px] capitalize text-[#333333] mb-1 cursor-pointer" onClick={() => DetailspageCall(product?.id)}> {product?.name?.englishname} </h3>
+              <h3 className="block w-full font-heading font-semibold text-[18px] leading-[25px] capitalize text-[#333333] mb-1 cursor-pointer truncate max-w-[11rem]" onClick={() => DetailspageCall(product?.id)}> {product?.name?.englishname} </h3>
               <span className="font-normal font-heading text-[1.2rem] leading-[18px]  uppercase flex gap-x-1">
                 <div> {product?.packaging}  </div>
                 <div> {product?.packagingtype?.type_eng}  </div>

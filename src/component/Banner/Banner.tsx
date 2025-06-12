@@ -2,32 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Scrollbar, A11y, Autoplay   } from 'swiper/modules';
 import { useDispatch, useSelector } from 'react-redux';
-import { toast } from 'react-toastify';
-import {getBannerlist} from "../../Store/actions"
+import {getBannerlist} from "../../Store/actions";
+const IMG_URL = import.meta.env["VITE_API_URL"];
 
-const bannerSlides = [
-  {
-    category: '100% natural',
-    title: 'Fresh Smoothie & Summer Juice',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Dignissim massa diam elementum.',
-    button: 'Shop Now',
-    img: 'images/banner/Banner.jpeg',
-  },
-  {
-    category: '100% natural',
-    title: 'Fresh Smoothie & Summer Juice',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Dignissim massa diam elementum.',
-    button: 'Shop Collection',
-    img: 'images/banner/Banner.jpeg',
-  },
-  {
-    category: '100% natural',
-    title: 'Heinz Tomato Ketchup',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Dignissim massa diam elementum.',
-    button: 'Shop Collection',
-    img: 'images/banner/Banner.jpeg',
-  },
-];
 
 const BannerSection: React.FC = () => {
 
@@ -64,7 +41,7 @@ const BannerSection: React.FC = () => {
                             <img src={item.img} alt="Smoothie Bottle" className="h-[30rem] object-contain" />
                         </div>
                     </div> */}
-                       <img src={item?.banner_pic} key={i} alt={item?.banner_pic} className="h-[30rem] object-contain" />
+                       <img src={  `${IMG_URL}/public/banner/${item?.banner_pic}`}  key={i} alt={item?.banner_pic} className="h-[30rem] object-contain" />
                 </SwiperSlide>
             ))}
           </Swiper>
