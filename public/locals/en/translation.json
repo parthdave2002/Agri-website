@@ -47,6 +47,72 @@
     ]
   },
 
+  "testimonial1": {
+    "name": "Dhirubhai Solanki",
+    "message": "I used AgriBharat’s seeds this season, and the results are amazing! The plants are healthy, the growth is strong, and I’m expecting a great harvest. Very satisfied with the quality."
+  },
+  "testimonial2": {
+    "name": "Hasmukhbhai Chudasama",
+    "message": "I bought sesame seeds from AgriBharat, and I’m very happy with the results. The germination was excellent, and the crop is growing really well. I will definitely recommend it to other farmers."
+  },
+  "testimonial3": {
+    "name": "Ashvinbhai Vanja",
+    "message": "I ordered seeds and a tarpaulin sheet from AgriBharat. Everything was delivered on time and in perfect condition. I’m very satisfied with the quality. AgriBharat is truly supporting farmers like me."
+  },
+  "testimonial4": {
+    "name": "Arajanbhai Vala",
+    "message": "The battery sprayer I bought from Agri Bharat is working great in my fields. It has made pesticide application so much easier. Their service is also very helpful and quick."
+  },
+    "testimonial5": {
+    "name": "Chandrsinh Gohil",
+    "message": "I bought seeds from Agri Bharat. The packing, delivery, and seed quality are all top-class. Will definitely order again. Thanks to Agri Bharat for supporting farmers."
+  },
+    "testimonial6": {
+    "name": "Nareshbhai Goswami",
+    "message": "I ordered a battery sprayer from Agri Bharat. It was delivered quickly and works perfectly. Very useful for spraying across my farm with less effort. Thank you, Agri Bharat!."
+  },
+
+  "category": {
+    "plant_protection": "Plant Protection",
+    "plant_nutrition": "Plant Nutrition",
+    "fertilizer": "Fertilizer",
+    "seed": "Seeds",
+    "hardware": "Hardware",
+    "animal_husbandry": "Animal Husbandry"
+  },
+
+  "discount": {
+    "brands": "Brands",
+    "happy_farmers": "Happy Farmers",
+    "products": "Products",
+    "pincodes_delivery": "Pincodes Delivery"
+  },
+
+  "popularSearch": {
+    "farm_gold_humic": "Farm gold humic",
+    "tata_bahaar": "Tata bahaar",
+    "farm_grow_plus": "Farm grow+",
+    "roket": "Roket",
+    "saaf": "Saaf",
+    "areva": "Areva",
+    "em1": "Em-1",
+    "tata_gateway": "Tata gateway",
+    "goldzyme_crop_plus": "Goldzyme crop+",
+    "tata_tafgor": "Tata tafgor",
+    "upl_ulala": "Upl ulala",
+    "tata_manik": "Tata manik",
+    "tata_solubor": "Tata solubor",
+    "fertis_90_sulphar_mills": "Fertis 90% Sulphar mills",
+    "lancer_gold": "Lancer gold",
+    "gelops_bg_cotton": "Gelops Bg cotton",
+    "spraywell_pump_12x12": "12x12 spraywell pump",
+    "tadpatri_18x24": "18x24 Tadpatri",
+    "osian_megha_torch": "Osian megha torch",
+    "amul_fighter_torch": "Amul fighter torch"
+  },
+
+  "First name" : "Name",
+  "Reason" : "Reason",
 
   "Need Help": "Need Help",
   "View All": "View All",
@@ -60,6 +126,8 @@
   "legal policies" :  "Legal policies",
   "Phone": "Phone",
   "Email": "Email",
+  "Message" : "Message",
+  "Submit" : "Submit",
 
   "Product Details": "Product Details",
   "Relevant Category Products": "Relevant Category Products",

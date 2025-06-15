@@ -23,7 +23,7 @@ const Header: React.FC= ( ) => {
 
     const labelMap: Record<string, string> = {
       en: "English",
-      gj: "Gujarati",
+      gj: "ગુજરાતી",
     };
 
     const [cartOpen , setCartOpen] = useState(false);
@@ -112,7 +112,7 @@ const Header: React.FC= ( ) => {
                       </DialogPanel>
                     </div>
                   </div>
-                </Dialog>
+              </Dialog>
         : null}
     </>
   );

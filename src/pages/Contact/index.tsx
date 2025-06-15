@@ -2,25 +2,25 @@ import React, { useEffect, useState } from 'react';
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { Form, Input, FormFeedback, Button } from "reactstrap";
-import { LazyLoadImage } from 'react-lazy-load-image-component';
-import { useDispatch } from 'react-redux';
-import { AddLeadlist } from '../../Store/Lead/action';
+import { useDispatch, useSelector } from 'react-redux';
+import { AddLeadlist, ResetLeadlist } from '../../Store/Lead/action';
+import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
+import ToastMessage from '../../component/ToastMessage';
 
 const ContactusSection = () => {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
+  
 
-  useEffect(() => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  }, [])
+  const [ messageData, setMessageData] = useState("")
+  const [ messageError, setMessageError] = useState(false)
 
   const [initialValues, setinitialValues] = useState({
-    first_name: "",
-    last_name: "",
+    name: "",
     email: "",
-    phone_number: ""
+    phone_number: "",
+    user_type: ""
   });
 
   const validation = useFormik({
@@ -28,79 +28,98 @@ const ContactusSection = () => {
     initialValues: initialValues,
     
     validationSchema: Yup.object({
-      first_name: Yup.string().required("Please enter first name"),
-      last_name: Yup.string().required("Please enter last name"),
-      email: Yup.string().required("Please enter email"),
+      name: Yup.string().required("Please enter your name"),
+      user_type: Yup.string().required("Please select reason "),
       phone_number: Yup.number().required("Please enter phone number").min(10, "Phone number must be minimum 10 digits"),
     }),
         
-    onSubmit: (values:any) => {
+    onSubmit: (values) => {
+      if(!messageData) return setMessageError(true)
 
       let requserdata = {
-        first_name: values?.first_name,
-        last_name: values?.last_name,
+        name: values?.name,
+        user_type: values?.user_type,
         email : values?.email,
-        phone_number: values?.phone_number,
-        type: "Contact us"
+        mobile_number: values?.phone_number,
+        comment : messageData,
+        type: "contactus"
       };
       dispatch(AddLeadlist(requserdata));
+      validation.resetForm();
+      setMessageError(false);
+      setMessageData("");
     },
     });
+
+  // ------------- Get data from redux code start ------------- 
+    const Adddetail :any = useSelector((state:any) => state.Lead.AddLeaddatalist); 
+    useEffect(() => { 
+      if (Adddetail ) { 
+        toast.success(Adddetail?.msg);
+        // dispatch(ResetLeadlist())
+      }
+    }, [Adddetail]); 
+  // ------------- Get data from redux code end -------------
 
   return (
     <div>
       <div className="min-h-screen md:flex ">
         <div className="w-full md:w-1/2  text-white p-10 flex flex-col justify-between">
-          <LazyLoadImage effect="blur" src="/images/contact-2.jpg" className="transform scale-x-[-1]" />
+          <img src="/images/contact-2.jpg" className="transform scale-x-[-1]" />
         </div>
 
         <div className="w-full md:w-1/2 bg-white p-10">
-          <h2 className="text-2xl font-semibold mb-8 font-heading">Contact us</h2>
+          <h2 className="text-2xl font-semibold mb-8 font-heading">{t("Contact Us")}</h2>
 
           <Form onSubmit={(e) => { e.preventDefault(); validation.handleSubmit(); return false; }} >
                         
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-3">
               <div className="flex-1">
-                <label className="text-md block mb-1 uppercase tracking-wide">First Name  <span className='text-red-500'>*</span></label>
+                <label className="text-md block mb-1 uppercase tracking-wide">{t("First name")}  <span className='text-red-500'>*</span></label>
                 <div className="mt-1">
                   <Input
-                    id="first_name"
-                    name="first_name"
+                    id="name"
+                    name="name"
                     className="w-full border-b border-green-600 focus:outline-none py-2"
-                    placeholder="Enter your first name"
+                    placeholder="Enter your name"
                     type="text"
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
-                    value={validation.values.first_name || ""}
-                    invalid={validation.touched.first_name && validation.errors.first_name ? true : false}
+                    value={validation.values.name || ""}
+                    invalid={validation.touched.name && validation.errors.name ? true : false}
                   />
-                  {validation.touched.first_name && validation.errors.first_name ? (<FormFeedback type="invalid" className="text-red-500 text-sm"> {validation.errors.first_name} </FormFeedback>) : null}
+                  {validation.touched.name && validation.errors.name  ? (<FormFeedback type="invalid" className="text-red-500 text-sm"> {validation.errors.name} </FormFeedback>) : null}
                 </div>
               </div>
 
               <div className="flex-1">
-                <label className="text-md block mb-1 uppercase tracking-wide">Last Name  <span className='text-red-500'>*</span></label>
+                <label className="text-md block mb-1 uppercase tracking-wide"> {t("Reason")} <span className='text-red-500'>*</span></label>
 
-                <div className="mt-1">
-                  <Input
-                    id="last_name"
-                    name="last_name"
-                    className="w-full border-b border-green-600 focus:outline-none py-2"
-                    placeholder="Enter your last name"
-                    type="text"
-                    onChange={validation.handleChange}
-                    onBlur={validation.handleBlur}
-                    value={validation.values.last_name || ""}
-                    invalid={validation.touched.last_name && validation.errors.last_name ? true : false}
-                  />
-                  {validation.touched.last_name && validation.errors.last_name ? (<FormFeedback type="invalid" className="text-red-500 text-sm"> {validation.errors.last_name}  </FormFeedback>) : null}
-                </div>
+             <div className="mt-4">
+                <select
+                  id="user_type"
+                  name="user_type"
+                  className="w-full border-b border-green-600 focus:outline-none py-1 bg-transparent"
+                  onChange={validation.handleChange}
+                  onBlur={validation.handleBlur}
+                  value={validation.values.user_type || ""}
+                >
+                  <option value="" disabled hidden>   Select reason   </option>
+                  <option value="farmer">Farmer</option>
+                  <option value="job_application">Job Application</option>
+                  <option value="dealer">Dealer</option>
+                </select>
+
+                {validation.touched.user_type && validation.errors.user_type && (
+                    <FormFeedback type="invalid" className="text-red-500 text-sm"> {validation.errors.user_type}   </FormFeedback>
+                  )}
+              </div>
               </div>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className=' mt-[2.5rem]'>
-                <label className="text-md block mb-1 uppercase tracking-wide">Email <span className='text-red-500'>*</span></label>
+                <label className="text-md block mb-1 uppercase tracking-wide">{t("Email")} </label>
                 <div className="mt-1">
                   <Input
                     id="email"
@@ -113,12 +132,11 @@ const ContactusSection = () => {
                     value={validation.values.email || ""}
                     invalid={validation.touched.email && validation.errors.email ? true : false}
                   />
-                  {validation.touched.email && validation.errors.email ? (<FormFeedback type="invalid" className="text-red-500 text-sm"> {validation.errors.email} </FormFeedback>) : null}
                 </div>
               </div>
 
               <div className=' mt-[2.5rem]' >
-                <label className="text-md block mb-1 uppercase tracking-wide"> Phone Number  <span className='text-red-500'>*</span></label>
+                <label className="text-md block mb-1 uppercase tracking-wide"> {t("Phone")}  <span className='text-red-500'>*</span></label>
 
                 <div className="mt-1">
                   <Input
@@ -138,14 +156,17 @@ const ContactusSection = () => {
             </div>
 
             <div className=' mt-[2.5rem]' >
-              <label className="text-md  block mb-1 uppercase tracking-wide">Message  <span className='text-red-500'>*</span> </label>
-              <textarea placeholder="Enter your message" className="w-full border-b border-green-600 focus:outline-none py-2" />
+              <label className="text-md  block mb-1 uppercase tracking-wide">{t("Message")}  <span className='text-red-500'>*</span> </label>
+              <textarea placeholder="Enter your message" className="w-full border-b border-green-600 focus:outline-none py-2" value={messageData} onChange={(e:any) => setMessageData(e.target.value)} />
+              {messageError ?  <FormFeedback type="invalid" className="text-red-500 text-sm"> Please Enter message  </FormFeedback>  : null }
             </div>
 
-            <button type="submit" className=" text-sm font-medium text-black  border border-green-500 px-8 py-2 flex justify-center hover:bg-green-600 hover:text-white inline-flex items-center md:mt-[4rem]"> Submit <span className="ml-2">→</span>   </button>
+            <button type="submit" className=" text-sm font-medium text-black  border border-green-500 px-8 py-2 flex justify-center hover:bg-green-600 hover:text-white inline-flex items-center md:mt-[4rem]"> {t("Submit")} <span className="ml-2">→</span>   </button>
           </Form>
         </div>
       </div>
+
+         <ToastMessage />
     </div>
   )
 }

@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { useTranslation } from "react-i18next";
 import Marquee from "react-fast-marquee";
 
-const brandData = [
+
+
+const BrandCarouselSection: React.FC = () => {
+
+  const brandData = useMemo(() => [
   { img: 'images/company/adamaLogo.webp', subtitle: 'Adama'},
   { img: 'images/company/ajeetLogo.webp', subtitle: 'Ajeet'},
   { img: 'images/company/akariLogo.webp', subtitle: 'Akari'},
@@ -46,9 +50,7 @@ const brandData = [
   { img: 'images/company/terrapretaLogo.webp', subtitle: 'Terrapreta'},
   { img: 'images/company/uplLogo.webp', subtitle: 'UPL'},
   { img: 'images/company/yaraLogo.webp', subtitle: 'Yara'}
-];
-
-const BrandCarouselSection: React.FC = () => {
+], []);
   
   const repeatedData = [...brandData, ...brandData];
   const { t } = useTranslation();

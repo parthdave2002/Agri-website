@@ -15,8 +15,6 @@ const BannerSection: React.FC = () => {
   // ------------- Get data from redux code start ------------- 
   const bannerdetail :any = useSelector((state:any) => state.Banner.Bannerlist); 
   useEffect(() => { 
-    console.log("bannerdetail",bannerdetail);
-    
     if (bannerdetail) { 
       setbannerSlides(bannerdetail); 
     }

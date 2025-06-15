@@ -62,3 +62,13 @@ export interface Product {
   rating: number;
   price: string;
 }
+
+export interface CartItemProps {
+  image: string;
+  title: string;
+  price: number;
+  quantity: number;
+  // onDelete: () => void;
+  // onIncrement: () => void;
+  // onDecrement: () => void;
+}

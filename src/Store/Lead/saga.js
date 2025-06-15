@@ -11,14 +11,9 @@ import {
   ResetLeadlist,
   ResetLeadlistSuccess,
 } from "./action";
-import {
-  GET_LEAD_LIST,
-  ADD_LEAD_LIST,
-  MARK_AS_READ_LEAD_LIST,
-  DELETE_LEAD_LIST,
-  RESET_LEAD_LIST
-} from "./actionType";
+import { GET_LEAD_LIST, ADD_LEAD_LIST, MARK_AS_READ_LEAD_LIST,  DELETE_LEAD_LIST, RESET_LEAD_LIST} from "./actionType";
 import { LeadlistApi, AddLeadlistApi,MarkAsReadLeadlistApi,  DelLeadlistApi } from "../../helper/Demo_helper";
+import { toast } from "react-toastify";
 
 function* ongetLeadlist({ payload: requstuser }) {
   try {
@@ -34,6 +29,7 @@ function* onAddLeadlist({ payload: requstuser }) {
     const response = yield call(AddLeadlistApi, requstuser);
     yield put(AddLeadlistSuccess(ADD_LEAD_LIST, response));
   } catch (error) {
+    toast.error(error)
     yield put(AddLeadlistFail(error));
   }
 }

@@ -6,6 +6,9 @@ import * as Yup from "yup";
 import { useDispatch } from 'react-redux';
 import { useFormik } from 'formik';
 import { AddLeadlist } from '../../Store/Lead/action';
+import { useTranslation } from 'react-i18next';
+import { toast } from 'react-toastify';
+import ToastMessage from '../ToastMessage';
 
 interface HelpModalProps{
  isOpenDelteModel : boolean;
@@ -14,7 +17,10 @@ interface HelpModalProps{
 
 const HelpModal: FC<HelpModalProps>= ({isOpenDelteModel, setisOpenDelteModel}) => {
     const dispatch = useDispatch()
+    const { t } = useTranslation();
 
+      const [ messageData, setMessageData] = useState("")
+      const [ messageError, setMessageError] = useState(false)
 
     const [initialValues, setinitialValues] = useState({
       name: "",
@@ -31,15 +37,21 @@ const HelpModal: FC<HelpModalProps>= ({isOpenDelteModel, setisOpenDelteModel}) =
         phone_number: Yup.number().required("Please enter phone number").min(10, "Phone number must be minimum 10 digits"),
       }),
           
-      onSubmit: (values:any) => {
-  
+      onSubmit: (values) => {
+       if(!messageData) return setMessageError(true)
+
         let requserdata = {
           name: values?.name,
           email : values?.email,
-          phone_number: values?.phone_number,
-          type: "Contact us"
+          mobile_number: values?.phone_number,
+          comment: messageData,
+          type: "help"
         };
         dispatch(AddLeadlist(requserdata));
+        validation.resetForm();
+        setMessageData("");
+        setMessageError(false);
+        setisOpenDelteModel(false)
       },
       });
 
@@ -63,7 +75,7 @@ const HelpModal: FC<HelpModalProps>= ({isOpenDelteModel, setisOpenDelteModel}) =
                                         <div className="w-full md:w-1/2 p-5">
                                           <Form onSubmit={(e) => { e.preventDefault(); validation.handleSubmit(); return false; }}  className="bg-white rounded-lg p-6 text-gray-900 ">
                                             <div className="mb-4">
-                                               <label className="text-md block mb-1 uppercase tracking-wide"> Name  <span className='text-red-500'>*</span></label>
+                                               <label className="text-md block uppercase tracking-wide"> {t("First name")}  <span className='text-red-500'>*</span></label>
                                                  <div className="mt-1">
                                                                 <Input
                                                                   id="name"
@@ -79,59 +91,40 @@ const HelpModal: FC<HelpModalProps>= ({isOpenDelteModel, setisOpenDelteModel}) =
                                                                 {validation.touched.name && validation.errors.name ? (<FormFeedback type="invalid" className="text-red-500 text-sm"> {validation.errors.name} </FormFeedback>) : null}
                                                   </div>
                                             </div>
-                                            {/* <div className="mb-4">
-                                              <label htmlFor="email" className="block mb-1 font-semibold"> Phone Number </label>
-                                              <input type="email" id="email" name="email" placeholder="abc@mail.com"  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-base"  />
-                                            </div> */}
-                                            <div className="mb-4">
-                                               <label className="text-md block mb-1 uppercase tracking-wide"> Name  <span className='text-red-500'>*</span></label>
-                                                 <div className="mt-1">
-                                                                <Input
-                                                                  id="name"
-                                                                  name="name"
-                                                                  className="w-full border-b border-green-600 focus:outline-none py-2"
-                                                                  placeholder="Enter your first name"
-                                                                  type="text"
-                                                                  onChange={validation.handleChange}
-                                                                  onBlur={validation.handleBlur}
-                                                                  value={validation.values.name || ""}
-                                                                  invalid={validation.touched.name && validation.errors.name ? true : false}
-                                                                />
-                                                                {validation.touched.name && validation.errors.name ? (<FormFeedback type="invalid" className="text-red-500 text-sm"> {validation.errors.name} </FormFeedback>) : null}
-                                                  </div>
-                                            </div>
+                                             <div className=' mt-[2.5rem]' >
+                                                          <label className="text-md block uppercase tracking-wide"> {t("Phone")}  <span className='text-red-500'>*</span></label>
+                                          
+                                                          <div className="mt-1">
+                                                            <Input
+                                                              id="phone_number"
+                                                              name="phone_number"
+                                                              className="w-full border-b border-green-600 focus:outline-none py-2"
+                                                              placeholder="Enter phone number"
+                                                              type="number"
+                                                              onChange={validation.handleChange}
+                                                              onBlur={validation.handleBlur}
+                                                              value={validation.values.phone_number || ""}
+                                                              invalid={validation.touched.phone_number && validation.errors.phone_number ? true : false}
+                                                            />
+                                                            {validation.touched.phone_number && validation.errors.phone_number ? (<FormFeedback type="invalid" className="text-red-500 text-sm"> {validation.errors.phone_number}  </FormFeedback>) : null}
+                                                          </div>
+                                                        </div>
 
-                                            <div className="mb-4">
-                                               <label className="text-md block mb-1 uppercase tracking-wide"> Name  <span className='text-red-500'>*</span></label>
-                                                 <div className="mt-1">
-                                                                <Input
-                                                                  id="name"
-                                                                  name="name"
-                                                                  className="w-full border-b border-green-600 focus:outline-none py-2"
-                                                                  placeholder="Enter your first name"
-                                                                  type="text"
-                                                                  onChange={validation.handleChange}
-                                                                  onBlur={validation.handleBlur}
-                                                                  value={validation.values.name || ""}
-                                                                  invalid={validation.touched.name && validation.errors.name ? true : false}
-                                                                />
-                                                                {validation.touched.name && validation.errors.name ? (<FormFeedback type="invalid" className="text-red-500 text-sm"> {validation.errors.name} </FormFeedback>) : null}
-                                                  </div>
-                                            </div>
+                                                    <div className=' my-[2.5rem]' >
+                                                          <label className="text-md  block uppercase tracking-wide">{t("Message")}  <span className='text-red-500'>*</span> </label>
+                                                          <textarea placeholder="Enter your message" className="w-full border-b border-green-600 focus:outline-none py-2"   onChange={(e:any) => setMessageData(e.target.value)}/>
+                                                          {messageError ?  <FormFeedback type="invalid" className="text-red-500 text-sm"> Please Enter message  </FormFeedback>  : null }
+                                                    </div>
                                             
-                                            <button    className="w-full bg-black text-white py-3 text-lg font-semibold rounded hover:bg-gray-800 transition">    Submit  </button>
+                                            <button className="w-full bg-black text-white py-3 text-lg font-semibold rounded hover:bg-gray-800 transition"> {t("Submit")}  </button>
                                           </Form>
                                         </div>
 
                                         <div className="w-full md:w-1/2 col-md-6 p-5">
-                                          <div className="mb-4">
-                                                <img src='/public/images/needhelp.jpg' />
-                                          </div>
+                                          <div className="mb-4"> <img src='/public/images/needhelp.jpg' /> </div>
                                         </div>
-
-                                        {/* Right Form */}
                                        
-                                      </div>
+                                     </div>
                               </div>
                             </div>
                           </div>
@@ -142,6 +135,7 @@ const HelpModal: FC<HelpModalProps>= ({isOpenDelteModel, setisOpenDelteModel}) =
               </div>
             </Dialog>
 
+          <ToastMessage />
     </div>
   )
 }

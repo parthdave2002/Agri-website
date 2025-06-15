@@ -12,9 +12,11 @@ import { FaWindowClose } from 'react-icons/fa';
 import { Product, ProductDetails } from '../../types/types';
 import { useTranslation } from 'react-i18next';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
+const IMG_URL = import.meta.env["VITE_API_URL"];
 
 const ProductDetailsSection = () => {
-  const  { t } = useTranslation();
+  const  { i18n ,t } = useTranslation();
+  const lang = i18n.language;
   const { id } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate()
@@ -33,11 +35,10 @@ const ProductDetailsSection = () => {
   },[id])
 
   //------------- Get data from redux code start -------------
-  const productdetail: any = useSelector((state: any) => state?.Product.Productlist);
+  const productdetail: any = useSelector((state: any) => state?.Product.singleProductlist);
 
   const[productsData, setproductsData] = useState<ProductDetails>()
   useEffect(() => {
-
     if (productdetail?.success === true) {
       setproductsData(productdetail?.data);
     }
@@ -122,63 +123,98 @@ const ProductDetailsSection = () => {
     <div>
       <div>
         <div className='flex justify-between px-4'>
-          <div className="text-[2rem] font-semibold text-gray-900 font-heading"> Product Details   </div>
+          <div className="text-[2rem] font-semibold text-gray-900 font-heading"> {t("Product Details")}   </div>
           <div className="text-[2rem] font-semibold text-gray-900 flex self-center cursor-pointer" onClick={() => CloseCall()} > <FaWindowClose /> </div>
         </div>
 
-        <div className='flex px-3 mt-[2rem]'>
+        <div className='flex flex-col md:flex-row px-3 mt-[2rem]'>
           <div className='flex-1'>
-            <div className="relative w-full">
-              <div className="relative h-56 overflow-hidden rounded-lg md:h-96">
-                {productsData?.product_pics && productsData?.product_pics.map((src: any, index: number) => (
-                  <figure className="bg-[#F9F9F9] rounded-[12px] text-center mb-4">
-                    <Swiper modules={[Navigation, Autoplay]} spaceBetween={16} slidesPerView={1} loop={true} autoplay={{ delay: 3000, disableOnInteraction: false, }} >
-                      {productsData.product_pics.map((img, index) => (
-                        <SwiperSlide key={index}>
-                          <LazyLoadImage effect="blur" src={img} alt={`Product image ${index + 1}`} className="mx-auto max-h-[210px] h-auto object-contain" />
-                        </SwiperSlide>
-                      ))}
-                    </Swiper>
-                  </figure>
-                ))}
-              </div>
-            </div>
+             {/* <figure className="bg-[#F9F9F9] rounded-[12px] text-center mb-4">
+                <Swiper modules={[Navigation, Autoplay]} spaceBetween={16} slidesPerView={1} loop={true} autoplay={{ delay: 3000, disableOnInteraction: false, }} >
+                 {productsData?.product_pics?.map((img, index) => {
+                    console.log("Image URL:", `${IMG_URL}/public/product/${img}`);
+                    return (
+                      <SwiperSlide key={index}>
+                        <LazyLoadImage
+                          effect="blur"
+                          src={`${IMG_URL}/public/product/${img}`}
+                          alt={`Product image ${index + 1}`}
+                          className="mx-auto max-h-[210px] h-auto object-contain"
+                        />
+                      </SwiperSlide>
+                    );
+                  })}
+                </Swiper>
+              </figure> */}
           </div>
 
+          {/* RIGHT - Details */}
           <div className='flex-1 px-[3rem]'>
+            <div className='text-gray-900 text-[1.5rem] font-bold'>  {lang === 'gj'  ? productsData?.name?.gujaratiname  : productsData?.name?.englishname} </div>
 
-            <div className='text-gray-900 text-[1.5rem] font-bold'> {productsData?.name?.englishname} ({productsData?.categories?.name_eng})</div>
-            <div className='text-gray-900 text-[1rem] mt-3'> {productsData?.tech_name?.english_tech_name} </div>
-            <div className='text-gray-900 text-[1rem] mt-3 flex gap-x-3'> <div className='w-[8rem]'>Packing </div> : {productsData?.packaging}  {productsData?.packagingtype?.type_eng}  </div>
-            <div className='text-gray-900 text-[1rem] mt-3 flex gap-x-3'> <div className='w-[8rem]'> Available Qty </div> : {productsData?.avl_qty} </div>
-            <div className='text-gray-900 text-[1rem] mt-3 flex gap-x-3'> <div className='w-[8rem]'>Company </div> : {productsData?.company?.name_eng} </div>
+            <div className='text-gray-900 text-[1rem] mt-3'>
+              {lang === 'gj' ? productsData?.tech_name?.gujarati_tech_name   : productsData?.tech_name?.english_tech_name}
+            </div>
 
-            <div className='text-gray-900 text-[1rem] mt-3 flex gap-x-3'> <div className='w-[8rem]'>Price (₹) </div> :  {productsData?.price}</div>
-            <div className='text-gray-900 text-[1rem] mt-3 flex gap-x-3'> <div className='w-[8rem]'>Discount </div> : {productsData?.discount}</div>
-            <div className='text-gray-900 text-[1rem] mt-3 flex gap-x-3'> <div className='w-[8rem]'>Batch No </div>  : {productsData?.batch_no.replace(/"/g, '')}</div>
-            <div className='text-gray-900 text-[1rem] mt-3 flex gap-x-3'> <div className='w-[8rem]'> HSN Code </div> : {productsData?.hsn_code.replace(/"/g, '')}</div>
-            <div className='text-gray-900 text-[1rem] mt-3 flex gap-x-3'> <div className='w-[8rem]'> SGST </div> : {productsData?.s_gst}</div>
-            <div className='text-gray-900 text-[1rem] mt-3 flex gap-x-3'> <div className='w-[8rem]'> CGST </div> : {productsData?.c_gst}</div>
+            <div className='text-gray-900 text-[1rem] mt-3 flex gap-x-3'>
+              <div className='w-[8rem] font-heading text-[1rem]'>Packing</div> :   {productsData?.packaging} {lang === 'gj' ? productsData?.packagingtype?.type_guj  : productsData?.packagingtype?.type_eng}
+            </div>
+
+            <div className='text-gray-900 text-[1rem] mt-3 flex gap-x-3'>
+              <div className='w-[8rem] font-heading text-[1rem]'>Available Qty</div> :  {productsData?.avl_qty}
+            </div>
+
+            <div className='text-gray-900 text-[1rem] mt-3 flex gap-x-3'>
+              <div className='w-[8rem] font-heading text-[1rem]'>Company</div> :  {lang === 'gj'   ? productsData?.company?.name_guj : productsData?.company?.name_eng}
+            </div>
+
+            <div className='text-gray-900 text-[1rem] mt-3 flex gap-x-3'>
+              <div className='w-[8rem] font-heading text-[1rem]'>Price (₹)</div> : {productsData?.price}
+            </div>
+
+            <div className='text-gray-900 text-[1rem] mt-3 flex gap-x-3'>
+              <div className='w-[8rem] font-heading text-[1rem]'>Discount</div> :  {productsData?.discount}
+            </div>
+
+            <div className='text-gray-900 text-[1rem] mt-3 flex gap-x-3'>
+              <div className='w-[8rem] font-heading text-[1rem]'>Batch No</div> :  {productsData?.batch_no}
+            </div>
+
+            <div className='text-gray-900 text-[1rem] mt-3 flex gap-x-3'>
+              <div className='w-[8rem] font-heading text-[1rem]'>HSN Code</div> :  {productsData?.hsn_code}
+            </div>
+
+            <div className='text-gray-900 text-[1rem] mt-3 flex gap-x-3'>
+              <div className='w-[8rem] font-heading text-[1rem]'>SGST</div> :  {productsData?.s_gst}
+            </div>
+
+            <div className='text-gray-900 text-[1rem] mt-3 flex gap-x-3'>
+              <div className='w-[8rem] font-heading text-[1rem]'>CGST</div> :   {productsData?.c_gst}
+            </div>
+
+            {/* Quantity + Add to Cart */}
             <div className="flex items-center gap-x-[4rem] mt-[2rem]">
               <div className="flex items-center border border-green-600 rounded-lg w-[100px] overflow-hidden">
-                <button className="w-[60px] h-[35px] text-center bg-gray-200 hover:bg-green-600 border-r border-green-600 text-[#222222]"  > − </button>
+                <button className="w-[60px] h-[35px] text-center bg-gray-200 hover:bg-green-600 border-r border-green-600 text-[#222222]">−</button>
                 <input id="quantity" type="text" defaultValue="1" className="w-[40px] text-center border-none m-0 p-0 focus:outline-none" />
-                <button className="w-[60px] h-[35px] text-center bg-gray-200 hover:bg-green-600 border-l border-green-600 text-[#222222]"> + </button>
+                <button className="w-[60px] h-[35px] text-center bg-gray-200 hover:bg-green-600 border-l border-green-600 text-[#222222]">+</button>
               </div>
 
-              <button className="text-gray-50 px-4 py-2 text-md flex items-center gap-1 rounded-full flex items-center justify-center bg-green-600 border border-[#d8d8d8] hover:bg-green-500 hover:text-white transition-all duration-300"> Add to Cart <FaCartShopping />  </button>
+              <button className="text-gray-50 px-4 py-2 text-md flex items-center gap-1 rounded-full bg-green-600 border border-[#d8d8d8] hover:bg-green-500 hover:text-white transition-all duration-300">
+                Add to Cart <FaCartShopping />
+              </button>
             </div>
           </div>
         </div>
 
         <div className="mt-12 px-3">
-          <h3 className="text-[1.5rem] font-semibold text-gray-700 mb-2 dark:text-gray-100">Description</h3>
+          <h3 className="text-[1.5rem] font-semibold text-gray-700 mb-2 ">Description</h3>
           {productsData?.description && productsData?.description.map((data: any, index: number) => (
             <div key={index} className="mb-4 p-4 rounded-lg shadow-sm">
 
               <div className="flex flex-col gap-2 ">
-                <div className="font-bold text-gray-600 dark:text-gray-100 text-[1.2rem] flex gap-x-3"> <IoArrowRedoSharp className='self-center' /> {data.englishHeader} </div>
-                <div className="font-medium text-gray-600 dark:text-gray-100  flex gap-x-3"> <div className='h-4 w-4 flex self-top pt-1'> <SiBattledotnet /> </div> <div className='text-[0.9rem]'> {data.englishValue} </div> </div>
+                <div className="font-bold text-gray-600 text-[1.2rem] flex gap-x-3"> <IoArrowRedoSharp className='self-center' />  {lang === 'gj' ? data?.gujaratiHeader : data?.englishHeader} </div>
+                <div className="font-medium text-gray-600  flex gap-x-3"> <div className='h-4 w-4 flex self-top pt-1'> <SiBattledotnet /> </div> <div className='text-[0.9rem]'>  {lang === 'gj' ? data?.gujaratiValue :  data.englishValue} </div> </div>
               </div>
             </div>
           ))}
@@ -219,7 +255,7 @@ const ProductDetailsSection = () => {
           ))} 
        </div> */}
 
-      <div>
+      <div className='my-[3rem]'>
 
         <div className="text-[2rem] font-semibold text-gray-900 font-heading"> {t("Relevant Category Products")}  </div>
 
