@@ -43,7 +43,7 @@ const Footer = () => {
             </ul>
           </div>
 
-                 <div>
+          <div>
               <h4 className="text-xl md:text-[1.2rem] text-center font-heading font-semibold font-semibold mb-5">{t("Office Address")}</h4>
               <div className="flex flex-col gap-6">
 
@@ -57,19 +57,18 @@ const Footer = () => {
                   </div>
                 </div>
 
- 
                 <div className="text-sm md:text-base font-semibold leading-relaxed">
-                  <div className="flex flex-wrap gap-2 items-start">
-                    <h5 className="text-lg md:text-[1rem] font-heading font-semibold">Address 2 :</h5>
+                  <div className="flex text-sm md:text-base font-semibold leading-relaxed">
+                    <div className="w-28 md:w-[6rem] text-lg md:text-[1rem] font-heading font-semibold flex-shrink-0"> Address 2 :  </div>
                     <div>
                       <p className="mb-0 md:text-[0.9rem] font-heading">Shop-1, Ravi Shopping Centre, </p>
-                      <p className="mb-0 md:text-[0.9rem] font-heading">Opp. New Bus stand, Kapadwanj, Kheda - 387620</p>
-                      <p className="mb-0 md:text-[0.9rem] font-heading"> Gujarat, India</p>
+                      <p className="mb-0 md:text-[0.9rem] font-heading">Opp. New Bus stand, Kapadwanj, </p>
+                      <p className="mb-0 md:text-[0.9rem] font-heading">Kheda - 387620, Gujarat, India</p>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
+          </div>
         
         </div>
       </div>

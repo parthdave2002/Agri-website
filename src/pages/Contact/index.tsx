@@ -65,7 +65,7 @@ const ContactusSection = () => {
     <div>
       <div className="min-h-screen md:flex ">
         <div className="w-full md:w-1/2  text-white p-10 flex flex-col justify-between">
-          <img src="/images/contact-2.jpg" className="transform scale-x-[-1]" />
+          <img src="/images/contact-us.jpeg" className="transform scale-x-[-1]" />
         </div>
 
         <div className="w-full md:w-1/2 bg-white p-10">

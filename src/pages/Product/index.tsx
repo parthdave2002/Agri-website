@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Autoplay } from 'swiper/modules';
 import { FaCartShopping } from 'react-icons/fa6';
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import { getProductlist, GetProductViewlist } from '../../Store/Product/action';
 import { useNavigate } from 'react-router-dom';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
@@ -19,10 +19,7 @@ const ProductSection = () => {
   const currentLang = i18n.language;
 
   useEffect(() => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
+    window.scrollTo({ top: 0, behavior: "smooth"});
   }, [])
 
   const isFetchingRef = useRef(false); 
@@ -32,31 +29,35 @@ const ProductSection = () => {
   useEffect(() =>{
     if (!hasMore || isFetchingRef.current) return;
     isFetchingRef.current = true;
-    let requser = {
-      page : page,
-      size : 12 
-    }
+    let requser = { page : page, size : 12  }
     dispatch(getProductlist(requser))
   },[page])
+
+  // -------- Category Data code start --------------
+  const [CurrentCategory, setCurrentCategory] = useState("");
+  const handleDropdownChange = (data: string) =>{
+    setCurrentCategory(data)
+    setSearchData("")
+  }
+  // -------- Category Data code end --------------
 
   //------------- Get data from redux code start -------------
   const productdetail: any = useSelector((state: any) => state?.Product.Productlist);
 
-  const[productsData, setproductsData] = useState<Product[]>([]);
   useEffect(() => {
-    if (productdetail?.success === true) {
-      const newData = productdetail?.data || [];
+     if (productdetail) {
+    if (productdetail.success === true) {
+      const newData = productdetail.data || [];
       if (newData.length === 0) {
         setHasMore(false);
       } else {
-        setproductsData(prev => [...prev, ...newData]);
+        setProductsList((prev: any) => [...prev, ...newData]);
       }
-      isFetchingRef.current = false;
+    } else {
+      toast.error(productdetail.msg || "Failed to fetch products.");
     }
-    else if (productdetail?.data?.success === false) {
-      toast.error(productdetail?.msg);
-      isFetchingRef.current = false;
-    }
+    isFetchingRef.current = false;
+  }
   }, [productdetail]);
   //------------- Get data from redux code end -------------
 
@@ -85,100 +86,214 @@ const ProductSection = () => {
 
   // ------------ Add to cart start ----------
     const [cartItems, setCartItems] = useState<CartItemProps[]>([]);
+    const [productQuantities, setProductQuantities] = useState<{ [key: string]: number }>({});
 
     const AddCall = (item: ProductDetails) => {
-      // window.scrollTo({ top: 0, behavior: "smooth" });
+       window.scrollTo({ top: 0, behavior: "smooth"});
+      const quantity = productQuantities[item._id] || 1;
+      const alreadyInCart = cartItems.some((i: any) => i._id === item._id);
+      if (alreadyInCart) {
+        toast.info("Product is already in the cart.");
+        return;
+      }
+
       setCartItems((prevItems: any) => {
-        const existingIndex = prevItems.findIndex((i: any) => i?.name?.englishname === item?.name?.englishname);
+         const existingIndex = prevItems.findIndex((i: any) => i._id === item._id);
 
-        if (existingIndex > -1) {
-          const updated = [...prevItems];
-          updated[existingIndex].quantity += 1;
-          return updated;
-        }
+            let updatedCart;
+            if (existingIndex > -1) {
+              const updated = [...prevItems];
+              updated[existingIndex].quantity += 1;
+              updatedCart = updated;
+            } else {
+              updatedCart = [...prevItems, { ...item, quantity }];
+            }
 
-        // Add `quantity: 1` for new item
-        return [...prevItems, { ...item, quantity: 1 }];
+            localStorage.setItem("product", JSON.stringify(updatedCart));
+            window.dispatchEvent(new Event("cartChanged"));
+            return updatedCart;
       });
     };
-    
-  // ------------ Add to cart end ----------
 
-  // ------------ Scroll to load more start ----------
-    useEffect(() => {
-      const handleScroll = () => {
-        if (!hasMore) return;
-
-        const scrollTop = window.scrollY;
-        const windowHeight = window.innerHeight;
-        const fullHeight = document.documentElement.scrollHeight;
-
-        if (scrollTop + windowHeight >= fullHeight - 300 && !isFetchingRef.current && hasMore) {
-          setPage(prev => prev + 1); // Increase page => triggers new fetch
+      useEffect(() => {
+      const loadCart = () => {
+        const storedCart = localStorage.getItem("product");
+        if (storedCart) {
+          const cartItems = JSON.parse(storedCart);
+          setCartItems(cartItems);
         }
       };
 
-      window.addEventListener("scroll", handleScroll);
-      return () => window.removeEventListener("scroll", handleScroll);
-    }, [hasMore]);
+      loadCart();
+      window.addEventListener("cartChanged", loadCart);
+      
+      return () => {
+        window.removeEventListener("cartChanged", loadCart);
+      };
+  }, []);
+
+  const removeFromCart = (productId: string) => {
+    const updatedCart = cartItems.filter((item: any) => item._id !== productId);
+    setCartItems(updatedCart);
+    localStorage.setItem("product", JSON.stringify(updatedCart));
+    window.dispatchEvent(new Event("cartChanged"));
+    toast.info("Product removed from cart.");
+  };
+
+    const incrementQty = (productId: string) => {
+      setProductQuantities((prev) => ({
+        ...prev,
+        [productId]: (prev[productId] || 1) + 1,
+      }));
+    };
+
+    const decrementQty = (productId: string) => {
+      setProductQuantities((prev) => {
+        const currentQty = prev[productId] || 1;
+        return {
+          ...prev,
+          [productId]: currentQty > 1 ? currentQty - 1 : 1,
+        };
+      });
+      // setCartItems((prev) =>
+      //   prev.map((item: any) =>
+      //     item._id === productId && item.quantity > 1
+      //       ? { ...item, quantity: item.quantity - 1 }
+      //       : item
+      //   )
+      // );
+    };
+  // ------------ Add to cart end ----------
+
+  // ------------ Scroll to load more start ----------
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!hasMore || isFetchingRef.current) return;
+
+      const scrollTop = window.scrollY;
+      const windowHeight = window.innerHeight;
+      const fullHeight = document.documentElement.scrollHeight;
+
+      if (scrollTop + windowHeight >= fullHeight - 300) {
+        isFetchingRef.current = true; // Immediately lock
+        setPage((prev) => prev + 1);
+      }
+    };
+
+    const debounceScroll = () => {
+      clearTimeout((handleScroll as any).timer);
+      (handleScroll as any).timer = setTimeout(handleScroll, 200);
+    };
+
+    window.addEventListener("scroll", debounceScroll);
+    return () => window.removeEventListener("scroll", debounceScroll);
+  }, [hasMore]);
   // ------------ Scroll to load more end ----------
 
      const [searchData, setSearchData] = useState("");
   const SearchCall = () =>{
-    if(searchData){
-      dispatch(getProductlist({search : searchData}))
+    if (searchData || searchData == "" && !CurrentCategory ) {
+      setPage(1);
+      setProductsList([]);
+      setHasMore(true);
+      setCurrentCategory("")
+      isFetchingRef.current = true;
+      dispatch(getProductlist({ search: searchData, page: 1, size: 12 }));
+    }
+    else if(CurrentCategory){
+      setPage(1);
+      setProductsList([]);
+      setHasMore(true);
+      isFetchingRef.current = true;
+      dispatch(getProductlist({ search : CurrentCategory ,page: 1, size: 12 }));
     }
   }
+
+  useEffect(() => {
+
+  if (CurrentCategory) {
+    SearchCall();
+  }
+}, [CurrentCategory]);
 
   const OrderPlaced = () => {
     console.log("calll")
   }
+
    return (
     <div>
+       <div className="my-5 w-full flex flex-col items-center">
+         <div className="flex w-full max-w-2xl justify-between items-center gap-4">
 
-      <div className="my-5 flex justify-center">
-        <div className="flex w-full max-w-xl shadow-md rounded-xl overflow-hidden bg-white">
-          <input type="text"  placeholder="Enter product name"  className="flex-grow px-4 py-3  text-[19px] font-heading outline-none bg-gray-50" onChange={(e:any) => setSearchData(e.target.value)} />
-          <button className="bg-green-500 hover:bg-green-600 text-white px-5 py-3 text-[1.2rem] font-heading font-semibold transition" onClick={SearchCall}>  Search  </button>
-        </div>
-      </div>
-      <div className="md:grid  md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-1600">
-        {products && products.map((product:any) => (
-          <div key={product.id} className="relative p-4 bg-white border border-[#FBFBFB] shadow-[0px_5px_22px_rgba(0,0,0,0.04)] rounded-2xl mb-7 hover:shadow-[0px_21px_44px_rgba(0,0,0,0.08)] transition-shadow duration-300">
-            <figure className="bg-[#F9F9F9] rounded-[12px] text-center mb-4">
-              <Swiper modules={[Navigation, Autoplay]} spaceBetween={16} slidesPerView={1} loop={true} autoplay={{ delay: 3000, disableOnInteraction: false, }} >
-                {product?.product_pics.map((img, index) => (
-                  <SwiperSlide key={index}>
-                    <LazyLoadImage effect="blur"  src= {  `${IMG_URL}/public/product/${img}`}  alt={`Product image ${index + 1}`} className="mx-auto max-h-[210px] w-[12rem] h-[12rem] object-contain" />
-                  </SwiperSlide>
-                ))}
-              </Swiper>
-            </figure>
+           {/* Search Input (left side) */}
+           <div className="flex flex-grow shadow-md rounded-xl overflow-hidden bg-white">
+             <input type="text" placeholder="Enter product name" className="flex-grow px-4 py-3 text-[18px] font-heading outline-none bg-gray-50" value={searchData} onChange={(e: any) => setSearchData(e.target.value)} />
+             <button className="bg-green-500 hover:bg-green-600 text-white px-5 py-3 text-[1.1rem] font-heading font-semibold transition" onClick={SearchCall} > Search </button>
+           </div>
 
-            <div className="flex justify-between items-center text-sm ">
-              <h3 className="block w-full font-heading font-semibold text-[16px] leading-[25px] capitalize text-[#333333] mb-1 cursor-pointer truncate max-w-[11rem]" onClick={() => DetailspageCall(product?._id)}> {currentLang === 'gj' ? product?.name?.gujaratiname :   product?.name?.englishname} </h3>
-              <span className="font-normal font-heading text-[1rem] leading-[18px] flex gap-x-1">
-                <div> {product?.packaging}  </div>
-                <div> {product?.packagingtype?.type_eng}  </div>
-              </span>
-            </div>
-            <div className="block w-full  font-heading font-semibold text-[16px] leading-[25px] capitalize text-[#222222] mb-1 cursor-pointer" onClick={() => DetailspageCall(product?.id)}>Rs. {product?.price} </div>
+           <div className="w-48 shadow-md rounded-xl overflow-hidden bg-white border border-gray-200">
+             <select  className="w-full h-full px-4 py-3 text-[18px] font-heading bg-gray-50 outline-none rounded-xl"  value={CurrentCategory} onChange={(e) => handleDropdownChange(e.target.value)}>
+               <option value="">Select Category</option>
+               <option value="Plant Protection">Plant Protection</option>
+               <option value="Plant Nutrition">Plant Nutrition</option>
+               <option value="Fertilizer">Fertilizer</option>
+                <option value="Seeds">Seeds</option>
+               <option value="Hardware">Hardware</option>
+               <option value="Animal Husbandry">Animal Husbandry</option>
+             </select>
+           </div>
 
-            {/* Quantity Counter & Add to Cart */}
-            <div className="flex items-center justify-between">
-              <div className="flex items-center border border-[#E2E2E2] rounded w-[85px] overflow-hidden">
-                <button className="w-[26px] h-[26px] text-center bg-white border-r border-[#E2E2E2] text-[#222222]"> − </button>
-                <input id="quantity" type="text" defaultValue="1" className="w-[28px] text-center border-none m-0 p-0 focus:outline-none" />
-                <button className="w-[26px] h-[26px] text-center bg-white border-l border-[#E2E2E2] text-[#222222]"> + </button>
+         </div>
+       </div>
+
+        {Array.isArray(products) && products.length > 0 ? 
+         <div className="md:grid  md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-1600">
+          {products && products.map((product:any) => {
+            const cartItem = cartItems.find((item: any) => item._id === product._id);
+            const quantity = cartItem ? cartItem.quantity : 1;
+             return (
+              <div key={product.id} className="relative p-4 bg-white border border-[#FBFBFB] shadow-[0px_5px_22px_rgba(0,0,0,0.04)] rounded-2xl mb-7 hover:shadow-[0px_21px_44px_rgba(0,0,0,0.08)] transition-shadow duration-300">
+                <figure className="bg-[#F9F9F9] rounded-[12px] text-center mb-4">
+                  <Swiper modules={[Navigation, Autoplay]} spaceBetween={16} slidesPerView={1} loop={true} autoplay={{ delay: 3000, disableOnInteraction: false, }} >
+                    {product?.product_pics.map((img, index) => (
+                      <SwiperSlide key={index}>
+                        <LazyLoadImage effect="blur"  src= {  `${IMG_URL}/public/product/${img}`}  alt={`Product image ${index + 1}`} className="mx-auto max-h-[210px] w-[12rem] h-[12rem] object-contain" />
+                      </SwiperSlide>
+                    ))}
+                  </Swiper>
+                </figure>
+
+                <div className="flex justify-between items-center text-sm ">
+                  <h3 className="block w-full font-heading font-semibold text-[16px] leading-[25px] capitalize text-[#333333] mb-1 cursor-pointer truncate max-w-[11rem]" onClick={() => DetailspageCall(product?._id)}> {currentLang === 'gj' ? product?.name?.gujaratiname :   product?.name?.englishname} </h3>
+                  <span className="font-normal font-heading text-[1rem] leading-[18px] flex gap-x-1">
+                    <div> {product?.packaging}  </div>
+                    <div> {product?.packagingtype?.type_eng}  </div>
+                  </span>
+                </div>
+                <div className="block w-full  font-heading font-semibold text-[16px] leading-[25px] capitalize text-[#222222] mb-1 cursor-pointer" onClick={() => DetailspageCall(product?.id)}>Rs. {product?.price} </div>
+
+                {/* Quantity Counter & Add to Cart */}
+                <div className="flex items-center justify-between">
+                   {!cartItem &&(
+                  <div className="flex items-center border border-[#E2E2E2] rounded w-[85px] overflow-hidden">
+                    <button  onClick={() => decrementQty(product._id)} className="w-[26px] h-[26px] text-center bg-white border-r border-[#E2E2E2] text-[#222222]"> − </button>
+                    <input id="quantity"  value={productQuantities[product._id] || 1} type="text" defaultValue="1" className="w-[28px] text-center border-none m-0 p-0 focus:outline-none" readOnly/>
+                    <button  onClick={() => incrementQty(product._id)} className="w-[26px] h-[26px] text-center bg-white border-l border-[#E2E2E2] text-[#222222]"> + </button>
+                  </div>
+                  )}
+
+                    {cartItem ? 
+                        <button className="text-red-600 px-4 py-2 text-md flex items-end ml-[7rem] rounded-full justify-end border border-[#d8d8d8] hover:bg-red-100 transition-all duration-300 mt-4" onClick={() => removeFromCart(product?._id)} >  Remove from Cart </button>
+                    :  <button className="text-gray-50 px-4 py-2 text-md flex items-center gap-1 rounded-full flex items-center justify-center bg-green-600 border border-[#d8d8d8] hover:bg-green-500 hover:text-white transition-all duration-300" onClick={() => AddCall(product)}> Add to Cart <FaCartShopping />  </button>
+                    }
+                </div>
               </div>
+            )}
+          )}
+        </div>
+        : <div className='text-center text-2xl font-heading my-[12rem]'>No Data Found </div>}
 
-              <button className="text-gray-50 px-4 py-2 text-md flex items-center gap-1 rounded-full flex items-center justify-center bg-green-600 border border-[#d8d8d8] hover:bg-green-500 hover:text-white transition-all duration-300" onClick={() => AddCall(product)}> Add to Cart <FaCartShopping />  </button>
-            </div>
-          </div>
-        ))}
-      </div>
-
-      <CartSection  OrderPlaced={OrderPlaced} CartData={cartItems}  />
+      <ToastContainer />
     </div>
   )
 }

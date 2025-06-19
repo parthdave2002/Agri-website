@@ -4,7 +4,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Autoplay } from 'swiper/modules';
 import { FaCartShopping } from 'react-icons/fa6';
 import { toast } from "react-toastify";
-import { GetProductViewlist  } from '../../Store/Product/action';
+import { GetProductViewlist } from '../../Store/Product/action';
 import { useNavigate, useParams } from 'react-router-dom';
 import { IoArrowRedoSharp } from 'react-icons/io5';
 import { SiBattledotnet } from "react-icons/si";
@@ -15,7 +15,7 @@ import { LazyLoadImage } from 'react-lazy-load-image-component';
 const IMG_URL = import.meta.env["VITE_API_URL"];
 
 const ProductDetailsSection = () => {
-  const  { i18n ,t } = useTranslation();
+  const { i18n, t } = useTranslation();
   const lang = i18n.language;
   const { id } = useParams();
   const dispatch = useDispatch();
@@ -28,19 +28,22 @@ const ProductDetailsSection = () => {
     });
   }, [])
 
-  useEffect(() =>{
-    if(id){
-      dispatch(GetProductViewlist({id : id}))
+  useEffect(() => {
+    if (id) {
+      dispatch(GetProductViewlist({ id: id }))
     }
-  },[id])
+  }, [id])
 
   //------------- Get data from redux code start -------------
   const productdetail: any = useSelector((state: any) => state?.Product.singleProductlist);
 
-  const[productsData, setproductsData] = useState<ProductDetails>()
+  const [productsData, setproductsData] = useState<ProductDetails>()
+  const [relatedproductsData, setRelatedproductsData] = useState<Product[]>([])
+
   useEffect(() => {
     if (productdetail?.success === true) {
       setproductsData(productdetail?.data);
+      setRelatedproductsData(productdetail?.data?.similarProduct);
     }
     else if (productdetail?.data?.success === false) {
       toast.error(productdetail?.msg);
@@ -48,76 +51,9 @@ const ProductDetailsSection = () => {
   }, [productdetail]);
   //------------- Get data from redux code end -------------
 
-  const CloseCall = () =>{
+  const CloseCall = () => {
     navigate(-1)
   }
-
-  const products: Product[] = [
-    {
-      id: 1,
-      image: ['/images/thumb-tomatoes.png', '/images/thumb-tomatoketchup.png', '/images/thumb-bananas.png'],
-      title: 'Sunstar Fresh Melon Juice',
-      quantity: '1 Unit',
-      rating: 4.5,
-      price: '$18.00',
-    },
-    {
-      id: 2,
-      image: ['/images/thumb-tomatoketchup.png', '/images/thumb-tomatoes.png', '/images/thumb-bananas.png'],
-      title: 'Sunstar Fresh Melon Juice',
-      quantity: '1 Unit',
-      rating: 4.5,
-      price: '$18.00',
-    },
-    {
-      id: 3,
-      image: ['/images/thumb-bananas.png', '/images/thumb-tomatoketchup.png', '/images/thumb-tomatoes.png'],
-      title: 'Sunstar Fresh Melon Juice',
-      quantity: '1 Unit',
-      rating: 4.5,
-      price: '$18.00',
-    },
-    {
-      id: 4,
-      image: ['/images/thumb-tomatoketchup.png', '/images/thumb-tomatoes.png', '/images/thumb-bananas.png'],
-      title: 'Sunstar Fresh Melon Juice',
-      quantity: '1 Unit',
-      rating: 4.5,
-      price: '$18.00',
-    },
-    {
-      id: 5,
-      image: ['/images/thumb-bananas.png'],
-      title: 'Sunstar Fresh Melon Juice',
-      quantity: '1 Unit',
-      rating: 4.5,
-      price: '$18.00',
-    },
-    {
-      id: 6,
-      image: ['/images/thumb-tomatoketchup.png', '/images/thumb-tomatoketchup.png'],
-      title: 'Sunstar Fresh Melon Juice',
-      quantity: '1 Unit',
-      rating: 4.5,
-      price: '$18.00',
-    },
-    {
-      id: 7,
-      image: ['/images/thumb-bananas.png'],
-      title: 'Sunstar Fresh Melon Juice',
-      quantity: '1 Unit',
-      rating: 4.5,
-      price: '$18.00',
-    },
-    {
-      id: 8,
-      image: ['/images/thumb-bananas.png', '/images/thumb-tomatoketchup.png', '/images/thumb-tomatoes.png'],
-      title: 'Sunstar Fresh Melon Juice',
-      quantity: '1 Unit',
-      rating: 4.5,
-      price: '$18.00',
-    }
-  ];
 
   return (
     <div>
@@ -129,35 +65,42 @@ const ProductDetailsSection = () => {
 
         <div className='flex flex-col md:flex-row px-3 mt-[2rem]'>
           <div className='flex-1'>
-             {/* <figure className="bg-[#F9F9F9] rounded-[12px] text-center mb-4">
-                <Swiper modules={[Navigation, Autoplay]} spaceBetween={16} slidesPerView={1} loop={true} autoplay={{ delay: 3000, disableOnInteraction: false, }} >
-                 {productsData?.product_pics?.map((img, index) => {
-                    console.log("Image URL:", `${IMG_URL}/public/product/${img}`);
-                    return (
-                      <SwiperSlide key={index}>
-                        <LazyLoadImage
-                          effect="blur"
-                          src={`${IMG_URL}/public/product/${img}`}
-                          alt={`Product image ${index + 1}`}
-                          className="mx-auto max-h-[210px] h-auto object-contain"
-                        />
-                      </SwiperSlide>
-                    );
-                  })}
-                </Swiper>
-              </figure> */}
+        
+          <figure className="bg-[#F9F9F9] rounded-[12px] text-center mb-4 w-full max-w-[400px] mx-auto">
+            <Swiper
+              modules={[Navigation, Autoplay]}
+              spaceBetween={16}
+              slidesPerView={1}
+              loop={(productsData?.product_pics ?? []).length > 1}
+              autoplay={{
+                delay: 3000,
+                disableOnInteraction: false,
+              }}
+            >
+              {productsData?.product_pics?.map((img, index) => (
+                <SwiperSlide key={index}>
+                  <LazyLoadImage
+                    effect="blur"
+                    src={`${IMG_URL}/public/product/${encodeURIComponent(img)}`}
+                    alt={`Product image ${index + 1}`}
+                    className="w-full  h-auto object-contain mx-auto"
+                  />
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </figure>
           </div>
 
           {/* RIGHT - Details */}
           <div className='flex-1 px-[3rem]'>
-            <div className='text-gray-900 text-[1.5rem] font-bold'>  {lang === 'gj'  ? productsData?.name?.gujaratiname  : productsData?.name?.englishname} </div>
+            <div className='text-gray-900 text-[1.5rem] font-bold'>  {lang === 'gj' ? productsData?.name?.gujaratiname : productsData?.name?.englishname} </div>
 
             <div className='text-gray-900 text-[1rem] mt-3'>
-              {lang === 'gj' ? productsData?.tech_name?.gujarati_tech_name   : productsData?.tech_name?.english_tech_name}
+              {lang === 'gj' ? productsData?.tech_name?.gujarati_tech_name : productsData?.tech_name?.english_tech_name}
             </div>
 
             <div className='text-gray-900 text-[1rem] mt-3 flex gap-x-3'>
-              <div className='w-[8rem] font-heading text-[1rem]'>Packing</div> :   {productsData?.packaging} {lang === 'gj' ? productsData?.packagingtype?.type_guj  : productsData?.packagingtype?.type_eng}
+              <div className='w-[8rem] font-heading text-[1rem]'>Packing</div> :   {productsData?.packaging} {lang === 'gj' ? productsData?.packagingtype?.type_guj : productsData?.packagingtype?.type_eng}
             </div>
 
             <div className='text-gray-900 text-[1rem] mt-3 flex gap-x-3'>
@@ -165,7 +108,7 @@ const ProductDetailsSection = () => {
             </div>
 
             <div className='text-gray-900 text-[1rem] mt-3 flex gap-x-3'>
-              <div className='w-[8rem] font-heading text-[1rem]'>Company</div> :  {lang === 'gj'   ? productsData?.company?.name_guj : productsData?.company?.name_eng}
+              <div className='w-[8rem] font-heading text-[1rem]'>Company</div> :  {lang === 'gj' ? productsData?.company?.name_guj : productsData?.company?.name_eng}
             </div>
 
             <div className='text-gray-900 text-[1rem] mt-3 flex gap-x-3'>
@@ -214,71 +157,55 @@ const ProductDetailsSection = () => {
 
               <div className="flex flex-col gap-2 ">
                 <div className="font-bold text-gray-600 text-[1.2rem] flex gap-x-3"> <IoArrowRedoSharp className='self-center' />  {lang === 'gj' ? data?.gujaratiHeader : data?.englishHeader} </div>
-                <div className="font-medium text-gray-600  flex gap-x-3"> <div className='h-4 w-4 flex self-top pt-1'> <SiBattledotnet /> </div> <div className='text-[0.9rem]'>  {lang === 'gj' ? data?.gujaratiValue :  data.englishValue} </div> </div>
+                <div className="font-medium text-gray-600  flex gap-x-3"> <div className='h-4 w-4 flex self-top pt-1'> <SiBattledotnet /> </div> <div className='text-[0.9rem]'>  {lang === 'gj' ? data?.gujaratiValue : data.englishValue} </div> </div>
               </div>
             </div>
           ))}
         </div>
       </div>
 
-      {/* <div className="md:grid  md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-1600"> 
-       {products.map((product) => (
-            <div key={product.id} className="relative p-4 bg-white border border-[#FBFBFB] shadow-[0px_5px_22px_rgba(0,0,0,0.04)] rounded-2xl mb-7 hover:shadow-[0px_21px_44px_rgba(0,0,0,0.08)] transition-shadow duration-300">
-              <figure className="bg-[#F9F9F9] rounded-[12px] text-center mb-4">
-                <Swiper modules={[Navigation, Autoplay]} spaceBetween={16} slidesPerView={1} loop={true} autoplay={{ delay: 3000, disableOnInteraction: false, }} >
-                  {product.image.map((img, index) => (
-                    <SwiperSlide key={index}>
-                      <img src={img} alt={`Product image ${index + 1}`} className="mx-auto max-h-[210px] h-auto object-contain" />
-                    </SwiperSlide>
-                  ))}
-                </Swiper>
-              </figure>
-              <h3 className="block w-full font-heading font-semibold text-[18px] leading-[25px] capitalize text-[#333333] mb-1"> {product.title} </h3>
-
-              <div className="flex justify-between items-center text-sm mb-1">
-                <span className="font-normal text-[13px] leading-[18px] tracking-[0.02em] uppercase text-[#9D9D9D]">{product.quantity} </span>
-                <span className="font-semibold text-[13px] leading-[18px] capitalize text-[#222222] flex items-center gap-1"> <span className="text-[#FFC43F]">★</span> {product.rating} </span>
-              </div>
-
-              <div className="block w-full font-semibold text-[22px] leading-[30px] capitalize text-[#222222] mb-3">{product.price} </div>
-
-              <div className="flex items-center justify-between">
-                <div className="flex items-center border border-[#E2E2E2] rounded w-[85px] overflow-hidden">
-                  <button className="w-[26px] h-[26px] text-center bg-white border-r border-[#E2E2E2] text-[#222222]"> − </button>
-                  <input id="quantity" type="text" defaultValue="1" className="w-[28px] text-center border-none m-0 p-0 focus:outline-none" />
-                  <button className="w-[26px] h-[26px] text-center bg-white border-l border-[#E2E2E2] text-[#222222]"> + </button>
-                </div>
-               
-                <button className="text-gray-50 px-4 py-2 text-md flex items-center gap-1 rounded-full flex items-center justify-center bg-green-600 border border-[#d8d8d8] hover:bg-green-500 hover:text-white transition-all duration-300"> Add to Cart <FaCartShopping />  </button>
-              </div>
-            </div>
-          ))} 
-       </div> */}
-
       <div className='my-[3rem]'>
-
         <div className="text-[2rem] font-semibold text-gray-900 font-heading"> {t("Relevant Category Products")}  </div>
 
         <div className="md:grid  md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-1600">
-          {products.map((product) => (
+          {relatedproductsData && relatedproductsData.map((product:any, k:number) => (
             <div key={product.id} className="relative p-4 bg-white border border-[#FBFBFB] shadow-[0px_5px_22px_rgba(0,0,0,0.04)] rounded-2xl mb-7 hover:shadow-[0px_21px_44px_rgba(0,0,0,0.08)] transition-shadow duration-300">
-              <figure className="bg-[#F9F9F9] rounded-[12px] text-center mb-4">
-                <Swiper modules={[Navigation, Autoplay]} spaceBetween={16} slidesPerView={1} loop={true} autoplay={{ delay: 3000, disableOnInteraction: false, }} >
-                  {product.image.map((img, index) => (
-                    <SwiperSlide key={index}>
-                      <LazyLoadImage effect="blur" src={img} alt={`Product image ${index + 1}`} className="mx-auto max-h-[210px] h-auto object-contain" />
-                    </SwiperSlide>
-                  ))}
-                </Swiper>
-              </figure>
-              <h3 className="block w-full font-heading font-semibold text-[18px] leading-[25px] capitalize text-[#333333] mb-1"> {product.title} </h3>
+          <div className='flex-1'>
+        
+          <figure className="bg-[#F9F9F9] rounded-[12px] text-center mb-4 w-full max-w-[400px] mx-auto">
+            <Swiper
+              modules={[Navigation, Autoplay]}
+              spaceBetween={16}
+              slidesPerView={1}
+              loop={(productsData?.product_pics ?? []).length > 1}
+              autoplay={{
+                delay: 3000,
+                disableOnInteraction: false,
+              }}
+            >
+              {productsData?.product_pics?.map((img, index) => (
+                <SwiperSlide key={index}>
+                  <LazyLoadImage
+                    effect="blur"
+                    src={`${IMG_URL}/public/product/${encodeURIComponent(img)}`}
+                    alt={`Product image ${index + 1}`}
+                    className="w-full  h-auto object-contain mx-auto"
+                  />
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </figure>
+          </div>
 
-              <div className="flex justify-between items-center text-sm mb-1">
-                <span className="font-normal text-[13px] leading-[18px] tracking-[0.02em] uppercase text-[#9D9D9D]">{product.quantity} </span>
-                <span className="font-semibold text-[13px] leading-[18px] capitalize text-[#222222] flex items-center gap-1"> <span className="text-[#FFC43F]">★</span> {product.rating} </span>
+              <div className="flex justify-between items-center text-sm ">
+                <h3 className="block w-full font-heading font-semibold text-[16px] leading-[25px] capitalize text-[#333333] mb-1 cursor-pointer truncate max-w-[11rem]"> {lang === 'gj' ? product?.name?.gujaratiname :   product?.name?.englishname} </h3>
+                <span className="font-normal font-heading text-[1rem] leading-[18px] flex gap-x-1">
+                  <div> {product?.packaging}  </div>
+                  <div> {product?.packagingtype?.type_eng}  </div>
+                </span>
               </div>
 
-              <div className="block w-full font-semibold text-[22px] leading-[30px] capitalize text-[#222222] mb-3">{product.price} </div>
+               <div className="block w-full  font-heading font-semibold text-[16px] leading-[25px] capitalize text-[#222222] mb-1 cursor-pointer" >Rs. {product?.price} </div>
 
               <div className="flex items-center justify-between">
                 <div className="flex items-center border border-[#E2E2E2] rounded w-[85px] overflow-hidden">

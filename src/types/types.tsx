@@ -55,12 +55,26 @@ export interface ProductDetails {
 }
 
 export interface Product {
-  id: number;
-  image: string[];
-  title: string;
-  quantity: string;
-  rating: number;
-  price: string;
+   added_at: string;
+    avl_qty: number;
+    batch_no: string;
+    c_gst: number;
+    company: CompanyData;
+    categories: Category;
+    description: DescriptionData[];
+    discount: number;
+    hsn_code: string;
+    is_active: boolean;
+    is_deleted: boolean;
+    name: Name;
+    packaging: number;
+    packagingtype: PackingType;
+    price: number;
+    product_pics: [];
+    rating: any;
+    s_gst: number;
+    tech_name: TechName;
+    _id: string;
 }
 
 export interface CartItemProps {
@@ -68,6 +82,7 @@ export interface CartItemProps {
   title: string;
   price: number;
   quantity: number;
+  product_pics: string[];
   // onDelete: () => void;
   // onIncrement: () => void;
   // onDecrement: () => void;

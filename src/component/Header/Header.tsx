@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react'
 import {  FaFacebookF, FaFacebookMessenger, FaInstagram, FaLinkedinIn,  FaWhatsapp,  FaYoutube } from "react-icons/fa";
 import { IoIosArrowDown } from "react-icons/io";
@@ -8,10 +8,13 @@ import { useTranslation } from "react-i18next";
 import CartSection from "../../pages/Cart/Cart";
 import { useNavigate } from "react-router-dom";
 import { LazyLoadImage } from 'react-lazy-load-image-component';
+import { useDispatch } from "react-redux";
+import { AddLeadlist } from "../../Store/Lead/action";
 
 const Header: React.FC= ( ) => {
     const nagivate = useNavigate()
     const { t, i18n } = useTranslation();
+    const dispatch = useDispatch()
     const [language, setLanguage] = useState("en");
     const [isOpenlanguage, setIsOpenlang] = useState(false);
 
@@ -36,10 +39,32 @@ const Header: React.FC= ( ) => {
 
       const [isOpenSuccessModal, setIsOpenSuccessModal] = useState<boolean>(false);
       const OrderPlaced =() =>{
+                let requserdata = {
+                  type: "contactus"
+                };
+                // dispatch(AddLeadlist(requserdata));
         setIsOpenSuccessModal(true)
         setCartOpen(false)
       }
-    const [cartCount, setCartCount] = useState(3);
+    const [cartCount, setCartCount] = useState(0);
+    useEffect(() => {
+          const loadCart = () => {
+            const storedCart = localStorage.getItem("product");
+            if (storedCart) {
+              const cartItems = JSON.parse(storedCart);
+              setCartCount(cartItems?.length);
+            } else {
+              setCartCount(0);
+            }
+          };
+    
+          loadCart();
+          window.addEventListener("cartChanged", loadCart);
+          
+          return () => {
+            window.removeEventListener("cartChanged", loadCart);
+          };
+    }, []);
 
   return (
     <>
