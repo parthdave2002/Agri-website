@@ -3,7 +3,8 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Scrollbar, A11y, Autoplay   } from 'swiper/modules';
 import { useDispatch, useSelector } from 'react-redux';
 import {getBannerlist} from "../../Store/actions";
-const IMG_URL = import.meta.env["VITE_API_URL"];
+// const IMG_URL = import.meta.env["VITE_API_URL"];
+const IMG_URL = import.meta.env.VITE_API_URL; 
 
 
 const BannerSection: React.FC = () => {

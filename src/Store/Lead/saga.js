@@ -28,7 +28,6 @@ function* onAddLeadlist({ payload: requstuser }) {
   try {
     const response = yield call(AddLeadlistApi, requstuser);
     yield put(AddLeadlistSuccess(ADD_LEAD_LIST, response));
-    toast.success(response?.msg)
   } catch (error) {
     toast.error(error)
     yield put(AddLeadlistFail(error));

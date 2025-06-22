@@ -125,7 +125,7 @@ const PopularProductSection: React.FC = () => {
                 </div>
 
                 {/* <a href="#" className="text-blue-600 hover:underline text-sm flex items-center gap-1"> Add to Cart 🛒  </a> */}
-                <button className="text-gray-50 px-4 py-2 text-md flex items-center gap-1 rounded-full flex items-center justify-center bg-green-600 border border-[#d8d8d8] hover:bg-green-500 hover:text-white transition-all duration-300"> Add to Cart <FaCartShopping />  </button>
+                <button className="text-gray-50 px-4 py-2 text-md flex items-center gap-1 rounded-full flex items-center justify-center bg-green-600 border border-[#d8d8d8] hover:bg-green-500 hover:text-white transition-all duration-300"> {t("add_to_cart")}<FaCartShopping />  </button>
               </div>
             </div>
           ))}

@@ -9,10 +9,11 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { IoArrowRedoSharp } from 'react-icons/io5';
 import { SiBattledotnet } from "react-icons/si";
 import { FaWindowClose } from 'react-icons/fa';
-import { Product, ProductDetails } from '../../types/types';
+import { CartItemProps, Product, ProductDetails } from '../../types/types';
 import { useTranslation } from 'react-i18next';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
-const IMG_URL = import.meta.env["VITE_API_URL"];
+// const IMG_URL = import.meta.env["VITE_API_URL"];
+const IMG_URL = import.meta.env.VITE_API_URL; 
 
 const ProductDetailsSection = () => {
   const { i18n, t } = useTranslation();
@@ -54,6 +55,88 @@ const ProductDetailsSection = () => {
   const CloseCall = () => {
     navigate(-1)
   }
+
+// ------------ Add to cart start ----------
+    const [cartItems, setCartItems] = useState<CartItemProps[]>([]);
+    const [productQuantities, setProductQuantities] = useState<{ [key: string]: number }>({});
+
+    const AddCall = (item: ProductDetails) => {
+       window.scrollTo({ top: 0, behavior: "smooth"});
+      const quantity = productQuantities[item._id] || 1;
+      const alreadyInCart = cartItems.some((i: any) => i._id === item._id);
+      if (alreadyInCart) {
+        toast.info("Product is already in the cart.");
+        return;
+      }
+
+      setCartItems((prevItems: any) => {
+         const existingIndex = prevItems.findIndex((i: any) => i._id === item._id);
+
+            let updatedCart;
+            if (existingIndex > -1) {
+              const updated = [...prevItems];
+              updated[existingIndex].quantity += 1;
+              updatedCart = updated;
+            } else {
+              updatedCart = [...prevItems, { ...item, quantity }];
+            }
+
+            localStorage.setItem("product", JSON.stringify(updatedCart));
+            window.dispatchEvent(new Event("cartChanged"));
+            return updatedCart;
+      });
+    };
+
+      useEffect(() => {
+      const loadCart = () => {
+        const storedCart = localStorage.getItem("product");
+        if (storedCart) {
+          const cartItems = JSON.parse(storedCart);
+          setCartItems(cartItems);
+        }
+      };
+
+      loadCart();
+      window.addEventListener("cartChanged", loadCart);
+      
+      return () => {
+        window.removeEventListener("cartChanged", loadCart);
+      };
+  }, []);
+
+  const removeFromCart = (productId: string) => {
+    const updatedCart = cartItems.filter((item: any) => item._id !== productId);
+    setCartItems(updatedCart);
+    localStorage.setItem("product", JSON.stringify(updatedCart));
+    window.dispatchEvent(new Event("cartChanged"));
+    toast.info("Product removed from cart.");
+  };
+
+    const incrementQty = (productId: string) => {
+      setProductQuantities((prev) => ({
+        ...prev,
+        [productId]: (prev[productId] || 1) + 1,
+      }));
+    };
+
+    const decrementQty = (productId: string) => {
+      setProductQuantities((prev) => {
+        const currentQty = prev[productId] || 1;
+        return {
+          ...prev,
+          [productId]: currentQty > 1 ? currentQty - 1 : 1,
+        };
+      });
+      // setCartItems((prev) =>
+      //   prev.map((item: any) =>
+      //     item._id === productId && item.quantity > 1
+      //       ? { ...item, quantity: item.quantity - 1 }
+      //       : item
+      //   )
+      // );
+    };
+  // ------------ Add to cart end ----------
+
 
   return (
     <div>
@@ -138,13 +221,13 @@ const ProductDetailsSection = () => {
             {/* Quantity + Add to Cart */}
             <div className="flex items-center gap-x-[4rem] mt-[2rem]">
               <div className="flex items-center border border-green-600 rounded-lg w-[100px] overflow-hidden">
-                <button className="w-[60px] h-[35px] text-center bg-gray-200 hover:bg-green-600 border-r border-green-600 text-[#222222]">−</button>
-                <input id="quantity" type="text" defaultValue="1" className="w-[40px] text-center border-none m-0 p-0 focus:outline-none" />
-                <button className="w-[60px] h-[35px] text-center bg-gray-200 hover:bg-green-600 border-l border-green-600 text-[#222222]">+</button>
+                <button className="w-[60px] h-[35px] text-center bg-gray-200 hover:bg-green-600 border-r border-green-600 text-[#222222]"  onClick={() => decrementQty(productsData!._id)}>−</button>
+                <input id="quantity" value={productQuantities[productsData?._id || ''] || 1}  type="text" defaultValue="1" className="w-[40px] text-center border-none m-0 p-0 focus:outline-none" />
+                <button className="w-[60px] h-[35px] text-center bg-gray-200 hover:bg-green-600 border-l border-green-600 text-[#222222]" onClick={() => incrementQty( productsData!._id)}>+</button>
               </div>
 
-              <button className="text-gray-50 px-4 py-2 text-md flex items-center gap-1 rounded-full bg-green-600 border border-[#d8d8d8] hover:bg-green-500 hover:text-white transition-all duration-300">
-                Add to Cart <FaCartShopping />
+              <button className="text-gray-50 px-4 py-2 text-md flex items-center gap-1 rounded-full bg-green-600 border border-[#d8d8d8] hover:bg-green-500 hover:text-white transition-all duration-300"  onClick={() => productsData && AddCall(productsData)}> 
+               {t("add_to_cart")} <FaCartShopping />
               </button>
             </div>
           </div>
@@ -168,8 +251,10 @@ const ProductDetailsSection = () => {
         <div className="text-[2rem] font-semibold text-gray-900 font-heading"> {t("Relevant Category Products")}  </div>
 
         <div className="md:grid  md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-1600">
-          {relatedproductsData && relatedproductsData.map((product:any, k:number) => (
-            <div key={product.id} className="relative p-4 bg-white border border-[#FBFBFB] shadow-[0px_5px_22px_rgba(0,0,0,0.04)] rounded-2xl mb-7 hover:shadow-[0px_21px_44px_rgba(0,0,0,0.08)] transition-shadow duration-300">
+          {relatedproductsData && relatedproductsData.map((product:any, k:number) => {
+           const cartItem = cartItems.find((item: any) => item._id === product._id);
+          return(
+                 <div key={product.id} className="relative p-4 bg-white border border-[#FBFBFB] shadow-[0px_5px_22px_rgba(0,0,0,0.04)] rounded-2xl mb-7 hover:shadow-[0px_21px_44px_rgba(0,0,0,0.08)] transition-shadow duration-300">
           <div className='flex-1'>
         
           <figure className="bg-[#F9F9F9] rounded-[12px] text-center mb-4 w-full max-w-[400px] mx-auto">
@@ -201,23 +286,29 @@ const ProductDetailsSection = () => {
                 <h3 className="block w-full font-heading font-semibold text-[16px] leading-[25px] capitalize text-[#333333] mb-1 cursor-pointer truncate max-w-[11rem]"> {lang === 'gj' ? product?.name?.gujaratiname :   product?.name?.englishname} </h3>
                 <span className="font-normal font-heading text-[1rem] leading-[18px] flex gap-x-1">
                   <div> {product?.packaging}  </div>
-                  <div> {product?.packagingtype?.type_eng}  </div>
+                  <div>{lang === 'gj' ? product?.packagingtype?.type_guj :   product?.packagingtype?.type_eng}    </div>
                 </span>
               </div>
 
                <div className="block w-full  font-heading font-semibold text-[16px] leading-[25px] capitalize text-[#222222] mb-1 cursor-pointer" >Rs. {product?.price} </div>
 
               <div className="flex items-center justify-between">
-                <div className="flex items-center border border-[#E2E2E2] rounded w-[85px] overflow-hidden">
-                  <button className="w-[26px] h-[26px] text-center bg-white border-r border-[#E2E2E2] text-[#222222]"> − </button>
-                  <input id="quantity" type="text" defaultValue="1" className="w-[28px] text-center border-none m-0 p-0 focus:outline-none" />
-                  <button className="w-[26px] h-[26px] text-center bg-white border-l border-[#E2E2E2] text-[#222222]"> + </button>
-                </div>
+                  {!cartItem &&(
+                    <div className="flex items-center border border-[#E2E2E2] rounded w-[85px] overflow-hidden">
+                      <button onClick={() => decrementQty(product._id)} className="w-[26px] h-[26px] text-center bg-white border-r border-[#E2E2E2] text-[#222222]"> − </button>
+                      <input id="quantity"  value={productQuantities[product._id] || 1}  type="text" defaultValue="1" className="w-[28px] text-center border-none m-0 p-0 focus:outline-none" />
+                      <button   onClick={() => incrementQty(product._id)} className="w-[26px] h-[26px] text-center bg-white border-l border-[#E2E2E2] text-[#222222]"> + </button>
+                    </div>
+                   )}
 
-                <button className="text-gray-50 px-4 py-2 text-md flex items-center gap-1 rounded-full flex items-center justify-center bg-green-600 border border-[#d8d8d8] hover:bg-green-500 hover:text-white transition-all duration-300"> Add to Cart <FaCartShopping />  </button>
+                    {cartItem ? 
+                        <button className="text-red-600 px-4 py-2 text-md flex items-end ml-[7rem] rounded-full justify-end border border-[#d8d8d8] hover:bg-red-100 transition-all duration-300 mt-4" onClick={() => removeFromCart(product?._id)} > {t("remove_from_cart")} </button>
+                    :  <button className="text-gray-50 px-4 py-2 text-md flex items-center gap-1 rounded-full flex items-center justify-center bg-green-600 border border-[#d8d8d8] hover:bg-green-500 hover:text-white transition-all duration-300" onClick={() => AddCall(product)}>{t("add_to_cart")} <FaCartShopping />  </button>
+                    }
               </div>
             </div>
-          ))}
+            )
+          })}
         </div>
       </div>
     </div>

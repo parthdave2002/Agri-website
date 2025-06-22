@@ -84,7 +84,7 @@ const HelpModal: FC<HelpModalProps>= ({isOpenDelteModel, setisOpenDelteModel}) =
                                                                   id="name"
                                                                   name="name"
                                                                   className="w-full border-b border-green-600 focus:outline-none py-2"
-                                                                  placeholder="Enter your first name"
+                                                                   placeholder={t("enter_name")}
                                                                   type="text"
                                                                   onChange={validation.handleChange}
                                                                   onBlur={validation.handleBlur}
@@ -102,7 +102,7 @@ const HelpModal: FC<HelpModalProps>= ({isOpenDelteModel, setisOpenDelteModel}) =
                                                               id="phone_number"
                                                               name="phone_number"
                                                               className="w-full border-b border-green-600 focus:outline-none py-2"
-                                                              placeholder="Enter phone number"
+                                                              placeholder={t("enter_contect")}
                                                               type="number"
                                                               onChange={validation.handleChange}
                                                               onBlur={validation.handleBlur}
@@ -115,7 +115,7 @@ const HelpModal: FC<HelpModalProps>= ({isOpenDelteModel, setisOpenDelteModel}) =
 
                                                     <div className=' my-[2.5rem]'> 
                                                           <label className="text-md  block uppercase tracking-wide">{t("Message")}  <span className='text-red-500'>*</span> </label>
-                                                          <textarea placeholder="Enter your message" className="w-full border-b border-green-600 focus:outline-none py-2"   onChange={(e:any) => setMessageData(e.target.value)}/>
+                                                          <textarea  placeholder={t("enter_message")} className="w-full border-b border-green-600 focus:outline-none py-2"   onChange={(e:any) => setMessageData(e.target.value)}/>
                                                           {messageError ?  <FormFeedback type="invalid" className="text-red-500 text-sm"> Please Enter message  </FormFeedback>  : null }
                                                     </div>
                                             

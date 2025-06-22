@@ -12,7 +12,6 @@ const ContactusSection = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   
-
   const [ messageData, setMessageData] = useState("")
   const [ messageError, setMessageError] = useState(false)
 
@@ -81,7 +80,7 @@ const ContactusSection = () => {
                     id="name"
                     name="name"
                     className="w-full border-b border-green-600 focus:outline-none py-2"
-                    placeholder="Enter your name"
+                    placeholder={t("enter_name")}
                     type="text"
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
@@ -104,10 +103,10 @@ const ContactusSection = () => {
                   onBlur={validation.handleBlur}
                   value={validation.values.user_type || ""}
                 >
-                  <option value="" disabled hidden>   Select reason   </option>
-                  <option value="farmer">Farmer</option>
-                  <option value="job_application">Job Application</option>
-                  <option value="dealer">Dealer</option>
+                  <option value="" disabled hidden>    {t("select_reason")}   </option>
+                  <option value="farmer">{t("farmer")}</option>
+                  <option value="job_application">{t("job_application")}</option>
+                  <option value="dealer">{t("dealer")}</option>
                 </select>
 
                 {validation.touched.user_type && validation.errors.user_type && (
@@ -125,7 +124,7 @@ const ContactusSection = () => {
                     id="email"
                     name="email"
                     className="w-full border-b border-green-600 focus:outline-none py-2"
-                    placeholder="Enter your email"
+                    placeholder={t("enter_email")}
                     type="text"
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
@@ -143,7 +142,7 @@ const ContactusSection = () => {
                     id="phone_number"
                     name="phone_number"
                     className="w-full border-b border-green-600 focus:outline-none py-2"
-                    placeholder="Enter phone number"
+                    placeholder={t("enter_contect")}
                     type="number"
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
@@ -157,7 +156,7 @@ const ContactusSection = () => {
 
             <div className=' mt-[2.5rem]' >
               <label className="text-md  block mb-1 uppercase tracking-wide">{t("Message")}  <span className='text-red-500'>*</span> </label>
-              <textarea placeholder="Enter your message" className="w-full border-b border-green-600 focus:outline-none py-2" value={messageData} onChange={(e:any) => setMessageData(e.target.value)} />
+              <textarea placeholder={t("enter_message")}className="w-full border-b border-green-600 focus:outline-none py-2" value={messageData} onChange={(e:any) => setMessageData(e.target.value)} />
               {messageError ?  <FormFeedback type="invalid" className="text-red-500 text-sm"> Please Enter message  </FormFeedback>  : null }
             </div>
 

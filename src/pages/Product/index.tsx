@@ -5,17 +5,20 @@ import { Navigation, Autoplay } from 'swiper/modules';
 import { FaCartShopping } from 'react-icons/fa6';
 import { toast, ToastContainer } from "react-toastify";
 import { getProductlist, GetProductViewlist } from '../../Store/Product/action';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { CartItemProps, Product, ProductDetails } from '../../types/types';
 import { useTranslation } from "react-i18next";
-import CartSection from '../Cart/Cart';
-const IMG_URL = import.meta.env["VITE_API_URL"];
+// const IMG_URL = import.meta.env["VITE_API_URL"];
+const IMG_URL = import.meta.env.VITE_API_URL; 
 
 const ProductSection = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { i18n } = useTranslation();
+  const { t } =useTranslation();
+  const location = useLocation();
+
   const currentLang = i18n.language;
 
   useEffect(() => {
@@ -39,6 +42,24 @@ const ProductSection = () => {
     setCurrentCategory(data)
     setSearchData("")
   }
+
+   useEffect(() => {
+  const data = location.state?.filter;
+    if (data) {
+       const categoryKeyToLabelMap: Record<string, string> = {
+          "category.plant_protection": "Plant Protection",
+          "category.plant_nutrition": "Plant Nutrition",
+          "category.fertilizer": "Fertilizer",
+          "category.seed": "Seeds",
+          "category.hardware": "Hardware",
+          "category.animal_husbandry": "Animal Husbandry",
+        };
+           
+    const readableCategory = categoryKeyToLabelMap[data];
+    setCurrentCategory(readableCategory || "");
+
+    }
+  }, []);
   // -------- Category Data code end --------------
 
   //------------- Get data from redux code start -------------
@@ -216,10 +237,6 @@ const ProductSection = () => {
   }
 }, [CurrentCategory]);
 
-  const OrderPlaced = () => {
-    console.log("calll")
-  }
-
    return (
     <div>
        <div className="my-5 w-full flex flex-col items-center">
@@ -227,22 +244,21 @@ const ProductSection = () => {
 
            {/* Search Input (left side) */}
            <div className="flex flex-grow shadow-md rounded-xl overflow-hidden bg-white">
-             <input type="text" placeholder="Enter product name" className="flex-grow px-4 py-3 text-[18px] font-heading outline-none bg-gray-50" value={searchData} onChange={(e: any) => setSearchData(e.target.value)} />
-             <button className="bg-green-500 hover:bg-green-600 text-white px-5 py-3 text-[1.1rem] font-heading font-semibold transition" onClick={SearchCall} > Search </button>
+             <input type="text" placeholder={t("enter_product_name")} className="flex-grow px-4 py-3 text-[18px] font-heading outline-none bg-gray-50" value={searchData} onChange={(e: any) => setSearchData(e.target.value)} />
+             <button className="bg-green-500 hover:bg-green-600 text-white px-5 py-3 text-[1.1rem] font-heading font-semibold transition" onClick={SearchCall} > {t("search")} </button>
            </div>
 
            <div className="w-48 shadow-md rounded-xl overflow-hidden bg-white border border-gray-200">
              <select  className="w-full h-full px-4 py-3 text-[18px] font-heading bg-gray-50 outline-none rounded-xl"  value={CurrentCategory} onChange={(e) => handleDropdownChange(e.target.value)}>
-               <option value="">Select Category</option>
-               <option value="Plant Protection">Plant Protection</option>
-               <option value="Plant Nutrition">Plant Nutrition</option>
-               <option value="Fertilizer">Fertilizer</option>
-                <option value="Seeds">Seeds</option>
-               <option value="Hardware">Hardware</option>
-               <option value="Animal Husbandry">Animal Husbandry</option>
+               <option value=""> {t("category.select_category")}</option>
+               <option value="Plant Protection">{t("category.plant_protection")}</option>
+               <option value="Plant Nutrition">{t("category.plant_nutrition")}</option>
+               <option value="Fertilizer">{t("category.fertilizer")}</option>
+                <option value="Seeds">{t("category.seed")}</option>
+               <option value="Hardware">{t("category.hardware")}</option>
+               <option value="Animal Husbandry">{t("category.animal_husbandry")}</option>
              </select>
            </div>
-
          </div>
        </div>
 
@@ -250,12 +266,11 @@ const ProductSection = () => {
          <div className="md:grid  md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-1600">
           {products && products.map((product:any) => {
             const cartItem = cartItems.find((item: any) => item._id === product._id);
-            const quantity = cartItem ? cartItem.quantity : 1;
              return (
               <div key={product.id} className="relative p-4 bg-white border border-[#FBFBFB] shadow-[0px_5px_22px_rgba(0,0,0,0.04)] rounded-2xl mb-7 hover:shadow-[0px_21px_44px_rgba(0,0,0,0.08)] transition-shadow duration-300">
                 <figure className="bg-[#F9F9F9] rounded-[12px] text-center mb-4">
                   <Swiper modules={[Navigation, Autoplay]} spaceBetween={16} slidesPerView={1} loop={true} autoplay={{ delay: 3000, disableOnInteraction: false, }} >
-                    {product?.product_pics.map((img, index) => (
+                    {product?.product_pics.map((img:any, index:number) => (
                       <SwiperSlide key={index}>
                         <LazyLoadImage effect="blur"  src= {  `${IMG_URL}/public/product/${img}`}  alt={`Product image ${index + 1}`} className="mx-auto max-h-[210px] w-[12rem] h-[12rem] object-contain" />
                       </SwiperSlide>
@@ -267,7 +282,7 @@ const ProductSection = () => {
                   <h3 className="block w-full font-heading font-semibold text-[16px] leading-[25px] capitalize text-[#333333] mb-1 cursor-pointer truncate max-w-[11rem]" onClick={() => DetailspageCall(product?._id)}> {currentLang === 'gj' ? product?.name?.gujaratiname :   product?.name?.englishname} </h3>
                   <span className="font-normal font-heading text-[1rem] leading-[18px] flex gap-x-1">
                     <div> {product?.packaging}  </div>
-                    <div> {product?.packagingtype?.type_eng}  </div>
+                    <div>  {currentLang === 'gj' ? product?.packagingtype?.type_guj :  product?.packagingtype?.type_eng}   </div>
                   </span>
                 </div>
                 <div className="block w-full  font-heading font-semibold text-[16px] leading-[25px] capitalize text-[#222222] mb-1 cursor-pointer" onClick={() => DetailspageCall(product?.id)}>Rs. {product?.price} </div>
@@ -283,15 +298,15 @@ const ProductSection = () => {
                   )}
 
                     {cartItem ? 
-                        <button className="text-red-600 px-4 py-2 text-md flex items-end ml-[7rem] rounded-full justify-end border border-[#d8d8d8] hover:bg-red-100 transition-all duration-300 mt-4" onClick={() => removeFromCart(product?._id)} >  Remove from Cart </button>
-                    :  <button className="text-gray-50 px-4 py-2 text-md flex items-center gap-1 rounded-full flex items-center justify-center bg-green-600 border border-[#d8d8d8] hover:bg-green-500 hover:text-white transition-all duration-300" onClick={() => AddCall(product)}> Add to Cart <FaCartShopping />  </button>
+                        <button className="text-red-600 px-4 py-2 text-md flex items-end ml-[7rem] rounded-full justify-end border border-[#d8d8d8] hover:bg-red-100 transition-all duration-300 mt-4" onClick={() => removeFromCart(product?._id)} >  {t("remove_from_cart")}</button>
+                    :  <button className="text-gray-50 px-4 py-2 text-md flex items-center gap-1 rounded-full flex items-center justify-center bg-green-600 border border-[#d8d8d8] hover:bg-green-500 hover:text-white transition-all duration-300" onClick={() => AddCall(product)}> {t("add_to_cart")} <FaCartShopping />  </button>
                     }
                 </div>
               </div>
             )}
           )}
         </div>
-        : <div className='text-center text-2xl font-heading my-[12rem]'>No Data Found </div>}
+        : <div className='text-center text-2xl font-heading flex justify-center my-[6rem]'> <img src='/public/images/no-product-found.webp' /> </div>}
 
       <ToastContainer />
     </div>

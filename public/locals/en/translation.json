@@ -1,5 +1,5 @@
 {
-  "Missed Call To Order": "Missed Call To Order",
+  "call_us": " Call us",
   "9100029429 / 9100029329": "9100029429 / 9100029329",
 
   "Home": "Home",
@@ -78,7 +78,8 @@
     "fertilizer": "Fertilizer",
     "seed": "Seeds",
     "hardware": "Hardware",
-    "animal_husbandry": "Animal Husbandry"
+    "animal_husbandry": "Animal Husbandry",
+    "select_category":"Select Category"
   },
 
   "discount": {
@@ -141,5 +142,18 @@
   "100% secure payment": "100% secure payment",
   "Quality guarantee": " Quality guarantee",
   "Guaranteed savings": "Guaranteed savings",
-  "Daily offers": "Daily offers"
+  "Daily offers": "Daily offers",
+
+  "enter_name": "Enter your name",
+  "enter_email": "Enter your email",
+  "enter_contect" :"Enter phone number",
+  "enter_message" : "Enter message",
+  "enter_product_name" : "Enter product name",
+  "search" : "Search",
+  "select_reason": "Select reason",
+  "farmer": "Farmer",
+  "job_application": "Job Application",
+  "dealer": "Dealer",
+  "add_to_cart" : "Add to Cart",
+  "remove_from_cart" : "Remove from cart"
 }

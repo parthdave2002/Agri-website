@@ -18,7 +18,7 @@ const CategoryCarouselSection: React.FC = () => {
       ], []);
 
       const RedictCall = (data:any) =>{
-        navigate(data)
+        navigate("/product",{ state: { filter: data } })
       }
 
   return (
@@ -29,7 +29,7 @@ const CategoryCarouselSection: React.FC = () => {
         </div>
         <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-6 max-w-1600">
           {categoryData.map((item:any, idx:number) => (
-            <div key={idx} className="flex flex-col items-center text-center group cursor-pointer" onClick={() => RedictCall("/product")}>
+            <div key={idx} className="flex flex-col items-center text-center group cursor-pointer" onClick={() => RedictCall(item?.title)}>
               <div className="bg-gray-100 flex items-center justify-center group-hover:shadow-md transition rounded-full p-1"><LazyLoadImage effect="blur" src={item.img} alt={item.title} className=" object-contain rounded-full border-2 border-green-600" />  </div>
               <div className='mt-2 text-md md:text-[1rem] font-heading font-semibold   text-gray-800'>  {t(item.title)} </div>
             </div>

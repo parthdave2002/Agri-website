@@ -131,7 +131,7 @@ const JustarrivedSection: React.FC = () => {
                               <button className="w-[26px] h-[26px] text-center bg-white border-l border-[#E2E2E2] text-[#222222]"> + </button>
                           </div>
 
-                          <a href="#" className="text-blue-600 hover:underline text-sm flex items-center gap-1"> Add to Cart 🛒  </a>
+                          <a href="#" className="text-blue-600 hover:underline text-sm flex items-center gap-1"> {t("add_to_cart")}🛒  </a>
                       </div>
                   </div>
             </SwiperSlide>

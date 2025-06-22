@@ -8,15 +8,20 @@ import { useTranslation } from "react-i18next";
 import CartSection from "../../pages/Cart/Cart";
 import { useNavigate } from "react-router-dom";
 import { LazyLoadImage } from 'react-lazy-load-image-component';
-import { useDispatch } from "react-redux";
-import { AddLeadlist } from "../../Store/Lead/action";
+
 
 const Header: React.FC= ( ) => {
     const nagivate = useNavigate()
     const { t, i18n } = useTranslation();
-    const dispatch = useDispatch()
+
     const [language, setLanguage] = useState("en");
     const [isOpenlanguage, setIsOpenlang] = useState(false);
+
+    useEffect(() => {
+      const savedLang = localStorage.getItem("i18nextLng") || "en";
+      i18n.changeLanguage(savedLang);
+      setLanguage(savedLang);
+    }, []);
 
     const handleLanguageChange = (lang: string) => {
         i18n.changeLanguage(lang);
@@ -37,19 +42,10 @@ const Header: React.FC= ( ) => {
       nagivate(data)
     }
 
-      const [isOpenSuccessModal, setIsOpenSuccessModal] = useState<boolean>(false);
-      const OrderPlaced =() =>{
-                let requserdata = {
-                  type: "contactus"
-                };
-                // dispatch(AddLeadlist(requserdata));
-        setIsOpenSuccessModal(true)
-        setCartOpen(false)
-      }
     const [cartCount, setCartCount] = useState(0);
     useEffect(() => {
           const loadCart = () => {
-            const storedCart = localStorage.getItem("product");
+            const storedCart = localStorage.getItem("product");  
             if (storedCart) {
               const cartItems = JSON.parse(storedCart);
               setCartCount(cartItems?.length);
@@ -71,7 +67,7 @@ const Header: React.FC= ( ) => {
     <div className="w-full  bg-white mb-3">
         <div className="container border-b border-gray-100 mx-auto  py-1">
           <div className="md:flex justify-between">
-            <div className="text-green-600 font-heading font-semibold text-md md:text-[1rem] text-center"> {t('Missed Call To Order')} : {t("9100029429 / 9100029329")}</div>
+            <div className="text-green-600 font-heading font-semibold text-md md:text-[1rem] text-center"> {t('call_us')} : {t("9100029429 / 9100029329")}</div>
             <div className="flex gap-x-3 my-3 md:my-0 self-center justify-center">
               <a  target="_blank" rel='noopener noreferre'  href="https://chat.whatsapp.com/EpxTJUNTU8Q1NKUAS3RjBM"> <FaWhatsapp  className="text-gray-300 hover:text-green-500 cursor-pointer" size={22} /> </a>
               <a  target="_blank" rel='noopener noreferre'  href="https://www.instagram.com/agribharat.in?igsh=MXQwbnlwMmI5c3RvMw=="> <FaInstagram className="text-gray-300 hover:text-green-500 cursor-pointer" size={22} /> </a>
@@ -122,23 +118,8 @@ const Header: React.FC= ( ) => {
       </div>
     </div>
 
-     <CartSection  cartOpen={cartOpen} onClose={onClose} OrderPlaced={OrderPlaced} />
+     <CartSection  cartOpen={cartOpen} onClose={onClose} />
 
-         {isOpenSuccessModal == true ?
-             <Dialog open={isOpenSuccessModal} onClose={setIsOpenSuccessModal} className="relative z-10">
-                  <DialogBackdrop   transition  className="fixed inset-0 bg-gray-800/90 transition-opacity data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in"  />
-            
-                  <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
-                    <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-                      <DialogPanel transition  className="relative transform overflow-hidden rounded-lg p-6 bg-white text-left shadow-xl transition-all data-closed:translate-y-4 data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in sm:my-8 sm:w-full sm:max-w-lg data-closed:sm:translate-y-0 data-closed:sm:scale-95">
-                         <LazyLoadImage effect="blur" src="/public/images/Congratualtion-2.gif" />
-                          <button  type="button"  onClick={() => setIsOpenSuccessModal(false)}  className="inline-flex w-full justify-center rounded-md border border-green-600 px-[4rem] py-2 text-sm md:text-lg font-semibold hover:text-white shadow-xs hover:bg-green-600 sm:ml-3 sm:w-auto"  >   Okay </button>
-
-                      </DialogPanel>
-                    </div>
-                  </div>
-              </Dialog>
-        : null}
     </>
   );
 };

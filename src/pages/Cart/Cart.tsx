@@ -3,27 +3,30 @@ import { useEffect, useState } from "react";
 import { FaMinus, FaPlus, FaShoppingCart } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
 import { MdDelete } from "react-icons/md";
-import { LazyLoadImage } from 'react-lazy-load-image-component';
+import { LazyLoadImage } from "react-lazy-load-image-component";
 import { toast } from "react-toastify";
 import * as Yup from "yup";
 import { Form, Input, FormFeedback, Button } from "reactstrap";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
+import { AddLeadlist } from '../../Store/Lead/action';
+import { useLocation, useNavigate } from "react-router-dom";
+const IMG_URL = import.meta.env.VITE_API_URL; 
+// const IMG_URL = import.meta.env["VITE_API_URL"];
 
-const IMG_URL = import.meta.env["VITE_API_URL"];
-
-interface CartProps{
-    cartOpen ?: boolean;
-    onClose?: () => void;
-    OrderPlaced : any;
+interface CartProps {
+  cartOpen?: boolean;
+  onClose?: () => void;
 }
 
-const CartSection: React.FC  <CartProps>= ( { cartOpen, onClose, OrderPlaced,} ) => {
+const CartSection: React.FC<CartProps> = ({ cartOpen, onClose }) => {
   const [CartData, setCartData] = useState([]);
+  const location = useLocation();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { t } = useTranslation();
   
-  
+
   const handleDelete = (productId: string) => {
     const storedCart = localStorage.getItem("product");
     if (!storedCart) return;
@@ -36,185 +39,256 @@ const CartSection: React.FC  <CartProps>= ( { cartOpen, onClose, OrderPlaced,} )
   };
 
   useEffect(() => {
-      const loadCart = () => {
-        const storedCart = localStorage.getItem("product");
-        if (storedCart) {
-          const cartItems = JSON.parse(storedCart);
-          setCartData(cartItems);
-        } else {
-          setCartData([]);
-        }
-      };
+    const loadCart = () => {
+      const storedCart = localStorage.getItem("product");
+      if (storedCart) {
+        const cartItems = JSON.parse(storedCart);
+        setCartData(cartItems);
+      } else {
+        setCartData([]);
+      }
+    };
 
-      loadCart();
-      window.addEventListener("cartChanged", loadCart);
-      
-      return () => {
-        window.removeEventListener("cartChanged", loadCart);
-      };
+    loadCart();
+    window.addEventListener("cartChanged", loadCart);
+
+    return () => {
+      window.removeEventListener("cartChanged", loadCart);
+    };
   }, []);
 
-const totalAmount = CartData.reduce((sum: number, item: any) => {
-  return sum + item.price * item.quantity;
-}, 0);
+  const totalAmount = CartData.reduce((sum: number, item: any) => {
+    return sum + item.price * item.quantity;
+  }, 0);
 
-    const [initialValues, setinitialValues] = useState({
-      name: "",
-      email: "",
-      phone_number: ""
-    });
-  
-    const validation = useFormik({
-      enableReinitialize: true,
-      initialValues: initialValues,
-      
-      validationSchema: Yup.object({
-        name: Yup.string().required("Please enter  name"),
-        phone_number: Yup.number().required("Please enter phone number").min(10, "Phone number must be minimum 10 digits"),
-      }),
-          
-      onSubmit: (values) => {
+  const [initialValues, setinitialValues] = useState({
+    name: "",
+    email: "",
+    phone_number: "",
+  });
 
-        let requserdata = {
-          name: values?.name,
-          email : values?.email,
-          mobile_number: values?.phone_number,
-          type: "order"
-        };
-        console.log(requserdata);
-        
-        // dispatch(AddLeadlist(requserdata));
-        validation.resetForm();
-      },
-      });
-  
+  const validation = useFormik({
+    enableReinitialize: true,
+    initialValues: initialValues,
+
+    validationSchema: Yup.object({
+      name: Yup.string().required("Please enter  name"),
+      phone_number: Yup.number()
+        .required("Please enter phone number")
+        .min(10, "Phone number must be minimum 10 digits"),
+    }),
+
+    onSubmit: (values) => {
+      let requserdata = {
+        name: values?.name,
+        products : CartData.map((item: any) => ({
+          _id: item._id,
+          quantity: item.quantity,
+        })),
+        mobile_number: values?.phone_number,
+        type: "order",
+      };
+      dispatch(AddLeadlist(requserdata));
+      validation.resetForm();
+    },
+  });
+
+    // ------------- Get data from redux code start ------------- 
+      const Adddetail :any = useSelector((state:any) => state.Lead.AddLeaddatalist); 
+      useEffect(() => { 
+        if (Adddetail &&  location.pathname === "/product" ) { 
+           localStorage.removeItem("product")
+            setCartData([]);
+            window.dispatchEvent(new Event("cartChanged"));
+              if (onClose) {
+                onClose();
+              }
+              toast.success(Adddetail?.msg)
+            setTimeout(() =>{
+              navigate("/")
+            },3000)
+         
+          // dispatch(ResetLeadlist())
+        }
+      }, [Adddetail]); 
+    // ------------- Get data from redux code end -------------
 
   return (
     <>
-      <div className={`fixed top-0 right-0 z-[9999] h-full w-80  md:w-[25rem] bg-white shadow-lg transition-transform duration-300 ${  cartOpen ? "translate-x-0" : "translate-x-full" }`} aria-labelledby="My Cart"  role="dialog" >
+      <div
+        className={`fixed top-0 right-0 z-[9999] h-full w-80  md:w-[25rem] bg-white shadow-lg transition-transform duration-300 ${
+          cartOpen ? "translate-x-0" : "translate-x-full"
+        }`}
+        aria-labelledby="My Cart"
+        role="dialog"
+      >
         <div className="flex justify-between px-4  ">
-          <h4 className=" items-center  text-[2rem] font-semibold font-heading">  <span className="text-green-600 self-center flex gap-x-3"> Cart <FaShoppingCart className="self-center"  /></span> </h4>
-          <button  onClick={onClose}  className="text-gray-500 hover:text-gray-700" aria-label="Close"> <IoClose size={24} /></button>
+          <h4 className=" items-center  text-[2rem] font-semibold font-heading">
+            <span className="text-green-600 self-center flex gap-x-3">
+              Cart <FaShoppingCart className="self-center" />
+            </span>
+          </h4>
+          <button
+            onClick={onClose}
+            className="text-gray-500 hover:text-gray-700"
+            aria-label="Close"
+          >
+            <IoClose size={24} />
+          </button>
         </div>
 
         <div className="p-2 md:p-4 ">
-          <div className="md:h-[20rem]  md:max-h-[18rem] overflow-scroll" >
+          <div className="md:h-[20rem]  md:max-h-[18rem] overflow-scroll">
+            {CartData.length > 0 ? (
+              // <div>
+              //         {CartData && CartData.map(( item:any, k:number ) =>{
+              //             return(
+              //               <div key={k} className="flex items-center justify-between border-b py-3">
+              //                   <div className="flex items-center space-x-2">
+              //                     <div className="w-14 h-14 flex items-center justify-center rounded-full"> <LazyLoadImage effect="blur" src= {  `${IMG_URL}/public/product/${item?.product_pics[0]}`} alt={item?.title} className="w-14 h-14 object-contain" /> </div>
+              //                   </div>
 
-            {CartData.length  > 0 ? 
-                // <div>
-                //         {CartData && CartData.map(( item:any, k:number ) =>{
-                //             return(
-                //               <div key={k} className="flex items-center justify-between border-b py-3">
-                //                   <div className="flex items-center space-x-2">
-                //                     <div className="w-14 h-14 flex items-center justify-center rounded-full"> <LazyLoadImage effect="blur" src= {  `${IMG_URL}/public/product/${item?.product_pics[0]}`} alt={item?.title} className="w-14 h-14 object-contain" /> </div>
-                //                   </div>
+              //                   <div className="text-left md:max-w-[13rem] md:w-[13rem]  w-[10rem] md:max-w-[10rem]">
+              //                       <p className="text-md  md:text-md font-heading truncate">{item?.name?.englishname}</p>
+              //                      <div className="flex gap-x-3"> <p className="text-md md:text-md font-heading text-gray-800">₹{item?.price}</p>   X <p className="text-md md:text-md font-heading text-gray-800">{item?.quantity}</p>   </div>
+              //                       <p className="text-md md:text-md font-heading text-gray-800"> ₹{(item?.price * item?.quantity).toFixed(0)}</p>
+              //                   </div>
 
-                //                   <div className="text-left md:max-w-[13rem] md:w-[13rem]  w-[10rem] md:max-w-[10rem]">
-                //                       <p className="text-md  md:text-md font-heading truncate">{item?.name?.englishname}</p>
-                //                      <div className="flex gap-x-3"> <p className="text-md md:text-md font-heading text-gray-800">₹{item?.price}</p>   X <p className="text-md md:text-md font-heading text-gray-800">{item?.quantity}</p>   </div>
-                //                       <p className="text-md md:text-md font-heading text-gray-800"> ₹{(item?.price * item?.quantity).toFixed(0)}</p>  
-                //                   </div>
+              //                   <button  onClick={() => handleDelete(item?._id)} className="text-2xl  text-red-400 hover:text-red-600  rounded-full"  >  <MdDelete />   </button>
+              //               </div>
+              //             )
+              //         })}
+              // </div>
 
-                //                   <button  onClick={() => handleDelete(item?._id)} className="text-2xl  text-red-400 hover:text-red-600  rounded-full"  >  <MdDelete />   </button>
-                //               </div>
-                //             )
-                //         })}
-                // </div>
+              <div className="space-y-4">
+                {CartData &&  CartData.map((item: any, k: number) => (
+                    <div   key={k} className="flex gap-4 items-center p-4 border rounded-xl shadow-sm bg-white hover:shadow-md transition"   >
+                      {/* Product Image */}
+                      <div className="w-16 h-16 flex items-center justify-center rounded-lg border bg-gray-50">
+                        <LazyLoadImage
+                          effect="blur"
+                          src={`${IMG_URL}/public/product/${item?.product_pics[0]}`}
+                          alt={item?.title}
+                          className="w-full h-full object-contain"
+                        />
+                      </div>
 
-                <div className="space-y-4">
-  {CartData && CartData.map((item: any, k: number) => (
-    <div
-      key={k}
-      className="flex gap-4 items-center p-4 border rounded-xl shadow-sm bg-white hover:shadow-md transition"
-    >
-      {/* Product Image */}
-      <div className="w-16 h-16 flex items-center justify-center rounded-lg border bg-gray-50">
-        <LazyLoadImage
-          effect="blur"
-          src={`${IMG_URL}/public/product/${item?.product_pics[0]}`}
-          alt={item?.title}
-          className="w-full h-full object-contain"
-        />
-      </div>
+                      {/* Product Info */}
+                      <div className="flex-1">
+                        <p className="text-md font-semibold font-heading text-gray-900 truncate">
+                          {item?.name?.englishname}
+                        </p>
 
-      {/* Product Info */}
-      <div className="flex-1">
-        <p className="text-md font-semibold font-heading text-gray-900 truncate">
-          {item?.name?.englishname}
-        </p>
+                        <div className="flex items-center gap-2 mt-1 text-sm text-gray-700">
+                          <span>₹{item?.price}</span>
+                          <span className="font-medium">×</span>
+                          <span>{item?.quantity}</span>
+                        </div>
 
-        <div className="flex items-center gap-2 mt-1 text-sm text-gray-700">
-          <span>₹{item?.price}</span>
-          <span className="font-medium">×</span>
-          <span>{item?.quantity}</span>
+                        <p className="mt-1 text-base font-semibold text-green-700">
+                          ₹{(item?.price * item?.quantity).toFixed(2)}
+                        </p>
+                      </div>
+
+                      {/* Delete Button */}
+                      <button
+                        onClick={() => handleDelete(item?._id)}
+                        className="text-red-500 hover:text-red-700 transition"
+                        title="Remove from cart"
+                      >
+                        <MdDelete className="text-2xl" />
+                      </button>
+                    </div>
+                  ))}
+              </div>
+            ) : (
+           <div className="flex justify-center self-center">  <img src="/public/images/empty-cart.jpg"  height={260} width={260} /> </div>
+            )}
+          </div>
+         
+            <Form
+              onSubmit={(e) => {
+                e.preventDefault();
+                validation.handleSubmit();
+                return false;
+              }}
+              className="bg-white rounded-lg p-3 border rounded-xl shadow-sm bg-white hover:shadow-md transition my-3 text-gray-900 "
+            >
+               <div className="flex flex-col">
+              <div className="mb-2 flex justify-between">
+                <label className="text-md block uppercase tracking-wide self-center">   {t("First name")} <span className="text-red-500">*</span> </label>
+                <div className="">
+                  <Input
+                    id="name"
+                    name="name"
+                    className="w-[15rem] border-b border-green-600 focus:outline-none py-2"
+                    placeholder={t("enter_name")}
+                    type="text"
+                    onChange={validation.handleChange}
+                    onBlur={validation.handleBlur}
+                    value={validation.values.name || ""}
+                    invalid={
+                      validation.touched.name && validation.errors.name
+                        ? true
+                        : false
+                    }
+                  />
+                  {validation.touched.name && validation.errors.name ? (
+                    <FormFeedback
+                      type="invalid"
+                      className="text-red-500 text-sm"
+                    >
+                      {validation.errors.name}
+                    </FormFeedback>
+                  ) : null}
+                </div>
+              </div>
+
+              <div className=" mt-3  flex justify-between">
+                <label className="text-md block uppercase tracking-wide self-center">  {t("Phone")} <span className="text-red-500">*</span>  </label>
+
+                <div className="mt-1">
+                  <Input
+                    id="phone_number"
+                    name="phone_number"
+                    className="w-[15rem] border-b border-green-600 focus:outline-none py-2"
+                    placeholder={t("enter_contect")}
+                    type="number"
+                    onChange={validation.handleChange}
+                    onBlur={validation.handleBlur}
+                    value={validation.values.phone_number || ""}
+                    invalid={
+                      validation.touched.phone_number &&
+                      validation.errors.phone_number
+                        ? true
+                        : false
+                    }
+                  />
+                  {validation.touched.phone_number &&
+                  validation.errors.phone_number ? (
+                    <FormFeedback
+                      type="invalid"
+                      className="text-red-500 text-sm"
+                    >
+                      {validation.errors.phone_number}
+                    </FormFeedback>
+                  ) : null}
+                </div>
+              </div>
+         
+          </div>
+          <div className="p-4 border-t">
+            {  CartData.length > 0  ?
+            <button  type="submit" className="w-full bg-green-600 text-white py-2 rounded-lg text-xl hover:bg-green-700 transition font-heading" > Place Order : {totalAmount.toFixed(0)} Rs.  </button>
+              :
+            <div className="w-full bg-green-300 text-white py-2 rounded-lg text-xl text-center transition font-heading" > Place Order : {totalAmount.toFixed(0)} Rs.  </div>
+            }
+          </div>
+             </Form>
         </div>
-
-        <p className="mt-1 text-base font-semibold text-green-700">
-          ₹{(item?.price * item?.quantity).toFixed(2)}
-        </p>
       </div>
-
-      {/* Delete Button */}
-      <button onClick={() => handleDelete(item?._id)}  className="text-red-500 hover:text-red-700 transition" title="Remove from cart"    > <MdDelete className="text-2xl" /> </button>
-    </div>
-  ))}
-</div>
-
-             : "Your cart is empty"}
-
-           
-          </div>
-          <div className="flex flex-col">
-               <Form onSubmit={(e) => { e.preventDefault(); validation.handleSubmit(); return false; }}  className="bg-white rounded-lg p-3 border rounded-xl shadow-sm bg-white hover:shadow-md transition my-3 text-gray-900 ">
-                                                        <div className="mb-2 flex justify-between">
-                                                           <label className="text-md block uppercase tracking-wide self-center"> {t("First name")}  <span className='text-red-500'>*</span></label>
-                                                             <div className="">
-                                                                            <Input
-                                                                              id="name"
-                                                                              name="name"
-                                                                              className="w-[15rem] border-b border-green-600 focus:outline-none py-2"
-                                                                              placeholder="Enter your name"
-                                                                              type="text"
-                                                                              onChange={validation.handleChange}
-                                                                              onBlur={validation.handleBlur}
-                                                                              value={validation.values.name || ""}
-                                                                              invalid={validation.touched.name && validation.errors.name ? true : false}
-                                                                            />
-                                                                            {validation.touched.name && validation.errors.name ? (<FormFeedback type="invalid" className="text-red-500 text-sm"> {validation.errors.name} </FormFeedback>) : null}
-                                                              </div>
-                                                        </div>
-
-                                                         <div className=' mt-3  flex justify-between' >
-                                                                      <label className="text-md block uppercase tracking-wide self-center"> {t("Phone")}  <span className='text-red-500'>*</span></label>
-                                                      
-                                                                      <div className="mt-1">
-                                                                        <Input
-                                                                          id="phone_number"
-                                                                          name="phone_number"
-                                                                          className="w-[15rem] border-b border-green-600 focus:outline-none py-2"
-                                                                          placeholder="Enter phone number"
-                                                                          type="number"
-                                                                          onChange={validation.handleChange}
-                                                                          onBlur={validation.handleBlur}
-                                                                          value={validation.values.phone_number || ""}
-                                                                          invalid={validation.touched.phone_number && validation.errors.phone_number ? true : false}
-                                                                        />
-                                                                        {validation.touched.phone_number && validation.errors.phone_number ? (<FormFeedback type="invalid" className="text-red-500 text-sm"> {validation.errors.phone_number}  </FormFeedback>) : null}
-                                                                      </div>
-                                                                    </div>
-            
-
-                                                        
-                                                        
-                </Form>
-          </div>
-            <div className="p-4 border-t">  <button type="submit" className="w-full bg-green-600 text-white py-2 rounded-lg text-xl hover:bg-green-700 transition font-heading" >  Place Order : {totalAmount.toFixed(0)} Rs. </button> </div>
-        </div> 
-
-      </div>    
-
     </>
   );
-}
+};
 
-export default  CartSection
+export default CartSection;
