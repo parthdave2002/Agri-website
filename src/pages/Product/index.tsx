@@ -111,25 +111,17 @@ const ProductSection = () => {
 
     const AddCall = (item: ProductDetails) => {
        window.scrollTo({ top: 0, behavior: "smooth"});
-      const quantity = productQuantities[item._id] || 1;
-      const alreadyInCart = cartItems.some((i: any) => i._id === item._id);
-      if (alreadyInCart) {
-        toast.info("Product is already in the cart.");
-        return;
-      }
+      const quantity = typeof productQuantities[item._id] !== "undefined" ? productQuantities[item._id]  : 1;
 
       setCartItems((prevItems: any) => {
-         const existingIndex = prevItems.findIndex((i: any) => i._id === item._id);
+          const existingIndex = prevItems.findIndex((i: any) => i._id === item._id);
+        
+         if (existingIndex > -1) {
+            // toast.info("Product is already in the cart.");
+            return prevItems;
+          }
 
-            let updatedCart;
-            if (existingIndex > -1) {
-              const updated = [...prevItems];
-              updated[existingIndex].quantity += 1;
-              updatedCart = updated;
-            } else {
-              updatedCart = [...prevItems, { ...item, quantity }];
-            }
-
+          const updatedCart = [...prevItems, { ...item, quantity }];
             localStorage.setItem("product", JSON.stringify(updatedCart));
             window.dispatchEvent(new Event("cartChanged"));
             return updatedCart;
@@ -272,7 +264,7 @@ const ProductSection = () => {
                   <Swiper modules={[Navigation, Autoplay]} spaceBetween={16} slidesPerView={1} loop={true} autoplay={{ delay: 3000, disableOnInteraction: false, }} >
                     {product?.product_pics.map((img:any, index:number) => (
                       <SwiperSlide key={index}>
-                        <LazyLoadImage effect="blur"  src= {  `${IMG_URL}/public/product/${img}`}  alt={`Product image ${index + 1}`} className="mx-auto max-h-[210px] w-[12rem] h-[12rem] object-contain" />
+                        <LazyLoadImage effect="blur"  src= {  `${IMG_URL}/public/product/${img}`}  alt={`Product image ${index + 1}`} className="mx-auto max-h-[210px] w-[12rem] h-[12rem] object-contain cursor-pointer"  onClick={() => DetailspageCall(product?._id)} />
                       </SwiperSlide>
                     ))}
                   </Swiper>

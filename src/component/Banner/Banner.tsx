@@ -23,9 +23,9 @@ const BannerSection: React.FC = () => {
   // ------------- Get data from redux code end -------------
 
   return (
-     <section className="py-8 bg-[url('/images/background-pattern.jpg')] bg-no-repeat bg-cover ">
-      <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 ">
-        <div className="">
+     <section className=" bg-[url('/images/background-pattern.jpg')] bg-no-repeat bg-cover ">
+      <div className="max-w-7xl mx-auto  grid grid-cols-1 ">
+        <div className="z-6">
           <Swiper   modules={[ Pagination, Scrollbar, A11y, Autoplay ]}  spaceBetween={50}   autoplay={{ delay: 5000, disableOnInteraction: false }}   loop className="rounded-xl overflow-hidden" >
             {bannerSlides.map((item:any, i:number) => (
                 <SwiperSlide>
@@ -40,7 +40,7 @@ const BannerSection: React.FC = () => {
                             <img src={item.img} alt="Smoothie Bottle" className="h-[30rem] object-contain" />
                         </div>
                     </div> */}
-                       <img src={  `${IMG_URL}/public/banner/${item?.banner_pic}`}  key={i} alt={item?.banner_pic} className="h-[30rem] object-contain" />
+                       <img src={  `${IMG_URL}/public/banner/${item?.banner_pic}`}  key={i} alt={item?.banner_pic} className="h-[30rem] object-contain z-6" />
                 </SwiperSlide>
             ))}
           </Swiper>

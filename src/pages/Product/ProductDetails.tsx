@@ -63,23 +63,15 @@ const ProductDetailsSection = () => {
     const AddCall = (item: ProductDetails) => {
        window.scrollTo({ top: 0, behavior: "smooth"});
       const quantity = productQuantities[item._id] || 1;
-      const alreadyInCart = cartItems.some((i: any) => i._id === item._id);
-      if (alreadyInCart) {
-        toast.info("Product is already in the cart.");
-        return;
-      }
 
       setCartItems((prevItems: any) => {
          const existingIndex = prevItems.findIndex((i: any) => i._id === item._id);
+           if (existingIndex > -1) {
+            // toast.info("Product is already in the cart.");
+            return prevItems;
+          }
 
-            let updatedCart;
-            if (existingIndex > -1) {
-              const updated = [...prevItems];
-              updated[existingIndex].quantity += 1;
-              updatedCart = updated;
-            } else {
-              updatedCart = [...prevItems, { ...item, quantity }];
-            }
+            const updatedCart = [...prevItems, { ...item, quantity }];
 
             localStorage.setItem("product", JSON.stringify(updatedCart));
             window.dispatchEvent(new Event("cartChanged"));
@@ -226,9 +218,11 @@ const ProductDetailsSection = () => {
                 <button className="w-[60px] h-[35px] text-center bg-gray-200 hover:bg-green-600 border-l border-green-600 text-[#222222]" onClick={() => incrementQty( productsData!._id)}>+</button>
               </div>
 
-              <button className="text-gray-50 px-4 py-2 text-md flex items-center gap-1 rounded-full bg-green-600 border border-[#d8d8d8] hover:bg-green-500 hover:text-white transition-all duration-300"  onClick={() => productsData && AddCall(productsData)}> 
-               {t("add_to_cart")} <FaCartShopping />
-              </button>
+                 {!cartItems ? 
+                      <button className="text-red-600 px-4 py-2 text-md flex items-end ml-[7rem] rounded-full justify-end border border-[#d8d8d8] hover:bg-red-100 transition-all duration-300 mt-4" onClick={() => productsData &&  removeFromCart(productsData?._id)} > {t("remove_from_cart")} </button>
+                    :  
+                    <button className="text-gray-50 px-4 py-2 text-md flex items-center gap-1 rounded-full bg-green-600 border border-[#d8d8d8] hover:bg-green-500 hover:text-white transition-all duration-300"  onClick={() => productsData && AddCall(productsData)}>    {t("add_to_cart")} <FaCartShopping /> </button>
+                }
             </div>
           </div>
         </div>

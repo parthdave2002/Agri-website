@@ -113,6 +113,9 @@ const CartSection: React.FC<CartProps> = ({ cartOpen, onClose }) => {
       }, [Adddetail]); 
     // ------------- Get data from redux code end -------------
 
+    console.log("CartData",CartData);
+    
+
   return (
     <>
       <div
@@ -140,26 +143,6 @@ const CartSection: React.FC<CartProps> = ({ cartOpen, onClose }) => {
         <div className="p-2 md:p-4 ">
           <div className="md:h-[20rem]  md:max-h-[18rem] overflow-scroll">
             {CartData.length > 0 ? (
-              // <div>
-              //         {CartData && CartData.map(( item:any, k:number ) =>{
-              //             return(
-              //               <div key={k} className="flex items-center justify-between border-b py-3">
-              //                   <div className="flex items-center space-x-2">
-              //                     <div className="w-14 h-14 flex items-center justify-center rounded-full"> <LazyLoadImage effect="blur" src= {  `${IMG_URL}/public/product/${item?.product_pics[0]}`} alt={item?.title} className="w-14 h-14 object-contain" /> </div>
-              //                   </div>
-
-              //                   <div className="text-left md:max-w-[13rem] md:w-[13rem]  w-[10rem] md:max-w-[10rem]">
-              //                       <p className="text-md  md:text-md font-heading truncate">{item?.name?.englishname}</p>
-              //                      <div className="flex gap-x-3"> <p className="text-md md:text-md font-heading text-gray-800">₹{item?.price}</p>   X <p className="text-md md:text-md font-heading text-gray-800">{item?.quantity}</p>   </div>
-              //                       <p className="text-md md:text-md font-heading text-gray-800"> ₹{(item?.price * item?.quantity).toFixed(0)}</p>
-              //                   </div>
-
-              //                   <button  onClick={() => handleDelete(item?._id)} className="text-2xl  text-red-400 hover:text-red-600  rounded-full"  >  <MdDelete />   </button>
-              //               </div>
-              //             )
-              //         })}
-              // </div>
-
               <div className="space-y-4">
                 {CartData &&  CartData.map((item: any, k: number) => (
                     <div   key={k} className="flex gap-4 items-center p-4 border rounded-xl shadow-sm bg-white hover:shadow-md transition"   >
@@ -169,7 +152,7 @@ const CartSection: React.FC<CartProps> = ({ cartOpen, onClose }) => {
                           effect="blur"
                           src={`${IMG_URL}/public/product/${item?.product_pics[0]}`}
                           alt={item?.title}
-                          className="w-full h-full object-contain"
+                          className="w-[3rem] h-[3rem] object-contain"
                         />
                       </div>
 

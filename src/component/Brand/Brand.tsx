@@ -61,10 +61,10 @@ const BrandCarouselSection: React.FC = () => {
           <div className="w-full overflow-hidden bg-white py-4">
             <Marquee loop={0} speed={50} pauseOnClick={true} autoFill={true}>
               {brandData.map((item, index) => (
-                <div key={index} className="flex-shrink-0 w-32 mx-10 flex items-center justify-center">
+                <div key={index} className="flex-shrink-0 w-36 mx-10 flex items-center text-center justify-center">
                   <div className='flex flex-col '>
-                    <LazyLoadImage effect="blur" src={item.img}  className="max-h-full max-w-full object-contain" />
-                    <h3 className="text-lg text-center font-heading font-bold text-gray-900 mt-2">{item.subtitle}</h3>
+                    <LazyLoadImage effect="blur" src={item.img}  className="h-20 w-20 object-contain"   />
+                    <h3 className="text-base font-semibold text-gray-900 mt-2 leading-tight">{item.subtitle}</h3>
                   </div>
                 </div>
               ))}
