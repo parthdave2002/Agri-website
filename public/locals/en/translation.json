@@ -48,29 +48,36 @@
   },
 
   "testimonial1": {
-    "name": "Dhirubhai Solanki",
-    "message": "I used AgriBharat’s seeds this season, and the results are amazing! The plants are healthy, the growth is strong, and I’m expecting a great harvest. Very satisfied with the quality."
+    "name": "Hiteshbhai Vaja",
+    "village" : "Gir Devli, Kodinar",
+    "message": " The seeds, tarpaulin, and medicines I purchased from AgriBharat proved to be very effective. The plant growth improved significantly with the use of their products, and the overall crop quality is much better than before."
   },
   "testimonial2": {
-    "name": "Hasmukhbhai Chudasama",
-    "message": "I bought sesame seeds from AgriBharat, and I’m very happy with the results. The germination was excellent, and the crop is growing really well. I will definitely recommend it to other farmers."
+    "name": "Mohanbhai Damliya",
+    "village" : "Olwan, Una",
+    "message": "I ordered seeds and pesticides for cotton from AgriBharat, and my crop looks the healthiest in the entire village. Now, I prefer to purchase all my farming supplies only from here."
   },
-  "testimonial3": {
-    "name": "Ashvinbhai Vanja",
-    "message": "I ordered seeds and a tarpaulin sheet from AgriBharat. Everything was delivered on time and in perfect condition. I’m very satisfied with the quality. AgriBharat is truly supporting farmers like me."
-  },
-  "testimonial4": {
-    "name": "Arajanbhai Vala",
-    "message": "The battery sprayer I bought from Agri Bharat is working great in my fields. It has made pesticide application so much easier. Their service is also very helpful and quick."
-  },
-    "testimonial5": {
+    "testimonial3": {
     "name": "Chandrsinh Gohil",
+    "village" : "Podapdar, Una",
     "message": "I bought seeds from Agri Bharat. The packing, delivery, and seed quality are all top-class. Will definitely order again. Thanks to Agri Bharat for supporting farmers."
   },
-    "testimonial6": {
+   "testimonial4": {
+    "name": "Hasmukhbhai Chudasama",
+    "village" : "Ghantvar, Kodinar",
+    "message": "I bought sesame seeds from AgriBharat, and I’m very happy with the results. The germination was excellent, and the crop is growing really well. I will definitely recommend it to other farmers."
+  },
+    "testimonial5": {
     "name": "Nareshbhai Goswami",
+    "village" : "Morvad, Kodinar",
     "message": "I ordered a battery sprayer from Agri Bharat. It was delivered quickly and works perfectly. Very useful for spraying across my farm with less effort. Thank you, Agri Bharat!."
   },
+    "testimonial6": {
+    "name": "Dhirubhai Solanki",
+    "village" : "Kajardi, Una",
+    "message": "I used AgriBharat’s seeds this season, and the results are amazing! The plants are healthy, the growth is strong, and I’m expecting a great harvest. Very satisfied with the quality."
+  },
+ 
 
   "category": {
     "plant_protection": "Plant Protection",
@@ -155,5 +162,6 @@
   "job_application": "Job Application",
   "dealer": "Dealer",
   "add_to_cart" : "Add to Cart",
-  "remove_from_cart" : "Remove from cart"
+  "remove_from_cart" : "Remove from cart",
+  "advisor_contact_success": "Our Advisor will contact you soon."
 }

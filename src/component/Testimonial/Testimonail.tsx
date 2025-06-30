@@ -17,44 +17,44 @@ const TestimonailSection = () => {
   const testimonials: Testimonial[] = [
     {
       name: 'testimonial1.name',
-      position: 'Cotton',
+      position: 'testimonial1.village',
       message:'testimonial1.message',
-      image: '/public/images/farmer/Dhirubhai Solanki.jpeg',
+      image: '/public/images/farmer/Hiteshbhai Vaja.jpeg',
       rating: 4,
     },
     {
       name: 'testimonial2.name',
-      position: 'Sesame',
+      position: 'testimonial2.village',
       message:'testimonial2.message',
-      image: '/public/images/farmer/Hasmukhbhai Chudasama.jpeg',
+      image: '/public/images/farmer/Mohanbhai Damaliya.jpeg',
       rating: 5,
     },
     {
       name: 	"testimonial3.name",
-      position: 'Farmer',
+      position:  'testimonial3.village',
       message : 'testimonial3.message',
-      image: '/public/images/farmer/Ashvinbhai vanja.jpeg',
+      image: '/public/images/farmer/Chandrsinh Gohil.jpeg',
        rating: 5,
     },
     {
       name: 'testimonial4.name',
-      position: 'Farmer',
+      position:  'testimonial4.village',
       message:'testimonial4.message',
-      image: '/public/images/farmer/Arajan Vala.jpeg',
+      image: '/public/images/farmer/Hasmukhbhai Chudasama.jpeg',
        rating: 5,
     },
     {
       name: 	"testimonial5.name",
-      position: 'Farmer',
+      position:  'testimonial5.village',
       message : 'testimonial5.message',
-      image: '/public/images/farmer/Chandrsinh Gohil.jpeg',
+      image: '/public/images/farmer/Nareshbhai goswami.jpeg',
        rating: 4,
     },
     {
       name: 'testimonial6.name',
-      position: 'Farmer',
+      position: 'testimonial6.village',
       message:"testimonial6.message",
-      image: '/public/images/farmer/Nareshbhai goswami.jpeg',
+      image: '/public/images/farmer/Dhirubhai Solanki.jpeg',
        rating: 5,
     },
   ];
@@ -85,7 +85,7 @@ const TestimonailSection = () => {
                       />
                       <div>
                         <h4 className="text-lg font-semibold text-gray-900">{t(testimonial?.name)}</h4>
-                        <p className="text-sm text-gray-500">{testimonial?.position}</p>
+                        <p className="text-sm text-gray-500">{t(testimonial?.position)}</p>
                       </div>
                     </div>
 

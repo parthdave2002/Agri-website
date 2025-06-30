@@ -35,7 +35,7 @@ const BrandCarouselSection: React.FC = () => {
   { img: 'images/company/osianLogo.webp', subtitle: 'Osian'},
   // { img: 'images/company/otlawebLogo.webp', subtitle: 'Otlaweb' },
   { img: 'images/company/PiLogo.webp', subtitle: 'Pi', },
-  // { img: 'images/company/rainbiotechLogo.webp', subtitle: 'Rain Biotech' },
+  { img: 'images/company/rainbiotechLogo.webp', subtitle: 'Rain Biotech' },
   { img: 'images/company/rallisLogo.webp', subtitle: 'Rallis'},
   // { img: 'images/company/seminisLogo.webp', subtitle: 'Seminis'},
   { img: 'images/company/spraywellLogo.webp', subtitle: 'Spraywell'},

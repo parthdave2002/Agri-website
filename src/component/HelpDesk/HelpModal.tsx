@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import type { FC, PropsWithChildren } from "react";
 import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react'
 import { Form, Input, FormFeedback, Button } from "reactstrap";
 import * as Yup from "yup";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useFormik } from 'formik';
-import { AddLeadlist } from '../../Store/Lead/action';
+import { AddLeadlist, ResetLeadlist } from '../../Store/Lead/action';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
 import ToastMessage from '../ToastMessage';
@@ -18,7 +18,7 @@ interface HelpModalProps{
 const HelpModal: FC<HelpModalProps>= ({isOpenDelteModel, setisOpenDelteModel}) => {
     const dispatch = useDispatch()
     const { t } = useTranslation();
-
+    const [formSubmitted, setFormSubmitted] = useState(false);
       const [ messageData, setMessageData] = useState("")
       const [ messageError, setMessageError] = useState(false)
 
@@ -48,15 +48,25 @@ const HelpModal: FC<HelpModalProps>= ({isOpenDelteModel, setisOpenDelteModel}) =
           type: "help"
         };
         dispatch(AddLeadlist(requserdata));
+        setFormSubmitted(true);
+        toast.success(t('advisor_contact_success'));
+      },
+      });
+
+  // ------------- Get data from redux code start ------------- 
+     const Adddetail :any = useSelector((state:any) => state.Lead.AddLeaddatalist); 
+      useEffect(() => { 
+       if (formSubmitted  && Adddetail) { 
         validation.resetForm();
         setMessageData("");
         setisOpenDelteModel(false)
         setMessageError(false);
-        setTimeout(() =>{
-          toast.success("Your Request submited. We are contact you shortly!!")
-        },2000)
-      },
-      });
+        toast.success(t('advisor_contact_success'));
+        dispatch(ResetLeadlist()) 
+        setFormSubmitted(false)
+       }
+    }, [Adddetail]); 
+  // ------------- Get data from redux code end -------------
 
   return (
     <div>

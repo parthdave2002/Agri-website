@@ -11,7 +11,7 @@ import ToastMessage from '../../component/ToastMessage';
 const ContactusSection = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  
+  const [formSubmitted, setFormSubmitted] = useState(false);
   const [ messageData, setMessageData] = useState("")
   const [ messageError, setMessageError] = useState(false)
 
@@ -44,18 +44,20 @@ const ContactusSection = () => {
         type: "contactus"
       };
       dispatch(AddLeadlist(requserdata));
-      validation.resetForm();
-      setMessageError(false);
-      setMessageData("");
+      setFormSubmitted(true)
     },
     });
 
   // ------------- Get data from redux code start ------------- 
     const Adddetail :any = useSelector((state:any) => state.Lead.AddLeaddatalist); 
     useEffect(() => { 
-      if (Adddetail ) { 
-        toast.success(Adddetail?.msg);
-        // dispatch(ResetLeadlist())
+      if (formSubmitted && Adddetail  && validation?.resetForm ) { 
+        toast.success(t('advisor_contact_success'));
+        dispatch(ResetLeadlist())
+        validation.resetForm();
+        setMessageError(false);
+        setMessageData("");
+        setFormSubmitted(false);
       }
     }, [Adddetail]); 
   // ------------- Get data from redux code end -------------
@@ -143,10 +145,10 @@ const ContactusSection = () => {
                     name="phone_number"
                     className="w-full border-b border-green-600 focus:outline-none py-2"
                     placeholder={t("enter_contect")}
-                    type="number"
+                    type="tel"
                     onChange={validation.handleChange}
                     onBlur={validation.handleBlur}
-                    value={validation.values.phone_number || ""}
+                    value={validation.values.phone_number?.toString() || ""}
                     invalid={validation.touched.phone_number && validation.errors.phone_number ? true : false}
                   />
                   {validation.touched.phone_number && validation.errors.phone_number ? (<FormFeedback type="invalid" className="text-red-500 text-sm"> {validation.errors.phone_number}  </FormFeedback>) : null}

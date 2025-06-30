@@ -29,7 +29,7 @@ function* onAddLeadlist({ payload: requstuser }) {
     const response = yield call(AddLeadlistApi, requstuser);
     yield put(AddLeadlistSuccess(ADD_LEAD_LIST, response));
   } catch (error) {
-    toast.error(error)
+    toast.error(error?.msg)
     yield put(AddLeadlistFail(error));
   }
 }
@@ -57,9 +57,9 @@ function* onDelCropList({ payload: requstuser }) {
   }
 }
 
-function* onResetLeadlist({ payload: requstuser }) {
-    const response = yield call(ResetLeadlist);
-    yield put(ResetLeadlistSuccess(RESET_LEAD_LIST, response));
+function* onResetLeadlist() {
+  const response = yield call(ResetLeadlist);
+  yield put(ResetLeadlistSuccess(RESET_LEAD_LIST, response));
 }
 
 function* LeadSaga() {

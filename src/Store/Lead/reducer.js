@@ -111,7 +111,7 @@ const LeadData = (state = INIT_STATE, action) => {
           return { ...state };
       }
 
-    case RESET_LEAD_LIST_SUCCESS:
+     case RESET_LEAD_LIST_SUCCESS:
         switch (action.payload.actionType) {
           case RESET_LEAD_LIST:
             return {
@@ -123,8 +123,8 @@ const LeadData = (state = INIT_STATE, action) => {
               AddLeaddatalist: [],
               error: {},
             };
-      }
-    case RESET_LEAD_LIST_ERROR:
+        }
+      case RESET_LEAD_LIST_ERROR:
         switch (action.payload.actionType) {
           case RESET_LEAD_LIST:
             return {
@@ -133,7 +133,7 @@ const LeadData = (state = INIT_STATE, action) => {
             };
           default:
             return { ...state };
-      }
+        }
  
     default:
       return state;  

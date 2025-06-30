@@ -9,7 +9,7 @@ import * as Yup from "yup";
 import { Form, Input, FormFeedback, Button } from "reactstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
-import { AddLeadlist } from '../../Store/Lead/action';
+import { AddLeadlist, ResetLeadlist } from '../../Store/Lead/action';
 import { useLocation, useNavigate } from "react-router-dom";
 const IMG_URL = import.meta.env.VITE_API_URL; 
 // const IMG_URL = import.meta.env["VITE_API_URL"];
@@ -25,7 +25,6 @@ const CartSection: React.FC<CartProps> = ({ cartOpen, onClose }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  
 
   const handleDelete = (productId: string) => {
     const storedCart = localStorage.getItem("product");
@@ -38,14 +37,13 @@ const CartSection: React.FC<CartProps> = ({ cartOpen, onClose }) => {
     toast.success("Product removed from cart.");
   };
 
+  const [formSubmitted, setFormSubmitted] = useState(false);
   useEffect(() => {
     const loadCart = () => {
       const storedCart = localStorage.getItem("product");
       if (storedCart) {
         const cartItems = JSON.parse(storedCart);
         setCartData(cartItems);
-      } else {
-        setCartData([]);
       }
     };
 
@@ -90,30 +88,31 @@ const CartSection: React.FC<CartProps> = ({ cartOpen, onClose }) => {
       };
       dispatch(AddLeadlist(requserdata));
       validation.resetForm();
+       setFormSubmitted(true);  
     },
   });
 
     // ------------- Get data from redux code start ------------- 
       const Adddetail :any = useSelector((state:any) => state.Lead.AddLeaddatalist); 
+             
       useEffect(() => { 
-        if (Adddetail &&  location.pathname === "/product" ) { 
+        if (formSubmitted  && Adddetail &&  location.pathname === "/product" ) { 
            localStorage.removeItem("product")
             setCartData([]);
             window.dispatchEvent(new Event("cartChanged"));
               if (onClose) {
                 onClose();
               }
-              toast.success(Adddetail?.msg)
+              toast.success(t('advisor_contact_success'));
+              // dispatch(ResetLeadlist())
             setTimeout(() =>{
               navigate("/")
             },3000)
-         
-          // dispatch(ResetLeadlist())
         }
       }, [Adddetail]); 
     // ------------- Get data from redux code end -------------
 
-    console.log("CartData",CartData);
+  
     
 
   return (
