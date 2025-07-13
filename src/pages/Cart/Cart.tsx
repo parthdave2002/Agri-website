@@ -34,7 +34,6 @@ const CartSection: React.FC<CartProps> = ({ cartOpen, onClose }) => {
     localStorage.setItem("product", JSON.stringify(updatedCart));
     setCartData(updatedCart);
     window.dispatchEvent(new Event("cartChanged"));
-    toast.success("Product removed from cart.");
   };
 
   const [formSubmitted, setFormSubmitted] = useState(false);
@@ -118,7 +117,7 @@ const CartSection: React.FC<CartProps> = ({ cartOpen, onClose }) => {
   return (
     <>
       <div
-        className={`fixed top-0 right-0 z-[9999] h-full w-80  md:w-[25rem] bg-white shadow-lg transition-transform duration-300 ${
+        className={`fixed top-0 right-0 z-[9999] h-full w-full  md:w-[25rem] bg-white shadow-lg transition-transform duration-300 ${
           cartOpen ? "translate-x-0" : "translate-x-full"
         }`}
         aria-labelledby="My Cart"
@@ -184,7 +183,7 @@ const CartSection: React.FC<CartProps> = ({ cartOpen, onClose }) => {
                   ))}
               </div>
             ) : (
-           <div className="flex justify-center self-center">  <img src="/public/images/empty-cart.jpg"  height={260} width={260} /> </div>
+           <div className="flex justify-center self-center">  <img src="/images/empty-cart.jpg"  height={260} width={260} /> </div>
             )}
           </div>
          
@@ -203,7 +202,7 @@ const CartSection: React.FC<CartProps> = ({ cartOpen, onClose }) => {
                   <Input
                     id="name"
                     name="name"
-                    className="w-[15rem] border-b border-green-600 focus:outline-none py-2"
+                    className="w-[13rem] md:w-[15rem]  border-b border-green-600 focus:outline-none py-2"
                     placeholder={t("enter_name")}
                     type="text"
                     onChange={validation.handleChange}
@@ -233,7 +232,7 @@ const CartSection: React.FC<CartProps> = ({ cartOpen, onClose }) => {
                   <Input
                     id="phone_number"
                     name="phone_number"
-                    className="w-[15rem] border-b border-green-600 focus:outline-none py-2"
+                    className="w-[13rem] md:w-[15rem] border-b border-green-600 focus:outline-none py-2"
                     placeholder={t("enter_contect")}
                     type="number"
                     onChange={validation.handleChange}

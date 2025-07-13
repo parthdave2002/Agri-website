@@ -14,7 +14,7 @@ const PromoBannerSection: React.FC = () => {
                 <p className="text-gray-900 md:text-[1.2rem] mb-4"> Very tasty & creamy vanilla flavour creamy muffins. </p>
                 <a  href="#" className="inline-block bg-black text-white uppercase text-sm font-semibold px-4 py-2 rounded hover:bg-gray-800 transition"  > Show Now</a>
               </div> */}
-              <img src="/public/images/banner/Chocolate.webp" />
+              <img src="/images/banner/Chocolate.webp" />
             </div>
           </div>
 
@@ -27,7 +27,7 @@ const PromoBannerSection: React.FC = () => {
                 <p className="text-gray-900 md:text-[1.2rem] mb-4"> Very tasty & creamy vanilla flavour creamy muffins. </p>
                 <a href="#" className="inline-block bg-black text-white uppercase text-sm font-semibold px-4 py-2 rounded hover:bg-gray-800 transition"  >  Show Now </a>
               </div> */}
-               <img src="/public/images/banner/Ice cream.webp" />
+               <img src="/images/banner/Ice cream.webp" />
             </div>
           </div>
         </div>

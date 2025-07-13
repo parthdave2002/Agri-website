@@ -134,7 +134,7 @@ const HelpModal: FC<HelpModalProps>= ({isOpenDelteModel, setisOpenDelteModel}) =
                                         </div>
 
                                         <div className="w-full md:w-1/2 col-md-6 p-5">
-                                          <div className="mb-4"> <img src='/public/images/need-help.jpeg' /> </div>
+                                          <div className="mb-4"> <img src='/images/need-help.jpeg' /> </div>
                                         </div>
                                        
                                      </div>

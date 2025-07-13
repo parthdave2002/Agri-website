@@ -40,7 +40,7 @@ const BannerSection: React.FC = () => {
                             <img src={item.img} alt="Smoothie Bottle" className="h-[30rem] object-contain" />
                         </div>
                     </div> */}
-                       <img src={  `${IMG_URL}/public/banner/${item?.banner_pic}`}  key={i} alt={item?.banner_pic} className="h-[30rem] object-contain z-6" />
+                       <img src={  `${IMG_URL}/public/banner/${item?.banner_pic}`}  key={i} alt={item?.banner_pic} className="object-contain z-6" />
                 </SwiperSlide>
             ))}
           </Swiper>

@@ -101,7 +101,6 @@ const ProductDetailsSection = () => {
     setCartItems(updatedCart);
     localStorage.setItem("product", JSON.stringify(updatedCart));
     window.dispatchEvent(new Event("cartChanged"));
-    toast.info("Product removed from cart.");
   };
 
     const incrementQty = (productId: string) => {
@@ -158,7 +157,7 @@ const ProductDetailsSection = () => {
                     effect="blur"
                     src={`${IMG_URL}/public/product/${encodeURIComponent(img)}`}
                     alt={`Product image ${index + 1}`}
-                    className="w-full  h-auto object-contain mx-auto"
+                    className="w-full  h-auto max-h-[30rem] object-contain mx-auto"
                   />
                 </SwiperSlide>
               ))}
@@ -167,7 +166,7 @@ const ProductDetailsSection = () => {
           </div>
 
           {/* RIGHT - Details */}
-          <div className='flex-1 px-[3rem]'>
+          <div className='flex-1 px-[1rem] md:px-[3rem]'>
             <div className='text-gray-900 text-[1.5rem] font-bold'>  {lang === 'gj' ? productsData?.name?.gujaratiname : productsData?.name?.englishname} </div>
 
             <div className='text-gray-900 text-[1rem] mt-3'>
@@ -211,7 +210,7 @@ const ProductDetailsSection = () => {
             </div>
 
             {/* Quantity + Add to Cart */}
-            <div className="flex items-center gap-x-[4rem] mt-[2rem]">
+            <div className="md:flex  items-center gap-x-[4rem] mt-[2rem]">
               <div className="flex items-center border border-green-600 rounded-lg w-[100px] overflow-hidden">
                 <button className="w-[60px] h-[35px] text-center bg-gray-200 hover:bg-green-600 border-r border-green-600 text-[#222222]"  onClick={() => decrementQty(productsData!._id)}>−</button>
                 <input id="quantity" value={productQuantities[productsData?._id || ''] || 1}  type="text" defaultValue="1" className="w-[40px] text-center border-none m-0 p-0 focus:outline-none" />
@@ -221,7 +220,7 @@ const ProductDetailsSection = () => {
                  {!cartItems ? 
                       <button className="text-red-600 px-4 py-2 text-md flex items-end ml-[7rem] rounded-full justify-end border border-[#d8d8d8] hover:bg-red-100 transition-all duration-300 mt-4" onClick={() => productsData &&  removeFromCart(productsData?._id)} > {t("remove_from_cart")} </button>
                     :  
-                    <button className="text-gray-50 px-4 py-2 text-md flex items-center gap-1 rounded-full bg-green-600 border border-[#d8d8d8] hover:bg-green-500 hover:text-white transition-all duration-300"  onClick={() => productsData && AddCall(productsData)}>    {t("add_to_cart")} <FaCartShopping /> </button>
+                    <button className="text-gray-50 px-4 py-2 text-md flex items-center gap-1 rounded-full bg-green-600 border border-[#d8d8d8] hover:bg-green-500 hover:text-white transition-all duration-300 mt-3 md:mt-0"  onClick={() => productsData && AddCall(productsData)}>    {t("add_to_cart")} <FaCartShopping /> </button>
                 }
             </div>
           </div>
@@ -268,7 +267,7 @@ const ProductDetailsSection = () => {
                     effect="blur"
                     src={`${IMG_URL}/public/product/${encodeURIComponent(img)}`}
                     alt={`Product image ${index + 1}`}
-                    className="w-full  h-auto object-contain mx-auto"
+                    className="w-full  h-auto max-h-[15rem] object-contain mx-auto"
                   />
                 </SwiperSlide>
               ))}

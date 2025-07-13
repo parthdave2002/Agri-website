@@ -150,7 +150,6 @@ const ProductSection = () => {
     setCartItems(updatedCart);
     localStorage.setItem("product", JSON.stringify(updatedCart));
     window.dispatchEvent(new Event("cartChanged"));
-    toast.info("Product removed from cart.");
   };
 
     const incrementQty = (productId: string) => {
@@ -298,7 +297,7 @@ const ProductSection = () => {
             )}
           )}
         </div>
-        : <div className='text-center text-2xl font-heading flex justify-center my-[6rem]'> <img src='/public/images/no-product-found.webp' /> </div>}
+        : <div className='text-center text-2xl font-heading flex justify-center my-[6rem]'> <img src='/images/no-product-found.webp' /> </div>}
 
       <ToastContainer />
     </div>
