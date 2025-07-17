@@ -235,7 +235,11 @@ const ProductSection = () => {
 
            {/* Search Input (left side) */}
            <div className="flex flex-grow shadow-md rounded-xl overflow-hidden bg-white">
-             <input type="text" placeholder={t("enter_product_name")} className="flex-grow px-4 py-3 text-[18px] font-heading outline-none bg-gray-50" value={searchData} onChange={(e: any) => setSearchData(e.target.value)} />
+             <input type="text" placeholder={t("enter_product_name")} className="flex-grow px-4 py-3 text-[18px] font-heading outline-none bg-gray-50" value={searchData} onChange={(e: any) => setSearchData(e.target.value)}  onKeyDown={(e) => {
+    if (e.key === "Enter") {
+      SearchCall();
+    }
+  }}/>
              <button className="bg-green-500 hover:bg-green-600 text-white px-5 py-3 text-[1.1rem] font-heading font-semibold transition" onClick={SearchCall} > {t("search")} </button>
            </div>
 

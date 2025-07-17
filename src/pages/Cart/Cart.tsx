@@ -70,9 +70,11 @@ const CartSection: React.FC<CartProps> = ({ cartOpen, onClose }) => {
 
     validationSchema: Yup.object({
       name: Yup.string().required("Please enter  name"),
-      phone_number: Yup.number()
+      phone_number: Yup.string()
         .required("Please enter phone number")
-        .min(10, "Phone number must be minimum 10 digits"),
+        .matches(/^\d+$/, "Phone number must be digits only")
+        .min(10, "Phone number must be at least 10 digits")
+        .max(10, "Phone number must be at most 10 digits"),
     }),
 
     onSubmit: (values) => {
@@ -156,7 +158,7 @@ const CartSection: React.FC<CartProps> = ({ cartOpen, onClose }) => {
 
                       {/* Product Info */}
                       <div className="flex-1">
-                        <p className="text-md font-semibold font-heading text-gray-900 truncate">
+                        <p className="text-md font-semibold font-heading  max-w-[12rem] truncate text-gray-900 truncate">
                           {item?.name?.englishname}
                         </p>
 

@@ -34,7 +34,11 @@ const HelpModal: FC<HelpModalProps>= ({isOpenDelteModel, setisOpenDelteModel}) =
       
       validationSchema: Yup.object({
         name: Yup.string().required("Please enter  name"),
-        phone_number: Yup.number().required("Please enter phone number").min(10, "Phone number must be minimum 10 digits"),
+        phone_number: Yup.string()
+              .required("Please enter phone number")
+              .matches(/^\d+$/, "Phone number must be digits only")
+              .min(10, "Phone number must be at least 10 digits")
+              .max(10, "Phone number must be at most 10 digits"),
       }),
           
       onSubmit: (values) => {

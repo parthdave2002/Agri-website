@@ -69,7 +69,7 @@ const Header: React.FC= ( ) => {
           <div className="md:flex justify-between">
             <div className="text-green-600 font-heading font-semibold text-md md:text-[1rem] text-center"> {t('call_us')} : {t("9100029429 / 9100029329")}</div>
             <div className="flex gap-x-3 my-3 md:my-0 self-center justify-center">
-              <a  target="_blank" rel='noopener noreferre'  href="https://chat.whatsapp.com/EpxTJUNTU8Q1NKUAS3RjBM"> <FaWhatsapp  className="text-gray-300 hover:text-green-500 cursor-pointer" size={22} /> </a>
+              <a  target="_blank" rel='noopener noreferre'  href="https://wa.me/919100029429"> <FaWhatsapp  className="text-gray-300 hover:text-green-500 cursor-pointer" size={22} /> </a>
               <a  target="_blank" rel='noopener noreferre'  href="https://www.instagram.com/agribharat.in?igsh=MXQwbnlwMmI5c3RvMw=="> <FaInstagram className="text-gray-300 hover:text-green-500 cursor-pointer" size={22} /> </a>
               <a  target="_blank" rel='noopener noreferre'  href="https://youtube.com/@agribharat2023?si=ip4lwikEkp4SCBgy"> <FaYoutube className="text-gray-300 hover:text-green-500 cursor-pointer" size={22} /> </a>
               <a  target="_blank" rel='noopener noreferre'  href="https://www.facebook.com/agribharat.in/"> <FaFacebookF  className="text-gray-300 hover:text-green-500 cursor-pointer" size={22} /> </a>

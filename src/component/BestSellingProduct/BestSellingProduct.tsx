@@ -2,50 +2,40 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { useTranslation } from "react-i18next";
-import { FaCartShopping } from 'react-icons/fa6';
 import { useNavigate } from 'react-router-dom';
 
-interface Product {
-  id: number;
-  image: string;
-  title: string;
-  quantity: string;
-  rating: number;
-  price: string;
-}
-
-const products: Product[] = [
+const products: any[] = [
   {
-    id: 1,
-    image: '/images/thumb-tomatoes.png',
-    title: 'Sunstar Fresh Melon Juice',
-    quantity: '1 Unit',
+    id: "6862a4563ca787accd907b7f",
+    image: '/images/product/areva1.webp',
+    title: 'Areva',
+    quantity: '250 Gram',
     rating: 4.5,
-    price: '$18.00',
+    price: '500',
   },
   {
-    id: 2,
-    image: '/images/thumb-tomatoketchup.png',
-    title: 'Sunstar Fresh Melon Juice',
-    quantity: '1 Unit',
+    id: "6872596422256079e7dce566",
+    image: '/images/product/tataBahar1.webp',
+    title: 'Tata Bahar',
+    quantity: '250 ML',
     rating: 4.5,
-    price: '$18.00',
+    price: '500',
   },
   {
-    id: 3,
-    image: '/images/thumb-bananas.png',
-    title: 'Sunstar Fresh Melon Juice',
-    quantity: '1 Unit',
+    id: "68736b7b2ac170b904090ff0",
+    image: '/images/product/meghaTorch.jpg',
+    title: 'Megha Torch',
+    quantity: '1 Piece',
     rating: 4.5,
-    price: '$18.00',
+    price: '359',
   },
   {
-    id: 4,
-    image: '/images/thumb-bananas.png',
-    title: 'Sunstar Fresh Melon Juice',
+    id: "68737b492ac170b904091386",
+    image: '/images/product/suketuBajara.webp',
+    title: 'Suketu 101 Bajara',
     quantity: '1 Unit',
     rating: 4.5,
-    price: '$18.00',
+    price: '18',
   }
   // Add more as needed
 ];
@@ -68,10 +58,6 @@ const BestSellingProductSection: React.FC = () => {
           <h2 className="text-2xl font-heading md:text-3xl font-semibold">{t("Best selling products")}</h2>
           <div className="flex items-center gap-4  mt-[2rem] md:mt-0">
             <div onClick={() => RedirectCall("/product")} className="cursor-pointer text-green-600 hover:text-green-500 text-md font-medium self-center"> {t("View All")} </div>
-            {/* <div className="flex gap-2">
-              <button className=" products-carousel-prev  bg-blue-500 text-white px-2 py-2 rounded-full"> <FaChevronLeft /> </button>
-              <button className=" products-carousel-next  bg-blue-500 text-white px-2 py-2 rounded-full"> <FaChevronRight /></button>
-            </div> */}
           </div>
         </div>
 
@@ -93,29 +79,16 @@ const BestSellingProductSection: React.FC = () => {
           {products.map((product) => (
             <SwiperSlide key={product.id}>
               <div className="relative z-5 p-4 bg-white border border-[#FBFBFB] shadow-[0px_5px_22px_rgba(0,0,0,0.04)] rounded-2xl mb-7 hover:shadow-[0px_21px_44px_rgba(0,0,0,0.08)] transition-shadow duration-300">
-                {/* <button className="absolute top-5 right-5 w-[40px] h-[40px] rounded-full flex items-center justify-center bg-white border border-[#d8d8d8] hover:bg-green-600 hover:text-white transition-all duration-300"> <FaHeart />  </button> */}
-                <div className="absolute top-5 left-5 w-[50px] h-[30px] rounded-md flex items-center justify-center bg-green-500 border border-[#d8d8d8] hover:bg-green-600 text-white transition-all duration-300"> <span className="badge bg-success position-absolute m-3">-15%</span>  </div>
+                  <figure className="bg-[#F9F9F9] rounded-[12px] text-center mb-4"> <LazyLoadImage effect="blur" src={product.image} alt="Product" className="mx-auto max-h-[210px] h-auto" />  </figure>
 
-                <figure className="bg-[#F9F9F9] rounded-[12px] text-center mb-4"> <LazyLoadImage effect="blur" src={product.image} alt="Product" className="mx-auto max-h-[210px] h-auto" />  </figure>
-                <h3 className="block w-full font-heading font-semibold text-[18px] leading-[25px] capitalize text-[#333333] mb-1 cursor-pointer" onClick={() => DetailspageCall(product?.id)}> {product.title} </h3>
-
-                <div className="flex justify-between items-center text-sm mb-1">
-                  <span className="font-normal text-[13px] leading-[18px] tracking-[0.02em] uppercase text-[#9D9D9D]">{product.quantity} </span>
-                  <span className="font-semibold text-[13px] leading-[18px] capitalize text-[#222222] flex items-center gap-1"> <span className="text-[#FFC43F]">★</span> {product.rating} </span>
-                </div>
-
-                <div className="block w-full font-semibold text-[22px] leading-[30px] capitalize text-[#222222] mb-3">{product.price} </div>
-
-                {/* Quantity Counter & Add to Cart */}
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center border border-[#E2E2E2] rounded w-[85px] overflow-hidden">
-                    <button className="w-[26px] h-[26px] text-center bg-white border-r border-[#E2E2E2] text-[#222222]"> − </button>
-                    <input id="quantity" type="text" defaultValue="1" className="w-[28px] text-center border-none m-0 p-0 focus:outline-none" />
-                    <button className="w-[26px] h-[26px] text-center bg-white border-l border-[#E2E2E2] text-[#222222]"> + </button>
-                  </div>
-
-                  <button className="text-gray-50 px-4 py-2 text-md flex items-center gap-1 rounded-full flex items-center justify-center bg-green-600 border border-[#d8d8d8] hover:bg-green-500 hover:text-white transition-all duration-300"> {t("add_to_cart")} <FaCartShopping />  </button>
-                </div>
+                    <div className="flex justify-between items-center text-sm ">
+                      <h3 className="block w-full font-heading font-semibold text-[16px] leading-[25px] capitalize text-[#333333] mb-1 cursor-pointer truncate max-w-[11rem]" onClick={() => DetailspageCall(product?.id)}> {product?.title} </h3>
+                      <span className="font-normal font-heading text-[1rem] leading-[18px] flex gap-x-1">
+                        <div> {product?.quantity}  </div>
+                        {/* <div>  {currentLang === 'gj' ? product?.packagingtype?.type_guj :  product?.packagingtype?.type_eng}   </div> */}
+                      </span>
+                    </div>
+                {/* <div className="block w-full  font-heading font-semibold text-[16px] leading-[25px] capitalize text-[#222222] mb-1 cursor-pointer" onClick={() => DetailspageCall(product?.id)}>Rs. {product?.price} </div> */}
               </div>
             </SwiperSlide>
           ))}

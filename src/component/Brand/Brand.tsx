@@ -50,10 +50,10 @@ const BrandCarouselSection: React.FC = () => {
   { img: 'images/company/yaraLogo.webp', subtitle: 'Yara'}
 ], []);
   
-  const repeatedData = [...brandData, ...brandData];
+
   const { t } = useTranslation();
   return (
-    <section className="py-10 overflow-hidden">
+    <section className="py-5 md:py-10 overflow-hidden">
 
       <div className="max-w-1600 mx-auto px-4">
         <div className="flex flex-wrap justify-between items-center mb-10">
@@ -61,7 +61,7 @@ const BrandCarouselSection: React.FC = () => {
           <div className="w-full overflow-hidden bg-white py-4">
             <Marquee loop={0} speed={50} pauseOnClick={true} autoFill={true}>
               {brandData.map((item, index) => (
-                <div key={index} className="flex-shrink-0 w-36 mx-10 flex items-center text-center justify-center">
+                <div key={index} className="flex-shrink-0   w-24 md:w-36 mx-10 flex items-center text-center justify-center">
                   <div className='flex flex-col '>
                     <LazyLoadImage effect="blur" src={item.img}  className="h-20 w-20 object-contain"   />
                     <h3 className="text-base font-semibold text-gray-900 mt-2 leading-tight">{item.subtitle}</h3>

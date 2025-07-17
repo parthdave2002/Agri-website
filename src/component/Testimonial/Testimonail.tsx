@@ -62,9 +62,9 @@ const TestimonailSection = () => {
   return (
     <section className="pb-10">
       <div className="max-w-1600 mx-auto px-4">
-        <h2 className="text-[2rem] font-heading font-semibold my-5"> {t("Farmer Testimonial")}</h2>
+        <h2 className="md:text-[2rem] text-[1.5rem]  font-heading font-semibold my-5"> {t("Farmer Testimonial")}</h2>
 
-         <div className="max-w-7xl mx-auto px-4 py-12">
+         <div className="max-w-7xl mx-auto md:px-4 py-6 md:py-12">
             <Swiper
               modules={[Autoplay]}
               autoplay={{ delay: 5000, disableOnInteraction: false }}

@@ -13,7 +13,7 @@ const FAQSection = () => {
   return (
     <div className='py-5'>
         <div className='max-w-1600 mx-auto px-4'>
-      <h2 className="text-[2rem] font-heading font-semibold my-5">{t("Frequently Asked Questions")}</h2>
+      <h2 className="md:text-[2rem] text-[1.5rem] font-heading font-semibold my-5">{t("Frequently Asked Questions")}</h2>
         <div className="max-w-7xl mx-auto p-6">
 
       {/* {faqs.map((faq, index) => (

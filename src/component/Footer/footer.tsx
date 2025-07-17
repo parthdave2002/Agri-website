@@ -26,7 +26,7 @@ const Footer = () => {
               <div className='text-md md:text-[1rem] font-heading font-semibold'> {t("Phone")} :  {t("9100029429 / 9100029329")}  </div>
               <div className='text-md md:text-[1rem] font-heading font-semibold mb-4'> {t("Email")} : agribharat.info@gmail.com</div>
                 <div className="flex space-x-3 ">
-                  <a  target="_blank" rel='noopener noreferre'  href="https://chat.whatsapp.com/EpxTJUNTU8Q1NKUAS3RjBM"  className="w-10 h-10 flex items-center justify-center transition cursor-pointer">  <LazyLoadImage effect="blur" src="/images/whatsapp.png" />   </a>
+                  <a  target="_blank" rel='noopener noreferre'  href="https://wa.me/919100029429"  className="w-10 h-10 flex items-center justify-center transition cursor-pointer">  <LazyLoadImage effect="blur" src="/images/whatsapp.png" />   </a>
                   <a  target="_blank" rel='noopener noreferre'  href="https://www.instagram.com/agribharat.in?igsh=MXQwbnlwMmI5c3RvMw=="  className="w-10 h-10 flex items-center justify-center transition cursor-pointer">  <LazyLoadImage effect="blur"  src="/images/instagram.png" />   </a>
                   <a  target="_blank" rel='noopener noreferre'  href="https://youtube.com/@agribharat2023?si=ip4lwikEkp4SCBgy"  className="w-10 h-10 flex items-center justify-center transition cursor-pointer">  <LazyLoadImage effect="blur"  src="/images/youtube.png" />   </a>
                   <a  target="_blank" rel='noopener noreferre'  href="https://www.facebook.com/agribharat.in/"  className="w-10 h-10 flex items-center justify-center transition cursor-pointer"> <LazyLoadImage effect="blur"  src="/images/facebook.png" />   </a>
