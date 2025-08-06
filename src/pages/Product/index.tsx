@@ -47,8 +47,8 @@ const ProductSection = () => {
   const data = location.state?.filter;
     if (data) {
        const categoryKeyToLabelMap: Record<string, string> = {
-          "category.plant_protection": "Plant Protection",
-          "category.plant_nutrition": "Plant Nutrition",
+          "category.plant_protection": "Crop Protection",
+          "category.plant_nutrition": "Crop Nutrition",
           "category.fertilizer": "Fertilizer",
           "category.seed": "Seeds",
           "category.hardware": "Hardware",
@@ -246,8 +246,8 @@ const ProductSection = () => {
            <div className="w-48 shadow-md rounded-xl overflow-hidden bg-white border border-gray-200">
              <select  className="w-full h-full px-4 py-3 text-[18px] font-heading bg-gray-50 outline-none rounded-xl"  value={CurrentCategory} onChange={(e) => handleDropdownChange(e.target.value)}>
                <option value=""> {t("category.select_category")}</option>
-               <option value="Plant Protection">{t("category.plant_protection")}</option>
-               <option value="Plant Nutrition">{t("category.plant_nutrition")}</option>
+               <option value="Crop Protection">{t("category.plant_protection")}</option>
+               <option value="Crop Nutrition">{t("category.plant_nutrition")}</option>
                <option value="Fertilizer">{t("category.fertilizer")}</option>
                 <option value="Seeds">{t("category.seed")}</option>
                <option value="Hardware">{t("category.hardware")}</option>

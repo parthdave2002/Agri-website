@@ -247,41 +247,41 @@ const ProductDetailsSection = () => {
           {relatedproductsData && relatedproductsData.map((product:any, k:number) => {
            const cartItem = cartItems.find((item: any) => item._id === product._id);
           return(
-                 <div key={product.id} className="relative p-4 bg-white border border-[#FBFBFB] shadow-[0px_5px_22px_rgba(0,0,0,0.04)] rounded-2xl mb-7 hover:shadow-[0px_21px_44px_rgba(0,0,0,0.08)] transition-shadow duration-300">
-          <div className='flex-1'>
-        
-          <figure className="bg-[#F9F9F9] rounded-[12px] text-center mb-4 w-full max-w-[400px] mx-auto">
-            <Swiper
-              modules={[Navigation, Autoplay]}
-              spaceBetween={16}
-              slidesPerView={1}
-              loop={(productsData?.product_pics ?? []).length > 1}
-              autoplay={{
-                delay: 3000,
-                disableOnInteraction: false,
-              }}
-            >
-              {productsData?.product_pics?.map((img, index) => (
-                <SwiperSlide key={index}>
-                  <LazyLoadImage
-                    effect="blur"
-                    src={`${IMG_URL}/public/product/${encodeURIComponent(img)}`}
-                    alt={`Product image ${index + 1}`}
-                    className="w-full  h-auto max-h-[15rem] object-contain mx-auto"
-                  />
-                </SwiperSlide>
-              ))}
-            </Swiper>
-          </figure>
-          </div>
+                 <div key={product._id || k} className="relative p-4 bg-white border border-[#FBFBFB] shadow-[0px_5px_22px_rgba(0,0,0,0.04)] rounded-2xl mb-7 hover:shadow-[0px_21px_44px_rgba(0,0,0,0.08)] transition-shadow duration-300">
+                  <div className='flex-1'>
+                
+                  <figure className="bg-[#F9F9F9] rounded-[12px] text-center mb-4 w-full max-w-[400px] mx-auto">
+                    <Swiper
+                      modules={[Navigation, Autoplay]}
+                      spaceBetween={16}
+                      slidesPerView={1}
+                      loop={(productsData?.product_pics ?? []).length > 1}
+                      autoplay={{
+                        delay: 3000,
+                        disableOnInteraction: false,
+                      }}
+                    >
+                      {productsData?.product_pics?.map((img, index) => (
+                        <SwiperSlide key={index}>
+                          <LazyLoadImage
+                            effect="blur"
+                            src={`${IMG_URL}/public/product/${encodeURIComponent(img)}`}
+                            alt={`Product image ${index + 1}`}
+                            className="w-full  h-auto max-h-[15rem] object-contain mx-auto"
+                          />
+                        </SwiperSlide>
+                      ))}
+                    </Swiper>
+                  </figure>
+                  </div>
 
-              <div className="flex justify-between items-center text-sm ">
-                <h3 className="block w-full font-heading font-semibold text-[16px] leading-[25px] capitalize text-[#333333] mb-1 cursor-pointer truncate max-w-[11rem]"> {lang === 'gj' ? product?.name?.gujaratiname :   product?.name?.englishname} </h3>
-                <span className="font-normal font-heading text-[1rem] leading-[18px] flex gap-x-1">
-                  <div> {product?.packaging}  </div>
-                  <div>{lang === 'gj' ? product?.packagingtype?.type_guj :   product?.packagingtype?.type_eng}    </div>
-                </span>
-              </div>
+                  <div className="flex justify-between items-center text-sm ">
+                    <h3 className="block w-full font-heading font-semibold text-[16px] leading-[25px] capitalize text-[#333333] mb-1 cursor-pointer truncate max-w-[11rem]"> {lang === 'gj' ? product?.name?.gujaratiname :   product?.name?.englishname} </h3>
+                    <span className="font-normal font-heading text-[1rem] leading-[18px] flex gap-x-1">
+                      <div> {product?.packaging}  </div>
+                      <div>{lang === 'gj' ? product?.packagingtype?.type_guj :   product?.packagingtype?.type_eng}    </div>
+                    </span>
+                  </div>
 
                <div className="block w-full  font-heading font-semibold text-[16px] leading-[25px] capitalize text-[#222222] mb-1 cursor-pointer" >Rs. {product?.price} </div>
 

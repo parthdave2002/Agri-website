@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { AddLeadlist, ResetLeadlist } from '../../Store/Lead/action';
 import { useLocation, useNavigate } from "react-router-dom";
+import ToastMessage from "../../component/ToastMessage";
 const IMG_URL = import.meta.env.VITE_API_URL; 
 // const IMG_URL = import.meta.env["VITE_API_URL"];
 
@@ -97,7 +98,8 @@ const CartSection: React.FC<CartProps> = ({ cartOpen, onClose }) => {
       const Adddetail :any = useSelector((state:any) => state.Lead.AddLeaddatalist); 
              
       useEffect(() => { 
-        if (formSubmitted  && Adddetail &&  location.pathname === "/product" ) { 
+          const isProductPage = location.pathname === "/product" || location.pathname.startsWith("/product-detail");
+        if (formSubmitted  && Adddetail &&  isProductPage ) { 
            localStorage.removeItem("product")
             setCartData([]);
             window.dispatchEvent(new Event("cartChanged"));
@@ -112,9 +114,6 @@ const CartSection: React.FC<CartProps> = ({ cartOpen, onClose }) => {
         }
       }, [Adddetail]); 
     // ------------- Get data from redux code end -------------
-
-  
-    
 
   return (
     <>
@@ -247,14 +246,8 @@ const CartSection: React.FC<CartProps> = ({ cartOpen, onClose }) => {
                         : false
                     }
                   />
-                  {validation.touched.phone_number &&
-                  validation.errors.phone_number ? (
-                    <FormFeedback
-                      type="invalid"
-                      className="text-red-500 text-sm"
-                    >
-                      {validation.errors.phone_number}
-                    </FormFeedback>
+                  {validation.touched.phone_number &&  validation.errors.phone_number ? (
+                    <FormFeedback  type="invalid"  className="text-red-500 text-sm"> {validation.errors.phone_number}   </FormFeedback>
                   ) : null}
                 </div>
               </div>
@@ -270,6 +263,8 @@ const CartSection: React.FC<CartProps> = ({ cartOpen, onClose }) => {
              </Form>
         </div>
       </div>
+
+      <ToastMessage />
     </>
   );
 };
