@@ -109,6 +109,7 @@ const CartSection: React.FC<CartProps> = ({ cartOpen, onClose }) => {
               toast.success(t('advisor_contact_success'));
               // dispatch(ResetLeadlist())
             setTimeout(() =>{
+              toast.success(t('advisor_contact_success'));
               navigate("/")
             },3000)
         }

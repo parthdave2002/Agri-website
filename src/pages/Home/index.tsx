@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import LookingForSection from '../../component/Looking/LookingFor'
 import PopularSearches from '../../component/PopularProduct/PopularProduct'
 import PopularProductSection from '../../component/PopularProduct/PopularProduct'
@@ -10,9 +10,11 @@ import CategoryCarouselSection from '../../component/Category/Category'
 import BannerSection from '../../component/Banner/Banner'
 import TestimonailSection from '../../component/Testimonial/Testimonail'
 import FAQSection from '../../component/FAQ/FAQ'
+import GlobalLoader from '../../component/Loader/Loader'
 
 const HomeSection = () => {
 
+  const [is_loader, set_is_loader] = useState(false)
   useEffect(() => {
     window.scrollTo({
       top: 0,
@@ -20,20 +22,25 @@ const HomeSection = () => {
     });
   }, [])
 
-
   return (
-    <div className=''>
-      <BannerSection />
-      <CategoryCarouselSection />
-      <BestSellingProductSection />
-      <DiscountBannerSection />
-       <BrandCarouselSection />
-      <PopularProductSection />
-      <PromoBannerSection />
-      <TestimonailSection />
-      <LookingForSection />
-      <FAQSection />
-    </div>
+    <div>
+        {is_loader ?  <GlobalLoader />
+          : 
+          <div className=''>
+            <BannerSection />
+            <CategoryCarouselSection />
+            <BestSellingProductSection />
+            <DiscountBannerSection />
+            <BrandCarouselSection />
+            <PopularProductSection />
+            <PromoBannerSection />
+            <TestimonailSection />
+            <LookingForSection />
+            <FAQSection />
+          </div>
+        }
+      </div>
+     
   )
 }
 
