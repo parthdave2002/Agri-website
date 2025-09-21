@@ -268,13 +268,13 @@ const ProductDetailsSection = () => {
                               modules={[Navigation, Autoplay]}
                               spaceBetween={16}
                               slidesPerView={1}
-                              loop={(productsData?.product_pics ?? []).length > 1}
+                              loop={(product?.product_pics ?? []).length > 1}
                               autoplay={{
                                 delay: 3000,
                                 disableOnInteraction: false,
                               }}
                             >
-                              {productsData?.product_pics?.map((img, index) => (
+                              {product?.product_pics?.map((img:any, index:any) => (
                                 <SwiperSlide key={index}>
                                   <LazyLoadImage
                                     effect="blur"
