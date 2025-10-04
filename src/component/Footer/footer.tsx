@@ -16,7 +16,7 @@ const Footer = () => {
   return (
     <>
 
-      <footer className="bg-white text-gray-800 py-10 border-t border-gray-200">
+      <footer className="bg-[#47e38178] text-gray-800 py-10 border-t border-gray-200">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 justify-items-center md:grid-cols-3 gap-8">
 
@@ -74,7 +74,7 @@ const Footer = () => {
       </div>
     </footer>
 
-     <footer id="footer-bottom" className="bg-white py-4 border-t">
+     <footer id="footer-bottom" className="bg-[#47e38178] py-4 border-t">
       <div className="max-w-[1600px] mx-auto px-12">
         <div className="flex flex-col md:flex-row justify-between items-center gap-2 text-sm text-gray-600">
           <p className='text-md md:text-[1rem] text-gray-800 font-heading font-semibold'>© {year}. {t("All Rights Reserved")}.</p>

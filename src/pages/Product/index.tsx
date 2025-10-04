@@ -69,23 +69,34 @@ const ProductSection = () => {
 
   //------------- Get data from redux code start -------------
   const productdetail: any = useSelector((state: any) => state?.Product.Productlist);
-
+  
   useEffect(() => {
-  if (productdetail) {
+    console.log("productdetail",productdetail.data);
+
+    if (productdetail?.data.length) {
     if (productdetail.success === true) {
       const newData = productdetail.data || [];
       if (newData.length === 0) {
         setHasMore(false);
       } else {
-        setProductsList((prev: any) => [...prev, ...newData]);
+        setProductsList((prev) => [
+          ...(Array.isArray(prev) ? prev : []),
+          ...newData,
+        ]);
       }
     } else {
       toast.error(productdetail.msg || "Failed to fetch products.");
     }
-    isFetchingRef.current = false;
+
+    // stop loader only after handling productdetail
     set_is_loader(false);
+    isFetchingRef.current = false;
   }
-  }, [productdetail]);
+  else{
+     set_is_loader(false);
+  }
+}, [productdetail]);
+
   //------------- Get data from redux code end -------------
 
   // ------------ Details page start --------
@@ -94,7 +105,7 @@ const ProductSection = () => {
     }
   // ------------ Details page end --------
 
-    const [products, setProductsList] = useState<any>([]);
+    const [products, setProductsList] = useState<any[]>([]);
     const [TotalListData, setTotalListData] = useState(0);
     const [CurrentPageNo, setCurrentPageNo] = useState(0);
 
@@ -244,7 +255,7 @@ set_is_loader(true);
     <div >
           {is_loader ?  <GlobalLoader />
               : 
-            <div>
+            <div className='bg-gray-100 p-4'>
               <div className="my-5 w-full flex flex-col items-center">
                 <div className="flex w-full max-w-2xl justify-between items-center gap-4">
 
@@ -260,9 +271,9 @@ set_is_loader(true);
 
                   <div className="w-48 shadow-md rounded-xl overflow-hidden bg-white border border-gray-200">
                     <select  className="w-full h-full px-4 py-3 text-[18px] font-heading bg-gray-50 outline-none rounded-xl"  value={CurrentCategory} onChange={(e) => handleDropdownChange(e.target.value)}>
-                      <option value=""> {t("category.select_category")}</option>
+                      <option value="null"> {t("category.select_category")}</option>
                       <option value="Crop Protection">{t("category.plant_protection")}</option>
-                      <option value="Crop Nutrition">{t("category.plant_nutrition")}</option>
+                      <option value="Crop Nutrients">{t("category.plant_nutrition")}</option>
                       <option value="Fertilizer">{t("category.fertilizer")}</option>
                         <option value="Seeds">{t("category.seed")}</option>
                       <option value="Hardware">{t("category.hardware")}</option>
@@ -273,11 +284,11 @@ set_is_loader(true);
               </div>
 
                 {Array.isArray(products) && products.length > 0 ? 
-                <div className="md:grid  md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-1600">
+                <div className="md:grid  md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-1600 ">
                   {products && products.map((product:any) => {
                     const cartItem = cartItems.find((item: any) => item._id === product._id);
                     return (
-                      <div key={product.id} className="relative p-4 bg-white border border-[#FBFBFB] shadow-[0px_5px_22px_rgba(0,0,0,0.04)] rounded-2xl mb-7 hover:shadow-[0px_21px_44px_rgba(0,0,0,0.08)] transition-shadow duration-300">
+                      <div key={product.id} className="relative p-4 bg-white border border-[#FBFBFB] shadow-[0px_5px_22px_rgba(0,0,0,0.04)] rounded-2xl mb-7 hover:shadow-[0px_50px_50px_rgba(0,0,0,0.08)] transition-shadow duration-300">
                         <figure className="bg-[#F9F9F9] rounded-[12px] text-center mb-4">
                           <Swiper modules={[Navigation, Autoplay]} spaceBetween={16} slidesPerView={1} loop={true} autoplay={{ delay: 3000, disableOnInteraction: false, }} >
                             {product?.product_pics.map((img:any, index:number) => (
