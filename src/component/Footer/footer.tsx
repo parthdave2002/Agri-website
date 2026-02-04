@@ -67,6 +67,17 @@ const Footer = () => {
                     </div>
                   </div>
                 </div>
+
+                  <div className="text-sm md:text-base font-semibold leading-relaxed">
+                  <div className="flex text-sm md:text-base font-semibold leading-relaxed">
+                    <div className="w-28 md:w-[6rem] text-lg md:text-[1rem] font-heading font-semibold flex-shrink-0"> Address 3 :  </div>
+                    <div>
+                      <p className="mb-0 md:text-[0.9rem] font-heading">Shop No-26, Ground Floor, </p>
+                      <p className="mb-0 md:text-[0.9rem] font-heading">Arth Business Center (ABC), S.P Ring Road, </p>
+                      <p className="mb-0 md:text-[0.9rem] font-heading">Nikol, Ahmedabad-382350, Gujarat, India</p>
+                    </div>
+                  </div>
+                </div>
               </div>
           </div>
         
