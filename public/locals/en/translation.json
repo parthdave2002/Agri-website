@@ -145,6 +145,13 @@
   "English": "English",
   "Gujarati": "Gujarati",
 
+  "Packing" : "Packing",
+  "Available Qty" : "Available Qty",
+  "Company" : "Company",
+  "Price" : "Price (₹)",
+  "Discount" : "Discount",
+  "Batch No" : "Batch No",
+
   "Free delivery": "Free delivery",
   "100% secure payment": "100% secure payment",
   "Quality guarantee": " Quality guarantee",

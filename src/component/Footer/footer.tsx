@@ -24,7 +24,7 @@ const Footer = () => {
               <LazyLoadImage effect="blur" src="/images/logo.webp" alt="FoodMart Logo" className="w-36 md:w-[15rem] mb-6 justify-self-center" />
 
               <div className='text-md md:text-[1rem] font-heading font-semibold'> {t("Phone")} :  {t("9100029429 / 9100029329")}  </div>
-              <div className='text-md md:text-[1rem] font-heading font-semibold mb-4'> {t("Email")} : agribharat.info@gmail.com</div>
+              <div className='text-md md:text-[1rem] font-heading font-semibold mb-4'> {t("Email")} : contact@agribharat.com</div>
                 <div className="flex space-x-3 ">
                   <a  target="_blank" rel='noopener noreferre'  href="https://wa.me/919100029429"  className="w-10 h-10 flex items-center justify-center transition cursor-pointer">  <LazyLoadImage effect="blur" src="/images/whatsapp.png" />   </a>
                   <a  target="_blank" rel='noopener noreferre'  href="https://www.instagram.com/agribharat.in?igsh=MXQwbnlwMmI5c3RvMw=="  className="w-10 h-10 flex items-center justify-center transition cursor-pointer">  <LazyLoadImage effect="blur"  src="/images/instagram.png" />   </a>
@@ -47,19 +47,30 @@ const Footer = () => {
               <h4 className="text-xl md:text-[1.2rem] text-center font-heading font-semibold font-semibold mb-5">{t("Office Address")}</h4>
               <div className="flex flex-col gap-6">
 
+                  <div className="text-sm md:text-base font-semibold leading-relaxed">
+                  <div className="flex text-sm md:text-base font-semibold leading-relaxed">
+                    <div className="w-28 md:w-[6rem] text-lg md:text-[1rem] font-heading font-semibold flex-shrink-0"> Address 1 :  </div>
+                    <div>
+                      <p className="mb-0 md:text-[0.9rem] font-heading">Shop No-26, Ground Floor, </p>
+                      <p className="mb-0 md:text-[0.9rem] font-heading">Arth Business Center (ABC), S.P Ring Road, </p>
+                      <p className="mb-0 md:text-[0.9rem] font-heading">Nikol, Ahmedabad-382350, Gujarat, India</p>
+                    </div>
+                  </div>
+                </div>
+
                 <div className="text-sm md:text-base font-semibold leading-relaxed">
                   <div className="flex flex-wrap gap-2 items-start">
-                    <h5 className="text-lg md:text-[1rem] font-heading font-semibold">Address 1 :</h5>
+                    <h5 className="text-lg md:text-[1rem] font-heading font-semibold">Address 2 :</h5>
                     <div>
-                      <p className="mb-0 md:text-[0.9rem] font-heading">Warehouse-1, Diu Road, Kesariya, Una, </p>
-                      <p className="mb-0 md:text-[0.9rem] font-heading"> Gir Somnath - 362560, Gujarat, India</p>
+                      <p className="mb-0 md:text-[0.9rem] font-heading">Warehouse-1, Olvan Road, Paldi, Una, </p>
+                      <p className="mb-0 md:text-[0.9rem] font-heading"> Gir Somnath - 362510, Gujarat, India</p>
                     </div>
                   </div>
                 </div>
 
                 <div className="text-sm md:text-base font-semibold leading-relaxed">
                   <div className="flex text-sm md:text-base font-semibold leading-relaxed">
-                    <div className="w-28 md:w-[6rem] text-lg md:text-[1rem] font-heading font-semibold flex-shrink-0"> Address 2 :  </div>
+                    <div className="w-28 md:w-[6rem] text-lg md:text-[1rem] font-heading font-semibold flex-shrink-0"> Address 3 :  </div>
                     <div>
                       <p className="mb-0 md:text-[0.9rem] font-heading">Shop-1, Ravi Shopping Centre, </p>
                       <p className="mb-0 md:text-[0.9rem] font-heading">Opp. New Bus stand, Kapadwanj, </p>
@@ -68,16 +79,7 @@ const Footer = () => {
                   </div>
                 </div>
 
-                  <div className="text-sm md:text-base font-semibold leading-relaxed">
-                  <div className="flex text-sm md:text-base font-semibold leading-relaxed">
-                    <div className="w-28 md:w-[6rem] text-lg md:text-[1rem] font-heading font-semibold flex-shrink-0"> Address 3 :  </div>
-                    <div>
-                      <p className="mb-0 md:text-[0.9rem] font-heading">Shop No-26, Ground Floor, </p>
-                      <p className="mb-0 md:text-[0.9rem] font-heading">Arth Business Center (ABC), S.P Ring Road, </p>
-                      <p className="mb-0 md:text-[0.9rem] font-heading">Nikol, Ahmedabad-382350, Gujarat, India</p>
-                    </div>
-                  </div>
-                </div>
+                
               </div>
           </div>
         

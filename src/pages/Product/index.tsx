@@ -101,13 +101,13 @@ useEffect(() => {
     setPage(1);
     setProducts([]);
     setHasMore(true);
-    dispatch(getProductlist({ page: 1, size: 12, search: readableCategory || "" }));
+    dispatch(getProductlist({ page: 1, is_active: true , size: 12, search: readableCategory || "" }));
     set_is_loader(true);
   }else{
    setPage(1);
     setProducts([]);
     setHasMore(true);
-    dispatch(getProductlist({ page: 1, size: 12}));
+    dispatch(getProductlist({ page: 1, size: 12, is_active:true}));
     set_is_loader(true); 
   }
 }, [data, dispatch]);
@@ -120,20 +120,20 @@ useEffect(() => {
       setProducts([]);
       setHasMore(true);
       setCategory("")
-      dispatch(getProductlist({ search: search, page: 1, size: 12 }));
+      dispatch(getProductlist({ search: search, page: 1, size: 12, is_active:true }));
       set_is_loader(true);
     }
     else if (category) {
       setPage(1);
       setProducts([]);
       setHasMore(true);
-      dispatch(getProductlist({ search: category, page: page, size: 12 }));
+      dispatch(getProductlist({ search: category, page: page, size: 12, is_active:true }));
       set_is_loader(true);
     } else {
       setPage(1);
       setProducts([]);
       setHasMore(true);
-      dispatch(getProductlist({ page: page, size: 12 }));
+      dispatch(getProductlist({ page: page, size: 12, is_active:true }));
       set_is_loader(true);
     }
   }
@@ -173,6 +173,7 @@ setLoading(true);
         page,
         size: PAGE_SIZE,
         search: search || category,
+        is_active:true
       })
     );
   }, [page, search, category]);

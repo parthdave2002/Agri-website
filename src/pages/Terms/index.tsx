@@ -92,7 +92,7 @@ const  Termspagesection = () => {
 
         <p className='text-[1rem] font-semibold font-heading'>13. Contact Information</p>
         <p className='mb-2 text-[1rem]'>If you have any questions or concerns about these Terms, you may contact us at:</p>
-        <p className='mb-2 text-[1rem]'>Email: agribharat.info@gmail.com</p>
+        <p className='mb-2 text-[1rem]'>Email: contact@agribharat.com</p>
         <p className='mb-8 text-[1rem]'>Phone: +91 9100029429/9100029329 </p>
 
 
@@ -146,7 +146,7 @@ const  Termspagesection = () => {
           <p className='mb-2 text-[1rem]'>• Correct any inaccuracies</p>
           <p className='mb-4 text-[1rem]'>• Request deletion (subject to regulatory or operational obligations)</p>
           <p className='mb-4 text-[1rem]'>• Opt-out of promotional messages</p>
-        <p className='mb-8 text-[1rem]'>To make a request, contact us at: agribharat.info@gmail.com</p>
+        <p className='mb-8 text-[1rem]'>To make a request, contact us at: contact@agribharat.com</p>
 
         <p className='font-heading font-semibold text-[1rem]'>6. Policy Updates</p>
         <p className='mb-8 text-[1rem]'>We may update this Privacy Policy occasionally to reflect changes in legal, regulatory, or operational requirements. Updates will be posted on this page, and we encourage you to review this policy periodically. </p>
@@ -157,7 +157,7 @@ const  Termspagesection = () => {
         <p className='font-heading font-semibold text-[1rem]'>13. Contact Information</p>
         <p className='mb-2 text-[1rem]'>If you have any questions about this Privacy Policy or how your data is handled, reach out to us:</p>
         <p className='mb-2 text-[1rem]'>Customer Support: +91-9100029429 / +91-9100029329</p>
-        <p className='mb-8 text-[1rem]'>Email: agribharat.info@gmail.com </p>
+        <p className='mb-8 text-[1rem]'>Email: contact@agribharat.com </p>
 
         <h2 className="text-[1.5rem] md:text-[2rem] font-heading font-semibold my-5"> Cancellation and Refund policy  </h2>
         <p className=' text-[1rem]'> Effective Date: 01/01/2025</p>
@@ -200,7 +200,7 @@ const  Termspagesection = () => {
         <p className=' font-heading font-semibold text-[1rem]'>5. How to Contact Us</p>
         <p className='mb-2 text-[1rem]'>For any cancellation, refund, or replacement requests:</p>
         <p className='mb-2 text-[1rem]'>Phone: +91-9100029429 / +91-9100029329</p>
-        <p className='mb-8 text-[1rem]'>Email: agribharat.info@gmail.com </p>
+        <p className='mb-8 text-[1rem]'>Email: contact@agribharat.com </p>
 
       </div>
     </div>
